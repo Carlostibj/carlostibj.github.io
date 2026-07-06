@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automation &amp; Scripting Projects | Your Name</title>
+  <meta name="description" content="Python, Bash and PowerShell automation and scripting projects by Your Name." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128737;</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION (same block as index.html) -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="logo" href="index.html"><span class="logo-prompt">~/</span>yourname</a>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <a class="btn btn-ghost btn-small" href="assets/resume.pdf" target="_blank">Resume</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- PAGE HEADER -->
+    <section class="page-hero">
+      <a class="back-link" href="projects.html">&larr; all projects</a>
+      <span class="eyebrow">// domain: automation</span>
+      <h1>Automation &amp; Scripting</h1>
+      <p>
+        Small tools that do the boring work for me. Scripts for security tasks,
+        system administration and anything I got tired of doing by hand.
+      </p>
+    </section>
+
+    <section class="section">
+
+      <!-- ==================================================
+           Single grid of script projects.
+           The card template is the SAME as every project page.
+           Copy one <article class="project-card"> block and edit it.
+           Almost every card here should link to a GitHub repo,
+           and optionally to a Notion write-up explaining it.
+           ================================================== -->
+      <div class="subsection">
+        <span class="team-chip chip-amber">SCRIPTS &middot; tools I built</span>
+        <h2>Scripts &amp; Tools</h2>
+        <p>Python, Bash and PowerShell utilities. Each links to its repo so you can read the code.</p>
+
+        <div class="project-grid">
+
+          <!-- EXAMPLE SCRIPT — replace or delete -->
+          <article class="project-card">
+            <div class="project-top">
+              <h3>Log Parser &amp; Alerter</h3>
+              <span class="status status-done">Completed</span>
+            </div>
+            <p class="project-desc">Python script that parses auth logs, flags repeated failed logins from the same IP and prints a clean summary of likely brute-force attempts.</p>
+            <div class="tag-row">
+              <span class="tag">Python</span>
+              <span class="tag">Regex</span>
+              <span class="tag">Log Analysis</span>
+            </div>
+            <div class="project-links">
+              <a class="btn btn-ghost btn-small" href="https://github.com/your-github/log-parser" target="_blank" rel="noopener">GitHub &rarr;</a>
+              <a class="btn btn-ghost btn-small" href="https://your-notion-link.notion.site" target="_blank" rel="noopener">Notion write-up</a>
+            </div>
+          </article>
+
+          <!-- EXAMPLE SCRIPT — replace or delete -->
+          <article class="project-card">
+            <div class="project-top">
+              <h3>Windows Hardening Script</h3>
+              <span class="status status-progress">In Progress</span>
+            </div>
+            <p class="project-desc">PowerShell script that applies a baseline of security settings to a fresh Windows install — disabling risky services and enforcing password policy.</p>
+            <div class="tag-row">
+              <span class="tag">PowerShell</span>
+              <span class="tag">Windows</span>
+              <span class="tag">Hardening</span>
+            </div>
+            <div class="project-links">
+              <a class="btn btn-ghost btn-small" href="https://github.com/your-github/win-harden" target="_blank" rel="noopener">GitHub &rarr;</a>
+            </div>
+          </article>
+
+          <!-- EXAMPLE SCRIPT — replace or delete -->
+          <article class="project-card">
+            <div class="project-top">
+              <h3>Automated Backup Script</h3>
+              <span class="status status-done">Completed</span>
+            </div>
+            <p class="project-desc">Bash script scheduled with cron that backs up my lab configs to a separate drive and emails me if a backup fails.</p>
+            <div class="tag-row">
+              <span class="tag">Bash</span>
+              <span class="tag">cron</span>
+              <span class="tag">Linux</span>
+            </div>
+            <div class="project-links">
+              <a class="btn btn-ghost btn-small" href="https://github.com/your-github/backup-script" target="_blank" rel="noopener">GitHub &rarr;</a>
+            </div>
+          </article>
+
+          <!-- PASTE NEW SCRIPT CARDS HERE -->
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER (same block as index.html) -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-line"><span class="prompt">$</span> echo "thanks for stopping by"</p>
+      <div class="footer-links">
+        <a href="mailto:your.email@example.com">email</a>
+        <a href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener">linkedin</a>
+        <a href="https://github.com/your-github" target="_blank" rel="noopener">github</a>
+      </div>
+      <p class="footer-copy">&copy; <span id="year"></span> Your Name &middot; Built with plain HTML/CSS and hosted on GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

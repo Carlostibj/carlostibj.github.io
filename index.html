@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ======================================================
+       EDIT-ME: put your real name in the title + description.
+       This is what shows up in browser tabs and Google.
+       ====================================================== -->
+  <title>Your Name | Cybersecurity Portfolio</title>
+  <meta name="description" content="Cybersecurity, IT and system administration portfolio of Your Name. Red team and blue team projects, homelab builds, and automation scripts." />
+
+  <!-- shield favicon (the little icon in the browser tab) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128737;</text></svg>" />
+
+  <!-- fonts + the one shared stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ======================================================
+       NAVIGATION BAR
+       NOTE: this same block is copied at the top of EVERY page.
+       If you add a new page to the nav, add the link on every
+       page so the menu stays consistent.
+       EDIT-ME: change "yourname" in the logo.
+       ====================================================== -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="logo" href="index.html"><span class="logo-prompt">~/</span>yourname</a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <!-- EDIT-ME: drop your resume PDF into the assets folder
+             and name it resume.pdf so this button works -->
+        <a class="btn btn-ghost btn-small" href="assets/resume.pdf" target="_blank">Resume</a>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ======================================================
+         HERO — the first thing visitors see
+         EDIT-ME: your name, your one-line pitch, and the links.
+         The terminal on the right types automatically. To change
+         what it types, edit the "lines" list in js/main.js.
+         ====================================================== -->
+    <section class="hero">
+      <div class="hero-text">
+        <span class="eyebrow">// cybersecurity &middot; IT &middot; sysadmin</span>
+        <h1 class="hero-title">Hi, I'm <span class="accent">Your Name</span>.</h1>
+        <p class="hero-sub">
+          Cybersecurity student building real skills the hands-on way:
+          attacking and defending my own lab, documenting every step,
+          and looking for my first role in security or IT.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="projects.html">View my projects</a>
+          <a class="btn btn-ghost" href="#contact">Get in touch</a>
+        </div>
+      </div>
+
+      <div class="terminal" aria-hidden="true">
+        <div class="terminal-bar">
+          <span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span>
+          <span class="terminal-title">visitor@portfolio:~</span>
+        </div>
+        <div class="terminal-body" id="typedLines">
+          <!-- main.js types the intro lines in here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         EXPLORE — three big cards pointing to the main pages.
+         These mirror the nav bar, so you rarely need to touch them.
+         ====================================================== -->
+    <section class="section">
+      <span class="eyebrow">// start here</span>
+      <h2 class="section-title">Explore the portfolio</h2>
+      <p class="section-sub">Everything is organized into three areas. Projects is where most of the action is.</p>
+
+      <div class="card-grid">
+        <a class="domain-card dc-teal" href="projects.html">
+          <div class="dc-icon">&#9632;</div>
+          <h3>Projects</h3>
+          <p>Hands-on work split by domain: red team, blue team, homelab builds, and automation scripts. Each one links to full documentation in Notion.</p>
+          <span class="dc-go">explore &rarr;</span>
+        </a>
+
+        <a class="domain-card dc-blue" href="certifications.html">
+          <div class="dc-icon">&#9632;</div>
+          <h3>Certifications &amp; Education</h3>
+          <p>Industry certifications I've earned, what I'm studying right now, and my formal education.</p>
+          <span class="dc-go">explore &rarr;</span>
+        </a>
+
+        <a class="domain-card dc-violet" href="experience.html">
+          <div class="dc-icon">&#9632;</div>
+          <h3>Experience &amp; Programs</h3>
+          <p>Work experience, internships, competitions, clubs, and training programs I've been part of.</p>
+          <span class="dc-go">explore &rarr;</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         CORE SKILLS
+         EDIT-ME: these are example skills. Swap the tags for the
+         tools you actually use. To add a skill, copy one
+         <span class="tag">...</span> line and change the text.
+         To add a whole new group, copy one <div class="card">
+         block (from its opening tag to its closing tag).
+         ====================================================== -->
+    <section class="section">
+      <span class="eyebrow">// toolbox</span>
+      <h2 class="section-title">Core skills</h2>
+      <p class="section-sub">The tools and technologies I work with most, grouped the way I use them.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <h3>Security &amp; analysis</h3>
+          <br />
+          <div class="tag-row">
+            <span class="tag">Wireshark</span>
+            <span class="tag">Nmap</span>
+            <span class="tag">Burp Suite</span>
+            <span class="tag">Metasploit</span>
+            <span class="tag">Wazuh</span>
+            <span class="tag">Splunk</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Networking</h3>
+          <br />
+          <div class="tag-row">
+            <span class="tag">TCP/IP</span>
+            <span class="tag">VLANs</span>
+            <span class="tag">pfSense</span>
+            <span class="tag">DNS / DHCP</span>
+            <span class="tag">VPN</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Systems</h3>
+          <br />
+          <div class="tag-row">
+            <span class="tag">Linux</span>
+            <span class="tag">Windows Server</span>
+            <span class="tag">Active Directory</span>
+            <span class="tag">Proxmox</span>
+            <span class="tag">Docker</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Scripting</h3>
+          <br />
+          <div class="tag-row">
+            <span class="tag">Python</span>
+            <span class="tag">Bash</span>
+            <span class="tag">PowerShell</span>
+            <span class="tag">Git</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         CONTACT
+         EDIT-ME: replace every href below with your real links.
+         The mailto: link opens the visitor's email app.
+         ====================================================== -->
+    <section class="section" id="contact">
+      <span class="eyebrow">// get in touch</span>
+      <h2 class="section-title">Let's connect</h2>
+      <p class="section-sub">
+        I'm actively looking for entry-level cybersecurity / IT roles and internships.
+        If you're a recruiter or just want to talk security, reach out.
+      </p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:your.email@example.com">Email me</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/your-github" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================
+       FOOTER (copied on every page)
+       EDIT-ME: same links as the contact section + your name.
+       The year fills in automatically.
+       ====================================================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-line"><span class="prompt">$</span> echo "thanks for stopping by"</p>
+      <div class="footer-links">
+        <a href="mailto:your.email@example.com">email</a>
+        <a href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener">linkedin</a>
+        <a href="https://github.com/your-github" target="_blank" rel="noopener">github</a>
+      </div>
+      <p class="footer-copy">&copy; <span id="year"></span> Your Name &middot; Built with plain HTML/CSS and hosted on GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homelab Projects | Your Name</title>
+  <meta name="description" content="Homelab builds, network configurations and troubleshooting write-ups by Your Name." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128737;</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION (same block as index.html) -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="logo" href="index.html"><span class="logo-prompt">~/</span>yourname</a>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <a class="btn btn-ghost btn-small" href="assets/resume.pdf" target="_blank">Resume</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- PAGE HEADER -->
+    <section class="page-hero">
+      <a class="back-link" href="projects.html">&larr; all projects</a>
+      <span class="eyebrow">// domain: homelab</span>
+      <h1>Homelab &amp; Infrastructure</h1>
+      <p>
+        My personal lab — the sandbox where everything else gets tested. Hardware
+        and server builds, network and service configurations, and an honest
+        troubleshooting journal of the things that broke along the way.
+      </p>
+    </section>
+
+    <section class="section">
+
+      <!-- ==================================================
+           BUILDS SUBSECTION
+           The card template is the SAME on every project page.
+           Copy one <article class="project-card"> block (opening
+           tag through closing </article>) and edit it.
+           ================================================== -->
+      <div class="subsection">
+        <span class="team-chip chip-violet">BUILDS &middot; hardware & servers</span>
+        <h2>Builds</h2>
+        <p>The physical and virtual foundation: what hardware I run and how it's set up.</p>
+
+        <div class="project-grid">
+
+          <!-- EXAMPLE BUILD — replace or delete -->
+          <article class="project-card">
+            <div class="project-top">
+              <h3>Proxmox Virtualization Host</h3>
+              <span class="status status-done">Completed</span>
+            </div>
+            <p class="project-desc">Turned an old desktop into a Proxmox server running multiple VMs and containers for my lab, with snapshots and scheduled backups.</p>
+            <div class="tag-row">
+              <span class="tag">Proxmox</span>
+              <span class="tag">Virtualization</span>
+              <span class="tag">Backups</span>
+            </div>
+            <div class="project-links">
+              <a class="btn btn-ghost btn-small" href="https://your-notion-link.notion.site" target="_blank" rel="noopener">Notion write-up &rarr;</a>
+            </div>
+          </article>
+
+          <!-- PASTE NEW BUILD CARDS HERE -->
+
+        </div>
+      </div>
+
+      <!-- ==================================================
+           CONFIGURATIONS SUBSECTION
+           ================================================== -->
+      <div class="subsection">
+        <span class="team-chip chip-violet">CONFIGS &middot; networking & services</span>
+        <h2>Configurations</h2>
+        <p>How the network and its services are wired together: firewalls, VLANs, DNS, self-hosted apps and more.</p>
+
+        <div class="project-grid">
+
+          <!-- EXAMPLE CONFIG — replace or delete -->
+          <article class="project-card">
+            <div class="project-top">
+              <h3>pfSense Firewall &amp; VLANs</h3>
+              <span class="status status-done">Completed</span>
+            </div>
+            <p class="project-desc">Segmented the lab into VLANs (trusted, lab, IoT) behind pfSense, with firewall rules isolating the vulnerable machines from my home network.</p>
+            <div class="tag-row">
+              <span class="tag">pfSense</span>
+              <span class="tag">VLANs</span>
+              <span class="tag">Firewall</span>
+            </div>
+            <div class="project-links">
+              <a class="btn btn-ghost btn-small" href="https://your-notion-link.notion.site" target="_blank" rel="noopener">Notion write-up &rarr;</a>
+            </div>
+          </article>
+
+          <!-- EXAMPLE CONFIG — replace or delete -->
+          <article class="project-card">
+            <div class="project-top">
+              <h3>Pi-hole DNS Sinkhole</h3>
+              <span class="status status-done">Completed</span>
+            </div>
+            <p class="project-desc">Set up Pi-hole as network-wide DNS to block ads and tracking, and to log DNS queries for visibility into what's talking on my network.</p>
+            <div class="tag-row">
+              <span class="tag">Pi-hole</span>
+              <span class="tag">DNS</span>
+              <span class="tag">Docker</span>
+            </div>
+            <div class="project-links">
+              <a class="btn btn-ghost btn-small" href="https://your-notion-link.notion.site" target="_blank" rel="noopener">Notion write-up &rarr;</a>
+            </div>
+          </article>
+
+          <!-- PASTE NEW CONFIG CARDS HERE -->
+
+        </div>
+      </div>
+
+      <!-- ==================================================
+           TROUBLESHOOTING SUBSECTION
+           A journal of problems and fixes. Great for recruiters —
+           it shows how you THINK, not just what you built.
+           ================================================== -->
+      <div class="subsection">
+        <span class="team-chip chip-amber">TROUBLESHOOTING &middot; problems & fixes</span>
+        <h2>Troubleshooting Journal</h2>
+        <p>Real problems I hit and how I diagnosed and fixed them. This is where the actual learning happens.</p>
+
+        <div class="project-grid">
+
+          <!-- EXAMPLE TROUBLESHOOTING ENTRY — replace or delete -->
+          <article class="project-card">
+            <div class="project-top">
+              <h3>VMs Losing Network After Reboot</h3>
+              <span class="status status-done">Solved</span>
+            </div>
+            <p class="project-desc">VMs kept dropping connectivity on restart. Traced it to a bridge misconfiguration in Proxmox and documented the root cause and fix.</p>
+            <div class="tag-row">
+              <span class="tag">Networking</span>
+              <span class="tag">Proxmox</span>
+              <span class="tag">Debugging</span>
+            </div>
+            <div class="project-links">
+              <a class="btn btn-ghost btn-small" href="https://your-notion-link.notion.site" target="_blank" rel="noopener">Notion write-up &rarr;</a>
+            </div>
+          </article>
+
+          <!-- PASTE NEW TROUBLESHOOTING ENTRIES HERE -->
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER (same block as index.html) -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-line"><span class="prompt">$</span> echo "thanks for stopping by"</p>
+      <div class="footer-links">
+        <a href="mailto:your.email@example.com">email</a>
+        <a href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener">linkedin</a>
+        <a href="https://github.com/your-github" target="_blank" rel="noopener">github</a>
+      </div>
+      <p class="footer-copy">&copy; <span id="year"></span> Your Name &middot; Built with plain HTML/CSS and hosted on GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects | Your Name</title>
+  <meta name="description" content="Cybersecurity, homelab and automation projects by Your Name — red team labs, blue team detections, homelab builds and scripts." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128737;</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION (same block as index.html) -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="logo" href="index.html"><span class="logo-prompt">~/</span>yourname</a>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <a class="btn btn-ghost btn-small" href="assets/resume.pdf" target="_blank">Resume</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- PAGE HEADER -->
+    <section class="page-hero">
+      <span class="eyebrow">// hands-on work</span>
+      <h1>Projects</h1>
+      <p>
+        Everything here was built, broken and fixed by me. Projects are grouped by
+        domain — pick one to dive in. Every project links to its full write-up in
+        Notion, where I document the setup, the process and what I learned.
+      </p>
+    </section>
+
+    <!-- ======================================================
+         DOMAIN CARDS — each card links to its own page.
+         ======================================================
+         HOW TO ADD A NEW DOMAIN (e.g. "Cloud Security"):
+         1. In your repo, duplicate one of the projects-*.html
+            files (projects-homelab.html is a good base) and
+            rename it, e.g. projects-cloud.html
+         2. Edit the new file's header text and project cards
+         3. Copy the template card between COPY START / COPY END
+            below, paste it inside <div class="card-grid">, and
+            point its href at your new file
+         4. Pick a color class for the card:
+            dc-teal / dc-red / dc-blue / dc-violet / dc-amber
+
+         COPY START (remove this line and COPY END when pasting)
+
+          <a class="domain-card dc-amber" href="projects-newdomain.html">
+            <div class="dc-icon">&#9632;</div>
+            <h2>New Domain Name</h2>
+            <p>One or two sentences describing what kind of projects live here.</p>
+            <div class="tag-row">
+              <span class="tag">Topic A</span>
+              <span class="tag">Topic B</span>
+            </div>
+            <br />
+            <span class="dc-go">open domain &rarr;</span>
+          </a>
+
+         COPY END
+         ====================================================== -->
+    <section class="section">
+      <div class="card-grid">
+
+        <!-- DOMAIN 1: CYBERSECURITY -->
+        <a class="domain-card dc-teal" href="projects-cybersecurity.html">
+          <div class="dc-icon">&#9632;</div>
+          <h2>Cybersecurity</h2>
+          <p>Offensive and defensive security work: attack labs, detections, investigations and CTF write-ups.</p>
+          <div class="tag-row">
+            <span class="tag">Red Team</span>
+            <span class="tag">Blue Team</span>
+            <span class="tag">CTF Write-ups</span>
+          </div>
+          <br />
+          <span class="dc-go">open domain &rarr;</span>
+        </a>
+
+        <!-- DOMAIN 2: HOMELAB -->
+        <a class="domain-card dc-violet" href="projects-homelab.html">
+          <div class="dc-icon">&#9632;</div>
+          <h2>Homelab &amp; Infrastructure</h2>
+          <p>My self-hosted lab: networking, virtualization, server builds, configurations and the troubleshooting journal that comes with them.</p>
+          <div class="tag-row">
+            <span class="tag">Networking</span>
+            <span class="tag">Virtualization</span>
+            <span class="tag">Troubleshooting</span>
+          </div>
+          <br />
+          <span class="dc-go">open domain &rarr;</span>
+        </a>
+
+        <!-- DOMAIN 3: AUTOMATION & SCRIPTING -->
+        <a class="domain-card dc-amber" href="projects-automation.html">
+          <div class="dc-icon">&#9632;</div>
+          <h2>Automation &amp; Scripting</h2>
+          <p>Python, Bash and PowerShell tools that automate boring or repetitive tasks — for the lab and for real life.</p>
+          <div class="tag-row">
+            <span class="tag">Python</span>
+            <span class="tag">Bash</span>
+            <span class="tag">PowerShell</span>
+          </div>
+          <br />
+          <span class="dc-go">open domain &rarr;</span>
+        </a>
+
+        <!-- PASTE NEW DOMAIN CARDS HERE -->
+
+      </div>
+    </section>
+
+    <!-- Short note so visitors know how documentation works -->
+    <section class="section">
+      <span class="eyebrow">// how this works</span>
+      <h2 class="section-title">Documented in Notion</h2>
+      <p class="section-sub">
+        This site is the map; Notion is the territory. Each project card links to a
+        public Notion page with the full write-up: diagrams, screenshots, commands,
+        problems I hit and how I solved them.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- FOOTER (same block as index.html) -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-line"><span class="prompt">$</span> echo "thanks for stopping by"</p>
+      <div class="footer-links">
+        <a href="mailto:your.email@example.com">email</a>
+        <a href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener">linkedin</a>
+        <a href="https://github.com/your-github" target="_blank" rel="noopener">github</a>
+      </div>
+      <p class="footer-copy">&copy; <span id="year"></span> Your Name &middot; Built with plain HTML/CSS and hosted on GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

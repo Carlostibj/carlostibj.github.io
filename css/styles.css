@@ -1,0 +1,660 @@
+/* ==========================================================================
+   STYLES.CSS  —  the ONE stylesheet shared by every page of the portfolio.
+   --------------------------------------------------------------------------
+   HOW THIS FILE IS ORGANIZED (use Ctrl+F to jump to a section):
+
+     1. DESIGN TOKENS  ...... colors + fonts. Change the whole site's look here.
+     2. BASE / RESET  ....... defaults for the whole page
+     3. LAYOUT HELPERS ...... .container, .section, eyebrows, titles
+     4. NAVIGATION BAR
+     5. BUTTONS
+     6. HERO + TERMINAL ..... the animated terminal on the home page
+     7. CARDS ............... generic cards, tags, status badges
+     8. DOMAIN CARDS ........ the big colored cards on the Projects hub
+     9. PROJECT CARDS ....... individual project entries
+    10. CERTIFICATIONS + EDUCATION
+    11. EXPERIENCE TIMELINE
+    12. CONTACT + FOOTER
+    13. ANIMATIONS
+    14. RESPONSIVE (mobile) RULES
+
+   You will almost never need to touch this file to ADD content.
+   Adding projects / certs / jobs happens in the HTML files.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. DESIGN TOKENS  — EDIT-ME: change any value here to re-theme the site
+   ========================================================================== */
+:root {
+  /* ---- Background colors ---- */
+  --ink:      #0D1319;   /* page background (deep slate)          */
+  --panel:    #131B24;   /* card background                        */
+  --panel-2:  #18222D;   /* slightly lighter card / hover surface  */
+  --line:     #223041;   /* card + section borders                 */
+  --line-soft:#1A2531;   /* subtler divider lines                  */
+
+  /* ---- Text colors ---- */
+  --text:  #E3EBF3;      /* main text  */
+  --muted: #8C9DAE;      /* secondary text (dates, descriptions)   */
+
+  /* ---- Accent colors (SIEM-style category coding) ----
+     teal   = primary brand accent (links, buttons, highlights)
+     red    = offensive security / red team
+     blue   = defensive security / blue team
+     violet = homelab & infrastructure
+     amber  = automation & scripting                              */
+  --teal:   #45D6C0;
+  --red:    #FF7A7A;
+  --blue:   #7AA7FF;
+  --violet: #B18CFF;
+  --amber:  #FFB454;
+
+  /* Transparent tints of the accents, used for badge backgrounds */
+  --teal-dim:   rgba(69, 214, 192, 0.12);
+  --red-dim:    rgba(255, 122, 122, 0.12);
+  --blue-dim:   rgba(122, 167, 255, 0.12);
+  --violet-dim: rgba(177, 140, 255, 0.12);
+  --amber-dim:  rgba(255, 180, 84, 0.14);
+
+  /* ---- Fonts (loaded from Google Fonts in each HTML <head>) ---- */
+  --font-display: "Chakra Petch", sans-serif;   /* big headings           */
+  --font-body:    "IBM Plex Sans", sans-serif;  /* paragraphs             */
+  --font-mono:    "IBM Plex Mono", monospace;   /* terminal, labels, tags */
+
+  /* ---- Sizing ---- */
+  --radius: 10px;        /* rounded corners on cards               */
+  --maxw: 1080px;        /* max width of page content              */
+}
+
+
+/* ==========================================================================
+   2. BASE / RESET
+   ========================================================================== */
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16.5px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* faint grid backdrop, like graph paper on a network diagram */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-size: 44px 44px;
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: -1;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+}
+
+/* visible keyboard focus for accessibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection { background: var(--teal); color: var(--ink); }
+
+
+/* ==========================================================================
+   3. LAYOUT HELPERS
+   ========================================================================== */
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section { padding: 72px 0; }
+.section + .section { border-top: 1px solid var(--line-soft); }
+
+/* the small mono label above each section title, e.g.  // projects  */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--teal);
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.section-title { font-size: clamp(1.6rem, 3.5vw, 2.2rem); margin-bottom: 12px; }
+
+.section-sub {
+  color: var(--muted);
+  max-width: 640px;
+  margin-bottom: 36px;
+}
+
+/* generic grids for laying out cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 20px;
+}
+
+
+/* ==========================================================================
+   4. NAVIGATION BAR (appears on every page)
+   ========================================================================== */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(13, 19, 25, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.nav-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.logo {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 1.02rem;
+  color: var(--text);
+}
+.logo:hover { text-decoration: none; }
+.logo .logo-prompt { color: var(--teal); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--muted);
+  padding: 6px 0;
+}
+.nav-links a:hover { color: var(--text); text-decoration: none; }
+
+/* main.js automatically adds .active to the link of the current page */
+.nav-links a.active { color: var(--teal); }
+
+/* hamburger button — hidden on desktop, shown on mobile (see section 14) */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 1.2rem;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+
+
+/* ==========================================================================
+   5. BUTTONS
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  padding: 11px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--teal);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+.btn:hover { text-decoration: none; transform: translateY(-2px); }
+
+.btn-primary { background: var(--teal); color: var(--ink); font-weight: 600; }
+.btn-primary:hover { background: #63e2cf; }
+
+.btn-ghost { background: transparent; color: var(--teal); }
+.btn-ghost:hover { background: var(--teal-dim); }
+
+.btn-small { padding: 7px 14px; font-size: 0.82rem; border-radius: 7px; }
+
+
+/* ==========================================================================
+   6. HERO + TERMINAL (home page)
+   ========================================================================== */
+.hero {
+  padding: 88px 0 80px;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.hero-title {
+  font-size: clamp(2.1rem, 5vw, 3.2rem);
+  margin: 14px 0 18px;
+}
+.hero-title .accent { color: var(--teal); }
+
+.hero-sub { color: var(--muted); max-width: 480px; margin-bottom: 30px; }
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* ---- the terminal window ---- */
+.terminal {
+  background: #0A1016;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--panel-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.t-dot { width: 11px; height: 11px; border-radius: 50%; }
+.t-dot.r { background: #ff5f57; }
+.t-dot.y { background: #febc2e; }
+.t-dot.g { background: #28c840; }
+
+.terminal-title {
+  margin-left: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.terminal-body {
+  padding: 20px 20px 24px;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  line-height: 1.9;
+}
+
+.terminal-body .prompt { color: var(--teal); margin-right: 8px; }
+.terminal-body .cmd    { color: var(--text); }
+.terminal-body .output { color: var(--muted); display: block; }
+.terminal-body .ok     { color: var(--teal); }
+
+/* blinking block cursor at the end of the typed line */
+.cursor {
+  display: inline-block;
+  width: 9px;
+  height: 1.1em;
+  background: var(--teal);
+  vertical-align: text-bottom;
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+
+/* ==========================================================================
+   7. GENERIC CARDS, TAGS, STATUS BADGES
+   ========================================================================== */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+.card:hover { transform: translateY(-4px); border-color: var(--teal); }
+
+/* small mono chips listing tools/skills, e.g. [Wireshark] [Nmap] */
+.tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+/* ---- STATUS BADGES ----
+   Put one of these on any project/cert card:
+     <span class="status status-done">Completed</span>
+     <span class="status status-progress">In Progress</span>
+     <span class="status status-planned">Planned</span>          */
+.status {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.status-done     { color: var(--teal);  background: var(--teal-dim);  }
+.status-progress { color: var(--amber); background: var(--amber-dim); }
+.status-planned  { color: var(--muted); background: var(--panel-2); border: 1px solid var(--line); }
+
+
+/* ==========================================================================
+   8. DOMAIN CARDS (Projects hub + "Explore" cards on the home page)
+   --------------------------------------------------------------------------
+   Each domain gets a color via a modifier class:
+     .dc-teal  .dc-red  .dc-blue  .dc-violet  .dc-amber
+   The colored bar on top + icon color come from that class.
+   ========================================================================== */
+.domain-card {
+  position: relative;
+  display: block;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px 24px 24px;
+  color: var(--text);
+  overflow: hidden;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+.domain-card:hover { text-decoration: none; transform: translateY(-4px); }
+
+/* the colored strip along the top edge */
+.domain-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--dc-color, var(--teal));
+}
+.domain-card:hover { border-color: var(--dc-color, var(--teal)); }
+
+.dc-teal   { --dc-color: var(--teal);   }
+.dc-red    { --dc-color: var(--red);    }
+.dc-blue   { --dc-color: var(--blue);   }
+.dc-violet { --dc-color: var(--violet); }
+.dc-amber  { --dc-color: var(--amber);  }
+
+.dc-icon {
+  font-size: 1.5rem;
+  margin-bottom: 14px;
+  color: var(--dc-color, var(--teal));
+}
+
+.domain-card h3, .domain-card h2 { font-size: 1.2rem; margin-bottom: 8px; }
+.domain-card p { color: var(--muted); font-size: 0.95rem; margin-bottom: 16px; }
+
+/* the little "explore →" line at the bottom of a domain card */
+.dc-go {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--dc-color, var(--teal));
+}
+
+
+/* ==========================================================================
+   9. PROJECT CARDS (used on all projects-*.html pages)
+   ========================================================================== */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+.project-card:hover { transform: translateY(-4px); border-color: var(--teal); }
+
+.project-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.project-top h3 { font-size: 1.08rem; }
+
+.project-desc { color: var(--muted); font-size: 0.95rem; flex-grow: 1; }
+
+.project-links { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* subsection header inside a domain page (e.g. "Red Team") */
+.subsection { margin-top: 56px; }
+.subsection:first-of-type { margin-top: 0; }
+
+.team-chip {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+.chip-red    { color: var(--red);    background: var(--red-dim);    }
+.chip-blue   { color: var(--blue);   background: var(--blue-dim);   }
+.chip-teal   { color: var(--teal);   background: var(--teal-dim);   }
+.chip-violet { color: var(--violet); background: var(--violet-dim); }
+.chip-amber  { color: var(--amber);  background: var(--amber-dim);  }
+
+.subsection h2 { font-size: 1.5rem; margin-bottom: 8px; }
+.subsection > p { color: var(--muted); max-width: 640px; margin-bottom: 26px; }
+
+/* "← All projects" link at the top of each domain page */
+.back-link {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 22px;
+}
+.back-link:hover { color: var(--teal); text-decoration: none; }
+
+/* smaller hero used on inner pages */
+.page-hero { padding: 64px 0 56px; border-bottom: 1px solid var(--line-soft); }
+.page-hero h1 { font-size: clamp(1.9rem, 4.5vw, 2.7rem); margin: 12px 0 14px; }
+.page-hero p  { color: var(--muted); max-width: 640px; }
+
+
+/* ==========================================================================
+   10. CERTIFICATIONS + EDUCATION
+   ========================================================================== */
+.cert-card { display: flex; flex-direction: column; gap: 10px; }
+
+.cert-issuer {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--teal);
+}
+
+.cert-meta { color: var(--muted); font-size: 0.88rem; }
+
+.cert-link {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  margin-top: auto;
+}
+
+.edu-card h3 { font-size: 1.15rem; margin-bottom: 4px; }
+.edu-school { color: var(--teal); font-family: var(--font-mono); font-size: 0.88rem; }
+.edu-dates  { color: var(--muted); font-size: 0.88rem; margin: 4px 0 14px; }
+
+
+/* ==========================================================================
+   11. EXPERIENCE TIMELINE
+   ========================================================================== */
+.timeline {
+  position: relative;
+  padding-left: 30px;
+  max-width: 760px;
+}
+
+/* the vertical line running down the timeline */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--line);
+}
+
+.timeline-item { position: relative; padding-bottom: 44px; }
+.timeline-item:last-child { padding-bottom: 0; }
+
+/* the dot on the line for each entry */
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -30px;
+  top: 7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 3px solid var(--teal);
+}
+
+.timeline-date {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.timeline-role { font-size: 1.15rem; }
+.timeline-org  { color: var(--teal); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin: 4px 0 12px; }
+
+.timeline-bullets { list-style: none; }
+.timeline-bullets li {
+  position: relative;
+  padding-left: 22px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  font-size: 0.96rem;
+}
+.timeline-bullets li::before {
+  content: ">";
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+  font-family: var(--font-mono);
+}
+
+
+/* ==========================================================================
+   12. CONTACT + FOOTER
+   ========================================================================== */
+.contact-links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 24px; }
+
+.site-footer {
+  border-top: 1px solid var(--line-soft);
+  padding: 40px 0 46px;
+  margin-top: 40px;
+}
+
+.footer-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer-line { font-family: var(--font-mono); font-size: 0.9rem; color: var(--muted); }
+.footer-line .prompt { color: var(--teal); margin-right: 8px; }
+
+.footer-links { display: flex; flex-wrap: wrap; gap: 20px; }
+.footer-links a { font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted); }
+.footer-links a:hover { color: var(--teal); text-decoration: none; }
+
+.footer-copy { color: var(--muted); font-size: 0.82rem; }
+
+
+/* ==========================================================================
+   13. ANIMATIONS (cards fade up as you scroll — added automatically by JS)
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* turn animations off for people who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .cursor { animation: none; }
+  .btn, .card, .domain-card, .project-card { transition: none; }
+}
+
+
+/* ==========================================================================
+   14. RESPONSIVE RULES (tablet + phone)
+   ========================================================================== */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 36px; padding: 56px 0 60px; }
+}
+
+@media (max-width: 720px) {
+  .section { padding: 56px 0; }
+
+  /* collapse nav links into a dropdown behind the hamburger button */
+  .nav-toggle { display: block; }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    padding: 8px 24px 16px;
+  }
+  .nav-links a { padding: 12px 0; width: 100%; }
+
+  /* main.js toggles this class when the hamburger is tapped */
+  .nav-links.open { display: flex; }
+}

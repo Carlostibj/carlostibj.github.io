@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cybersecurity Projects | Your Name</title>
+  <meta name="description" content="Red team and blue team cybersecurity projects and CTF write-ups by Your Name." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128737;</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION (same block as index.html) -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="logo" href="index.html"><span class="logo-prompt">~/</span>yourname</a>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <a class="btn btn-ghost btn-small" href="assets/resume.pdf" target="_blank">Resume</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- PAGE HEADER -->
+    <section class="page-hero">
+      <a class="back-link" href="projects.html">&larr; all projects</a>
+      <span class="eyebrow">// domain: cybersecurity</span>
+      <h1>Cybersecurity</h1>
+      <p>
+        Split into two mindsets. Red team is offense — finding the way in.
+        Blue team is defense — spotting it and shutting it down. CTF write-ups
+        live at the bottom.
+      </p>
+    </section>
+
+    <section class="section">
+
+      <!-- ==================================================
+           RED TEAM SUBSECTION
+           ==================================================
+           HOW TO ADD A RED TEAM PROJECT:
+           1. Copy the template between COPY START / COPY END
+           2. Paste it inside THIS subsection's
+              <div class="project-grid">
+           3. Edit the title, description, tags and the two links:
+              - "Notion write-up" -> your public Notion page URL
+              - "GitHub" -> repo URL (or delete that link if none)
+           4. Pick a status badge: status-done / status-progress / status-planned
+
+           COPY START (remove this line and COPY END when pasting)
+
+            <article class="project-card">
+              <div class="project-top">
+                <h3>Project Title</h3>
+                <span class="status status-done">Completed</span>
+              </div>
+              <p class="project-desc">One or two sentences: what you did, what you used, what you found.</p>
+              <div class="tag-row">
+                <span class="tag">Tool A</span>
+                <span class="tag">Tool B</span>
+              </div>
+              <div class="project-links">
+                <a class="btn btn-ghost btn-small" href="PASTE_NOTION_LINK" target="_blank" rel="noopener">Notion write-up &rarr;</a>
+                <a class="btn btn-ghost btn-small" href="PASTE_GITHUB_LINK" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </article>
+
+           COPY END
+           ================================================== -->
+      <div class="subsection">
+        <span class="team-chip chip-red">RED TEAM &middot; offense</span>
+        <h2>Red Team</h2>
+        <p>Offensive security: reconnaissance, exploitation, privilege escalation and post-exploitation in lab environments I control.</p>
+
+        <div class="project-grid">
+
+          <!-- EXAMPLE RED TEAM PROJECT — replace or delete -->
+          <article class="project-card">
+            <div class="project-top">
+              <h3>Active Directory Attack Lab</h3>
+              <span class="status status-done">Completed</span>
+            </div>
+            <p class="project-desc">Built a vulnerable Windows domain and walked the full kill chain: enumeration, Kerberoasting, lateral movement and domain admin.</p>
+            <div class="tag-row">
+              <span class="tag">BloodHound</span>
+              <span class="tag">Impacket</span>
+              <span class="tag">Mimikatz</span>
+            </div>
+            <div class="project-links">
+              <a class="btn btn-ghost btn-small" href="https://your-notion-link.notion.site" target="_blank" rel="noopener">Notion write-up &rarr;</a>
+              <a class="btn btn-ghost btn-small" href="https://github.com/your-github/ad-lab" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </article>
+
+          <!-- EXAMPLE RED TEAM PROJECT — replace or delete -->
+          <article class="project-card">
+            <div class="project-top">
+              <h3>Web App Pentest: DVWA</h3>
+              <span class="status status-done">Completed</span>
+            </div>
+            <p class="project-desc">Worked through SQL injection, XSS and file-upload flaws in Damn Vulnerable Web App, documenting each exploit and its fix.</p>
+            <div class="tag-row">
+              <span class="tag">Burp Suite</span>
+              <span class="tag">SQLmap</span>
+              <span class="tag">OWASP</span>
+            </div>
+            <div class="project-links">
+              <a class="btn btn-ghost btn-small" href="https://your-notion-link.notion.site" target="_blank" rel="noopener">Notion write-up &rarr;</a>
+            </div>
+          </article>
+
+          <!-- PASTE NEW RED TEAM PROJECTS HERE -->
+
+        </div>
+      </div>
+
+      <!-- ==================================================
+           BLUE TEAM SUBSECTION
+           Same idea as red team — copy the COPY START/END template
+           from the red team section above and paste your cards in
+           THIS subsection's <div class="project-grid">.
+           ================================================== -->
+      <div class="subsection">
+        <span class="team-chip chip-blue">BLUE TEAM &middot; defense</span>
+        <h2>Blue Team</h2>
+        <p>Defensive security: monitoring, detection engineering, log analysis and incident response inside my home SOC.</p>
+
+        <div class="project-grid">
+
+          <!-- EXAMPLE BLUE TEAM PROJECT — replace or delete -->
+          <article class="project-card">
+            <div class="project-top">
+              <h3>Home SOC with Wazuh</h3>
+              <span class="status status-progress">In Progress</span>
+            </div>
+            <p class="project-desc">Deployed Wazuh to collect logs from my lab machines, built dashboards and wrote rules to alert on suspicious logins.</p>
+            <div class="tag-row">
+              <span class="tag">Wazuh</span>
+              <span class="tag">SIEM</span>
+              <span class="tag">Sysmon</span>
+            </div>
+            <div class="project-links">
+              <a class="btn btn-ghost btn-small" href="https://your-notion-link.notion.site" target="_blank" rel="noopener">Notion write-up &rarr;</a>
+            </div>
+          </article>
+
+          <!-- EXAMPLE BLUE TEAM PROJECT — replace or delete -->
+          <article class="project-card">
+            <div class="project-top">
+              <h3>Phishing Email Analysis</h3>
+              <span class="status status-done">Completed</span>
+            </div>
+            <p class="project-desc">Analyzed real phishing samples: inspected headers, traced sender infrastructure and extracted indicators of compromise.</p>
+            <div class="tag-row">
+              <span class="tag">Email Headers</span>
+              <span class="tag">VirusTotal</span>
+              <span class="tag">IOCs</span>
+            </div>
+            <div class="project-links">
+              <a class="btn btn-ghost btn-small" href="https://your-notion-link.notion.site" target="_blank" rel="noopener">Notion write-up &rarr;</a>
+            </div>
+          </article>
+
+          <!-- PASTE NEW BLUE TEAM PROJECTS HERE -->
+
+        </div>
+      </div>
+
+      <!-- ==================================================
+           CTF WRITE-UPS SUBSECTION
+           A place for HackTheBox / TryHackMe / picoCTF write-ups.
+           Same card template as above.
+           (Delete this whole <div class="subsection"> if you
+           don't want a CTF section.)
+           ================================================== -->
+      <div class="subsection">
+        <span class="team-chip chip-teal">CTF &middot; write-ups</span>
+        <h2>CTF Write-ups</h2>
+        <p>Step-by-step solutions to boxes and challenges from HackTheBox, TryHackMe and picoCTF.</p>
+
+        <div class="project-grid">
+
+          <!-- EXAMPLE CTF WRITE-UP — replace or delete -->
+          <article class="project-card">
+            <div class="project-top">
+              <h3>HackTheBox: "Lame"</h3>
+              <span class="status status-done">Completed</span>
+            </div>
+            <p class="project-desc">Beginner box: identified a vulnerable Samba service, exploited it and captured both flags. Full methodology documented.</p>
+            <div class="tag-row">
+              <span class="tag">Nmap</span>
+              <span class="tag">Metasploit</span>
+              <span class="tag">Linux</span>
+            </div>
+            <div class="project-links">
+              <a class="btn btn-ghost btn-small" href="https://your-notion-link.notion.site" target="_blank" rel="noopener">Notion write-up &rarr;</a>
+            </div>
+          </article>
+
+          <!-- PASTE NEW CTF WRITE-UPS HERE -->
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER (same block as index.html) -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-line"><span class="prompt">$</span> echo "thanks for stopping by"</p>
+      <div class="footer-links">
+        <a href="mailto:your.email@example.com">email</a>
+        <a href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener">linkedin</a>
+        <a href="https://github.com/your-github" target="_blank" rel="noopener">github</a>
+      </div>
+      <p class="footer-copy">&copy; <span id="year"></span> Your Name &middot; Built with plain HTML/CSS and hosted on GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certifications &amp; Education | Your Name</title>
+  <meta name="description" content="Certifications, courses and education of Your Name, cybersecurity student." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128737;</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION (same block as index.html) -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="logo" href="index.html"><span class="logo-prompt">~/</span>yourname</a>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <a class="btn btn-ghost btn-small" href="assets/resume.pdf" target="_blank">Resume</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- PAGE HEADER -->
+    <section class="page-hero">
+      <span class="eyebrow">// credentials</span>
+      <h1>Certifications &amp; Education</h1>
+      <p>Formal proof of what I know, plus what I'm actively studying next.</p>
+    </section>
+
+    <!-- ======================================================
+         CERTIFICATIONS
+         ======================================================
+         HOW TO ADD A NEW CERTIFICATION:
+         1. Copy the whole template between COPY START / COPY END
+         2. Paste it INSIDE <div class="card-grid"> below,
+            next to the other cards
+         3. Edit the text and pick ONE status badge:
+              status-done      = Completed  (teal)
+              status-progress  = In Progress (amber)
+              status-planned   = Planned    (gray)
+         4. Paste your verification URL into the href (Credly,
+            CompTIA, Coursera, etc.). If there is no link yet,
+            delete the whole <a class="cert-link"> line.
+
+         COPY START (remove this line and COPY END when pasting)
+
+          <article class="card cert-card">
+            <div class="project-top">
+              <h3>Certification Name</h3>
+              <span class="status status-done">Completed</span>
+            </div>
+            <span class="cert-issuer">Issuing Organization</span>
+            <p class="cert-meta">Earned Month Year &middot; Credential ID: XXXX</p>
+            <a class="cert-link" href="https://link-to-verify.example.com" target="_blank" rel="noopener">verify credential &rarr;</a>
+          </article>
+
+         COPY END
+         ====================================================== -->
+    <section class="section">
+      <span class="eyebrow">// certifications</span>
+      <h2 class="section-title">Certifications</h2>
+      <p class="section-sub">EXAMPLE ENTRIES BELOW — replace them with your real certifications.</p>
+
+      <div class="card-grid">
+
+        <!-- EXAMPLE CERT 1 — replace or delete -->
+        <article class="card cert-card">
+          <div class="project-top">
+            <h3>Google Cybersecurity Certificate</h3>
+            <span class="status status-done">Completed</span>
+          </div>
+          <span class="cert-issuer">Google / Coursera</span>
+          <p class="cert-meta">Earned March 2026 &middot; 8-course program</p>
+          <a class="cert-link" href="https://www.credly.com/your-badge" target="_blank" rel="noopener">verify credential &rarr;</a>
+        </article>
+
+        <!-- EXAMPLE CERT 2 — replace or delete -->
+        <article class="card cert-card">
+          <div class="project-top">
+            <h3>CompTIA Security+</h3>
+            <span class="status status-progress">In Progress</span>
+          </div>
+          <span class="cert-issuer">CompTIA</span>
+          <p class="cert-meta">Exam scheduled for late 2026</p>
+        </article>
+
+        <!-- EXAMPLE CERT 3 — replace or delete -->
+        <article class="card cert-card">
+          <div class="project-top">
+            <h3>Pre-Security Learning Path</h3>
+            <span class="status status-done">Completed</span>
+          </div>
+          <span class="cert-issuer">TryHackMe</span>
+          <p class="cert-meta">Networking, web, Linux and Windows fundamentals</p>
+          <a class="cert-link" href="https://tryhackme.com/p/your-profile" target="_blank" rel="noopener">view profile &rarr;</a>
+        </article>
+
+        <!-- PASTE NEW CERTIFICATION CARDS HERE -->
+
+      </div>
+    </section>
+
+    <!-- ======================================================
+         ROADMAP — certs you plan to earn next.
+         EDIT-ME: just change the text inside the tags, or add a
+         new <span class="tag"> line for each future cert.
+         ====================================================== -->
+    <section class="section">
+      <span class="eyebrow">// up next</span>
+      <h2 class="section-title">Certification roadmap</h2>
+      <p class="section-sub">Where I'm headed after the current exam.</p>
+      <div class="tag-row">
+        <span class="tag">CompTIA Network+</span>
+        <span class="tag">CompTIA CySA+</span>
+        <span class="tag">Cisco CCNA</span>
+        <span class="tag">BTL1 (Blue Team Level 1)</span>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         EDUCATION
+         HOW TO ADD A SCHOOL: copy one <article class="card edu-card">
+         block (opening tag through closing </article>) and edit it.
+         ====================================================== -->
+    <section class="section">
+      <span class="eyebrow">// education</span>
+      <h2 class="section-title">Education</h2>
+
+      <div class="card-grid">
+
+        <!-- EXAMPLE SCHOOL — replace with yours -->
+        <article class="card edu-card">
+          <h3>B.S. in Cybersecurity</h3>
+          <span class="edu-school">Your University Name</span>
+          <p class="edu-dates">Expected graduation: May 2027 &middot; GPA: 3.X</p>
+          <div class="tag-row">
+            <span class="tag">Network Security</span>
+            <span class="tag">Digital Forensics</span>
+            <span class="tag">Operating Systems</span>
+            <span class="tag">Ethical Hacking</span>
+          </div>
+        </article>
+
+        <!-- PASTE NEW EDUCATION CARDS HERE -->
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER (same block as index.html) -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-line"><span class="prompt">$</span> echo "thanks for stopping by"</p>
+      <div class="footer-links">
+        <a href="mailto:your.email@example.com">email</a>
+        <a href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener">linkedin</a>
+        <a href="https://github.com/your-github" target="_blank" rel="noopener">github</a>
+      </div>
+      <p class="footer-copy">&copy; <span id="year"></span> Your Name &middot; Built with plain HTML/CSS and hosted on GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
