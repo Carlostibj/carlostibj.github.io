@@ -20,9 +20,9 @@
         <a href="certifications.html">Certifications</a>
         <a href="experience.html">Experience</a>
         <a href="projects.html">Projects</a>
-        <a class="btn btn-ghost btn-small" href="assets/resume.pdf" target="_blank">Resume</a>
+        <a class="btn btn-ghost btn-small" href="https://github.com/Carlostibj" target="_blank" rel="noopener">GitHub</a>
       </nav>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
     </div>
   </header>
 
@@ -47,7 +47,7 @@
       <span class="eyebrow">// architecture</span>
       <h2 class="section-title">Environment design</h2>
       <div class="card-grid">
-        <div class="card"><h3>Virtualization</h3><p>Dell Precision T5810 running Proxmox VE with a 64 GB memory pool. Eight core infrastructure/client VMs are organized by role and isolated through dedicated Linux bridges.</p></div>
+        <div class="card"><h3>Virtualization</h3><p>Dell Precision T5810 running Proxmox VE 9.2.2 with 64 GB RAM. Eight core infrastructure/client VMs are organized by role and isolated through dedicated Linux bridges.</p></div>
         <div class="card"><h3>Routing & segmentation</h3><p>OPNsense provides routing, DHCP, firewall policy, and controlled inter-VLAN access. Department networks use VLANs 10/20/30/40 with explicit service allows followed by private-network blocks.</p></div>
         <div class="card"><h3>Identity & services</h3><p>Windows Server domain <strong>homelab.internal</strong> provides AD DS, DNS and Group Policy. FILE01 provides department SMB shares protected with NTFS permissions and AGDLP group design.</p></div>
         <div class="card"><h3>Monitoring</h3><p>WAZUH01 runs Ubuntu 24.04 and Wazuh on a dedicated Monitoring LAN, positioned for centralized endpoint telemetry and the next SOC phase.</p></div>
@@ -106,12 +106,11 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="footer-inner">
+  <footer class="site-footer"><div class="footer-inner">
       <p class="footer-line"><span class="prompt">$</span> echo "build it, validate it, secure it"</p>
-      <p class="footer-copy">&copy; <span id="year"></span> Carlos Tiburcio &middot; Cybersecurity & Infrastructure Portfolio</p>
-    </div>
-  </footer>
+      <div class="footer-links"><a href="mailto:carlomtj15@gmail.com">carlomtj15@gmail.com</a><a href="https://github.com/Carlostibj" target="_blank" rel="noopener">github.com/Carlostibj</a></div>
+      <p class="footer-copy">&copy; <span id="year"></span> Carlos Tiburcio &middot; Cybersecurity &amp; Infrastructure Portfolio</p>
+    </div></footer>
   <script src="js/main.js"></script>
 </body>
 </html>
