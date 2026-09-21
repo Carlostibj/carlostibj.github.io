@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enterprise Proxmox Infrastructure Lab | Carlos Tiburcio</title>
+  <meta name="description" content="Enterprise-style Proxmox homelab built by Carlos Tiburcio with OPNsense segmentation, Active Directory, Windows file services, Wazuh monitoring, validation, troubleshooting, and dedicated backups." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128737;</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="logo" href="index.html"><span class="logo-prompt">~/</span>Carlos Tiburcio</a>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <a class="btn btn-ghost btn-small" href="assets/resume.pdf" target="_blank">Resume</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page-hero">
+      <a class="back-link" href="projects-homelab.html">&larr; homelab projects</a>
+      <span class="eyebrow">// flagship infrastructure project</span>
+      <h1>Enterprise Proxmox Infrastructure Lab</h1>
+      <p>
+        Designed and built a segmented enterprise-style environment on Proxmox to practice systems administration,
+        networking, identity, security monitoring, troubleshooting, and recovery. The completed infrastructure baseline,
+        <strong>INFRA-BASE-v1</strong>, provides the foundation for future SOC detection and incident-response projects.
+      </p>
+      <div class="tag-row">
+        <span class="tag">Proxmox</span><span class="tag">OPNsense</span><span class="tag">Active Directory</span>
+        <span class="tag">Windows Server</span><span class="tag">VLANs</span><span class="tag">DNS/DHCP</span>
+        <span class="tag">Wazuh</span><span class="tag">SMB/NTFS</span><span class="tag">Backup & Recovery</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <span class="eyebrow">// architecture</span>
+      <h2 class="section-title">Environment design</h2>
+      <div class="card-grid">
+        <div class="card"><h3>Virtualization</h3><p>Dell Precision T5810 running Proxmox VE with a 64 GB memory pool. Eight core infrastructure/client VMs are organized by role and isolated through dedicated Linux bridges.</p></div>
+        <div class="card"><h3>Routing & segmentation</h3><p>OPNsense provides routing, DHCP, firewall policy, and controlled inter-VLAN access. Department networks use VLANs 10/20/30/40 with explicit service allows followed by private-network blocks.</p></div>
+        <div class="card"><h3>Identity & services</h3><p>Windows Server domain <strong>homelab.internal</strong> provides AD DS, DNS and Group Policy. FILE01 provides department SMB shares protected with NTFS permissions and AGDLP group design.</p></div>
+        <div class="card"><h3>Monitoring</h3><p>WAZUH01 runs Ubuntu 24.04 and Wazuh on a dedicated Monitoring LAN, positioned for centralized endpoint telemetry and the next SOC phase.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <span class="eyebrow">// network map</span>
+      <h2 class="section-title">Logical networks</h2>
+      <div class="project-grid">
+        <article class="project-card"><div class="project-top"><h3>Servers LAN</h3><span class="status status-done">10.10.20.0/24</span></div><p class="project-desc">DC01: 10.10.20.100 &middot; FILE01: 10.10.20.120 &middot; Gateway: 10.10.20.1</p></article>
+        <article class="project-card"><div class="project-top"><h3>Monitoring LAN</h3><span class="status status-done">10.10.30.0/24</span></div><p class="project-desc">WAZUH01: 10.10.30.100 &middot; Gateway: 10.10.30.1</p></article>
+        <article class="project-card"><div class="project-top"><h3>Department VLANs</h3><span class="status status-done">Segmented</span></div><p class="project-desc">IT VLAN 10: 10.20.10.0/24 &middot; Sales VLAN 20: 10.20.20.0/24 &middot; HR VLAN 30: 10.20.30.0/24 &middot; Marketing VLAN 40: 10.20.40.0/24</p></article>
+        <article class="project-card"><div class="project-top"><h3>Malware Network</h3><span class="status status-done">Isolated</span></div><p class="project-desc">vmbr99 has no physical uplink, OPNsense interface, gateway, or routed path to the corporate lab.</p></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <span class="eyebrow">// implementation</span>
+      <h2 class="section-title">What I built</h2>
+      <div class="card-grid">
+        <div class="card"><h3>Active Directory</h3><p>Created departmental OUs, users, Global Security groups, workstation/server placement, password and lockout policy, and workstation/user GPO baselines. Domain health was validated with dcdiag and DNS tests.</p></div>
+        <div class="card"><h3>File services</h3><p>Built FILE01 with a dedicated data disk and IT, Sales, HR, and Marketing shares. Implemented AGDLP using Global groups nested into Domain Local resource groups, with NTFS as the effective security boundary.</p></div>
+        <div class="card"><h3>Firewall policy</h3><p>Department clients can reach required AD/DNS/RPC, SMB, Wazuh, and Internet services while lateral department access is blocked. IT receives controlled administrative access and the unused Clients LAN is explicitly denied.</p></div>
+        <div class="card"><h3>Recovery baseline</h3><p>Created a dedicated 2 TB external ext4 Proxmox backup target and completed compressed VZDump backups of all eight VMs under the INFRA-BASE-v1 baseline.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <span class="eyebrow">// troubleshooting</span>
+      <h2 class="section-title">Problems I diagnosed</h2>
+      <div class="project-grid">
+        <article class="project-card"><div class="project-top"><h3>Duplicate Layer-3 gateways</h3><span class="status status-done">Solved</span></div><p class="project-desc">Proxmox internal bridges were configured with .1 addresses that conflicted with OPNsense. I moved the bridges to Layer 2 only so OPNsense became the sole gateway.</p></article>
+        <article class="project-card"><div class="project-top"><h3>Cloned Windows identities</h3><span class="status status-done">Solved</span></div><p class="project-desc">Cloned workstations shared computer identity information and developed domain trust failures. I repaired the secure channels, assigned unique hostnames, and documented Sysprep/generalization for future templates.</p></article>
+        <article class="project-card"><div class="project-top"><h3>AD RPC firewall issue</h3><span class="status status-done">Solved</span></div><p class="project-desc">Group Policy updates hung because the dynamic RPC range was not correctly represented in the firewall alias. Correcting the range restored gpupdate processing.</p></article>
+        <article class="project-card"><div class="project-top"><h3>Management lockout</h3><span class="status status-done">Solved</span></div><p class="project-desc">A broad private-network block also denied IT access to the OPNsense GUI. I recovered through the console and added a specific management allow rule above the block.</p></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <span class="eyebrow">// validation</span>
+      <h2 class="section-title">Acceptance testing</h2>
+      <p class="section-sub">The baseline was not considered complete until the environment passed positive, negative, and recovery tests.</p>
+      <div class="card-grid">
+        <div class="card"><h3>Identity</h3><p>Secure-channel tests passed on FILE01 and all department workstations. Group Policy computer and user processing completed successfully.</p></div>
+        <div class="card"><h3>Services</h3><p>DNS resolution, department SMB access, Wazuh connectivity, and Internet access were validated from the appropriate networks.</p></div>
+        <div class="card"><h3>Segmentation</h3><p>Cross-department SMB, Monitoring-to-corporate SMB, and Server-to-client initiation tests were blocked as designed while approved traffic remained functional.</p></div>
+        <div class="card"><h3>Recovery</h3><p>Performed a controlled shutdown, rebooted the Proxmox host, started infrastructure in dependency order, and repeated core validation successfully.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <span class="eyebrow">// next phase</span>
+      <h2 class="section-title">From infrastructure to SOC</h2>
+      <p class="section-sub">INFRA-BASE-v1 is the clean foundation. The next phase expands Wazuh endpoint coverage, Sysmon telemetry, detection engineering, incident response, and threat hunting while preserving a known-good recovery point.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-line"><span class="prompt">$</span> echo "build it, validate it, secure it"</p>
+      <p class="footer-copy">&copy; <span id="year"></span> Carlos Tiburcio &middot; Cybersecurity & Infrastructure Portfolio</p>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
