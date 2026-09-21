@@ -14,7 +14,22 @@ const navLinks = document.getElementById("navLinks");
 
 if (navToggle && navLinks) {
   navToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("open");
+    const isOpen = navLinks.classList.toggle("open");
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  navLinks.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      navToggle.setAttribute("aria-expanded", "false");
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      navLinks.classList.remove("open");
+      navToggle.setAttribute("aria-expanded", "false");
+    }
   });
 }
 
@@ -28,9 +43,10 @@ document.querySelectorAll(".nav-links a").forEach((link) => {
   // Any projects-*.html page should still highlight "Projects" in the nav
   if (
     linkPage === currentPage ||
-    (linkPage === "projects.html" && currentPage.startsWith("projects"))
+    (linkPage === "projects.html" && currentPage.startsWith("project"))
   ) {
     link.classList.add("active");
+    link.setAttribute("aria-current", "page");
   }
 });
 
@@ -42,9 +58,9 @@ const typedTarget = document.getElementById("typedLines");
 
 if (typedTarget) {
   const lines = [
-    { cmd: "whoami", out: "cybersecurity student · blue team curious · homelab addict" },
-    { cmd: "cat mission.txt", out: "Learn by building. Break things in the lab, fix them, document everything." },
-    { cmd: "ls ./currently", out: "studying_security+   building_home_SOC   job_searching" },
+    { cmd: "whoami", out: "cybersecurity & networking student · infrastructure builder · SOC focused" },
+    { cmd: "cat mission.txt", out: "Build the foundation. Validate it. Secure it. Document the evidence." },
+    { cmd: "ls ./currently", out: "INFRA-BASE-v1   Wazuh   Security+_prep   SOC_next" },
   ];
 
   const typeSpeed = 45; // milliseconds per character (lower = faster)
