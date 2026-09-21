@@ -4,17 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- ======================================================
-       EDIT-ME: put your real name in the title + description.
-       This is what shows up in browser tabs and Google.
-       ====================================================== -->
-  <title>Carlos Tiburcio | Cybersecurity Portfolio</title>
-  <meta name="description" content="Carlos Tiburcio's Cybersecurity & Networking Portfolio. Red team and blue team projects and labs, homelab builds, and system administration practices." />
-
-  <!-- shield favicon (the little icon in the browser tab) -->
+  <title>Carlos Tiburcio | Cybersecurity & Infrastructure Portfolio</title>
+  <meta name="description" content="Carlos Tiburcio's hands-on cybersecurity, networking, systems administration, and enterprise homelab portfolio." />
+  <meta name="theme-color" content="#0d1319" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128737;</text></svg>" />
-
-  <!-- fonts + the one shared stylesheet -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -22,28 +15,17 @@
 </head>
 <body>
 
-  <!-- ======================================================
-       NAVIGATION BAR
-       NOTE: this same block is copied at the top of EVERY page.
-       If you add a new page to the nav, add the link on every
-       page so the menu stays consistent.
-       EDIT-ME: change "yourname" in the logo.
-       ====================================================== -->
   <header class="site-nav">
     <div class="nav-inner">
       <a class="logo" href="index.html"><span class="logo-prompt">~/</span>Carlos Tiburcio</a>
-
       <nav class="nav-links" id="navLinks">
         <a href="index.html">Home</a>
         <a href="certifications.html">Certifications</a>
         <a href="experience.html">Experience</a>
         <a href="projects.html">Projects</a>
-        <!-- EDIT-ME: drop your resume PDF into the assets folder
-             and name it resume.pdf so this button works -->
-        <a class="btn btn-ghost btn-small" href="assets/resume.pdf" target="_blank">Resume</a>
+        <a class="btn btn-ghost btn-small" href="https://github.com/Carlostibj" target="_blank" rel="noopener">GitHub</a>
       </nav>
-
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
     </div>
   </header>
 
@@ -57,13 +39,14 @@
          ====================================================== -->
     <section class="hero">
       <div class="hero-text">
-        <span class="eyebrow">// cybersecurity &middot; Networking &middot; sysadmin</span>
+        <span class="eyebrow">// cybersecurity &middot; networking &middot; systems</span>
         <h1 class="hero-title">Hi, I'm <span class="accent">Carlos</span>.</h1>
         <p class="hero-sub">
-          I'm a cybersecurity enthusiast who sees security as fundamentally about people: protecting them and the information they trust systems to keep safe. I want my skills to make a real difference, for my community and my country. I learn by building. I run my own homelab, break things on purpose to understand how they fail, and document what I find.
+          I'm a Cybersecurity &amp; Networking student who learns by building. My current flagship project is an enterprise-style Proxmox environment with OPNsense segmentation, Active Directory, Windows file services, and Wazuh monitoring — built to practice the same infrastructure and security workflows used in real environments.
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="projects.html">View my projects</a>
+          <a class="btn btn-ghost" href="project-enterprise-proxmox-lab.html">Flagship lab</a>
           <a class="btn btn-ghost" href="#contact">Get in touch</a>
         </div>
       </div>
@@ -86,27 +69,27 @@
     <section class="section">
       <span class="eyebrow">// start here</span>
       <h2 class="section-title">Explore the portfolio</h2>
-      <p class="section-sub">Take a look at what I've done!</p>
+      <p class="section-sub">Hands-on work, credentials, and experience — without filler or placeholder projects.</p>
 
       <div class="card-grid">
         <a class="domain-card dc-teal" href="projects.html">
           <div class="dc-icon">&#9632;</div>
           <h3>Projects</h3>
-          <p>Hands-on work across red team, blue team, and homelab environments, plus the automation scripts that tie it all together. Each project links to full documentation in Notion..</p>
+          <p>Hands-on work across infrastructure, offensive security, defensive security, and automation — with the scope, tools, validation, and lessons learned documented.</p>
           <span class="dc-go">explore &rarr;</span>
         </a>
 
         <a class="domain-card dc-blue" href="certifications.html">
           <div class="dc-icon">&#9632;</div>
-          <h3>Certifications &amp; Education, & Courses</h3>
+          <h3>Certifications &amp; Education</h3>
           <p>Industry certifications I've earned, what I'm currently studying, and my formal education background.</p>
           <span class="dc-go">explore &rarr;</span>
         </a>
 
         <a class="domain-card dc-violet" href="experience.html">
           <div class="dc-icon">&#9632;</div>
-          <h3>Experience &amp;</h3>
-          <p>Professional experience, and training programs I've been part of.</p>
+          <h3>Experience</h3>
+          <p>Professional experience, technical field work, and the hands-on training that supports my transition into cybersecurity.</p>
           <span class="dc-go">explore &rarr;</span>
         </a>
       </div>
@@ -145,9 +128,9 @@
           <div class="tag-row">
             <span class="tag">TCP/IP</span>
             <span class="tag">VLANs</span>
-            <span class="tag">pfSense</span>
+            <span class="tag">OPNsense</span>
             <span class="tag">DNS / DHCP</span>
-            <span class="tag">VPN</span>
+            <span class="tag">Firewalling</span>
           </div>
         </div>
 
@@ -159,7 +142,7 @@
             <span class="tag">Windows Server</span>
             <span class="tag">Active Directory</span>
             <span class="tag">Proxmox</span>
-            <span class="tag">Docker</span>
+            <span class="tag">Group Policy</span>
           </div>
         </div>
 
@@ -185,30 +168,22 @@
       <span class="eyebrow">// get in touch</span>
       <h2 class="section-title">Let's connect</h2>
       <p class="section-sub">
-        I'm actively looking for entry-level cybersecurity / IT roles and internships.
-        If you're a recruiter or just want to talk security, reach out.
+        I'm pursuing entry-level cybersecurity, SOC, IT, and infrastructure opportunities where I can keep building practical defensive and systems experience.
       </p>
       <div class="contact-links">
-        <a class="btn btn-primary" href="mailto:your.email@example.com">Email me</a>
-        <a class="btn btn-ghost" href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn btn-ghost" href="https://github.com/your-github" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-primary" href="mailto:carlomtj15@gmail.com">Email me</a>
+        <a class="btn btn-ghost" href="https://github.com/Carlostibj" target="_blank" rel="noopener">GitHub</a>
       </div>
     </section>
 
   </main>
 
-  <!-- ======================================================
-       FOOTER (copied on every page)
-       EDIT-ME: same links as the contact section + your name.
-       The year fills in automatically.
-       ====================================================== -->
   <footer class="site-footer">
     <div class="footer-inner">
-      <p class="footer-line"><span class="prompt">$</span> echo "thanks for stopping by"</p>
+      <p class="footer-line"><span class="prompt">$</span> echo "build it, break it, understand it, document it"</p>
       <div class="footer-links">
-        <a href="mailto:your.email@example.com">carlomtj15@gmail.com</a>
-        <a href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener"></a>
-        <a href="https://github.com/your-github" target="_blank" rel="noopener"></a>
+        <a href="mailto:carlomtj15@gmail.com">carlomtj15@gmail.com</a>
+        <a href="https://github.com/Carlostibj" target="_blank" rel="noopener">github.com/Carlostibj</a>
       </div>
       <p class="footer-copy">&copy; <span id="year"></span> Carlos Tiburcio &middot; Built with plain HTML/CSS and hosted on GitHub Pages.</p>
     </div>
