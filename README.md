@@ -1,39 +1,50 @@
-# Carlos Tiburcio — Cybersecurity & Infrastructure Portfolio
+# Carlos Tiburcio — Portfolio
 
-Personal portfolio site for my hands-on cybersecurity, networking, systems administration, and automation work.
+Live site: https://carlostibj.github.io
 
-## Featured project
+Plain HTML and CSS on GitHub Pages. No installation, build step, JavaScript, or paid service is required for the main portfolio.
 
-**Enterprise Proxmox Infrastructure Lab (INFRA-BASE-v1)**
+## Files you will edit
 
-A simulated enterprise environment built on Proxmox with:
+| File | Purpose |
+| --- | --- |
+| `index.html` | Introduction, featured project, skills, contact |
+| `projects.html` | All completed project cards |
+| `project-enterprise-proxmox-lab.html` | INFRA-BASE-v1 case study |
+| `certifications.html` | Credentials and education |
+| `experience.html` | Work experience and training |
+| `assets/style.css` | Shared colors, spacing, typography, responsive layout |
+| `assets/infra-base-v1.pdf` | Full evidence document |
+| `templates/` | Reusable starting points for future projects |
 
-- OPNsense routing, VLAN segmentation, DHCP, and firewall policy
-- Windows Server Active Directory, DNS, Group Policy, and departmental OUs
-- FILE01 SMB shares with NTFS permissions and AGDLP group design
-- Wazuh on a dedicated Monitoring LAN
-- Department workstations for IT, Sales, HR, and Marketing
-- Isolated malware-analysis network
-- Acceptance testing, reboot/recovery validation, and dedicated Proxmox backups
+## Edit text on GitHub
 
-The infrastructure baseline is the foundation for upcoming SOC work: endpoint telemetry, Sysmon, detection engineering, incident response, threat hunting, and security automation.
+1. Open the file in this repository, then select the pencil (Edit).
+2. Change the text between the HTML tags, preserving the tags. For example, `<h1>My title</h1>`.
+3. Select Preview or inspect the diff, then commit your change to `main`.
+4. Wait for GitHub Pages to finish deploying, then refresh the live page.
 
-## Portfolio sections
+## Add a completed project
 
-- **Cybersecurity** — authorized offensive-security labs and defensive-security projects
-- **Homelab & Infrastructure** — enterprise lab design, configuration, validation, and troubleshooting
-- **Automation & Scripting** — Python, Flask, NAPALM, Netmiko, and Paramiko lab work
-- **Certifications & Education** — completed credentials, current study, and academic background
-- **Experience** — technical field work and professional experience
+1. Copy `templates/project-template.html` into a new file at the repository root, such as `project-soc01.html`. Use **Add file → Create new file** on GitHub and paste the template contents.
+2. Replace the sample title, description, objective, implementation, tests, and lessons with your actual work. Remove the template comment.
+3. Upload supporting PDFs or images into `assets/`. Link to them with relative paths such as `assets/soc01.pdf`. Add useful `alt` text for images.
+4. Copy the article from `templates/project-card.html` into `projects.html`, below the existing card. Update its number, title, status, description, tags, and both links to your new page.
+5. If you want to feature it, replace the project article on `index.html` with the new card too.
+6. Commit and check the live links on your phone and desktop.
 
-## Stack
+Only add completed case studies for now. Use clear scope and status; lab work is independent simulated experience, not employment or client work. Do not claim a restore test merely because a backup succeeded.
 
-The site intentionally uses plain HTML, CSS, and JavaScript and is hosted with GitHub Pages.
+## Replace the INFRA PDF
 
-## Accuracy
+Upload a replacement with the same name, `assets/infra-base-v1.pdf`. Existing links will keep working. Update the case study text if scope or outcomes change.
 
-Projects are labeled as completed, in progress, or planned. Homelab work is presented as independent simulated-enterprise experience, not as production SOC or client work.
+## Navigation and styling
 
----
+Each page includes its own small header and footer to keep the site build-free. If you change navigation or your email, update it across the main HTML pages. To change the palette, edit the variables at the top of `assets/style.css`.
 
-Live portfolio: https://carlostibj.github.io
+The previous category URLs redirect to `projects.html` so old links still lead somewhere useful. Existing legacy CSS/JS files are retained but the new pages do not depend on them.
+
+## Preview locally (optional)
+
+From the repository folder: `python3 -m http.server 8000`, then visit `http://localhost:8000`. Otherwise edit directly in GitHub and check Pages after deployment.
