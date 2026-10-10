@@ -12,7 +12,7 @@ Plain HTML and CSS on GitHub Pages. No installation, build step, JavaScript, or 
 | `projects.html` | All completed project cards |
 | `project-enterprise-proxmox-lab.html` | INFRA-BASE-v1 case study |
 | `certifications.html` | Credentials and education |
-| `experience.html` | Work experience and training |
+| `experience.html` | Independent IT labs, training, and opportunity statement |
 | `assets/style.css` | Shared colors, spacing, typography, responsive layout |
 | `assets/infra-base-v1.pdf` | Full evidence document |
 | `templates/` | Reusable starting points for future projects |
@@ -48,3 +48,7 @@ The previous category URLs redirect to `projects.html` so old links still lead s
 ## Preview locally (optional)
 
 From the repository folder: `python3 -m http.server 8000`, then visit `http://localhost:8000`. Otherwise edit directly in GitHub and check Pages after deployment.
+
+## Contact and skills
+
+Public contact uses only `caromtj15@gmail.com`. The homepage lists the broader technical toolkit; each project page documents the skills actually demonstrated by that project. The Experience page presents independent technical practice and training, without unrelated work history.
