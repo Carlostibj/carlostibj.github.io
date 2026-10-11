@@ -51,4 +51,6 @@ From the repository folder: `python3 -m http.server 8000`, then visit `http://lo
 
 ## Contact and skills
 
-Public contact uses only `caromtj15@gmail.com`. The homepage lists the broader technical toolkit; each project page documents the skills actually demonstrated by that project. The Experience page presents independent technical practice and training, without unrelated work history.
+Public contact uses only `carlomtj15@gmail.com`. The homepage lists the broader technical toolkit; each project page documents the skills actually demonstrated by that project. The Experience page presents independent technical practice and training, without unrelated work history.
+
+Contact buttons open Gmail compose in a new tab. The correct address, `carlomtj15@gmail.com`, is also visible for visitors using another email service. Gmail links only open a draft; they do not send a message.
