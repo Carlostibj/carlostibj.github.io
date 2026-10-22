@@ -50,9 +50,9 @@ window.PORTFOLIO_PROJECTS = [
 
 window.PORTFOLIO_ROADMAP = [
   { key: "networking", label: "Networking", state: "foundation", note: "Cisco coursework and network design" },
-  { key: "foundation", label: "Infrastructure Foundation", state: "active", note: "INFRA-BASE-v1" },
+  { key: "foundation", label: "Infrastructure Foundation", state: "active", note: "INFRA-BASE-v1", directHref: "project-enterprise-proxmox-lab.html" },
   { key: "sysadmin", label: "Systems Administration", state: "foundation", note: "Built into the infrastructure track" },
-  { key: "soc", label: "Security Monitoring / SOC", state: "active", note: "SOC01" },
+  { key: "soc", label: "Security Monitoring / SOC", state: "active", note: "SOC01", directHref: "project-soc01.html" },
   { key: "detection", label: "Detection Engineering", state: "active", note: "DET01+" },
   { key: "identity", label: "Identity Security", state: "next", note: "AD → PAM → Zero Trust → NHI" },
   { key: "ai", label: "AI / ML Security", state: "next", note: "SOC copilots, agents, ML, AI security" },
@@ -131,8 +131,12 @@ window.PORTFOLIO_ROADMAP = [
         <strong>${esc(item.label)}</strong>
         <small>${esc(meta)}</small>`;
 
+      if (item.directHref) {
+        return `<a class="roadmap-node roadmap-${esc(item.state)}${current}" href="${esc(item.directHref)}">${content}</a>`;
+      }
+
       return count
-        ? `<a class="roadmap-node roadmap-${esc(item.state)}${current}" href="projects.html?domain=${encodeURIComponent(item.key)}">${content}</a>`
+        ? `<a class="roadmap-node roadmap-${esc(item.state)}${current}" href="projects.html?domain=${encodeURIComponent(item.key)}#project-catalog">${content}</a>`
         : `<div class="roadmap-node roadmap-${esc(item.state)}">${content}</div>`;
     }).join("");
   });
