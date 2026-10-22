@@ -1,7 +1,7 @@
 /*
   Central project catalog for the portfolio.
   Future projects should be added here once their case study is ready.
-  Pages render from this data so the homepage/project hub stay consistent.
+  The homepage and project hub both render from this file.
 */
 window.PORTFOLIO_PROJECTS = [
   {
@@ -58,6 +58,7 @@ window.PORTFOLIO_ROADMAP = [
   { key: "ai", label: "AI / ML Security", state: "next", note: "SOC copilots, agents, ML, AI security" },
   { key: "cloud", label: "Cloud Security", state: "planned", note: "Azure / AWS / hybrid identity" },
   { key: "threat-hunting", label: "Threat Hunting", state: "planned", note: "Multi-source investigations" },
+  { key: "vulnerability", label: "Vulnerability Management", state: "planned", note: "Discovery, prioritization, remediation" },
   { key: "automation", label: "Security Automation", state: "planned", note: "Python, APIs, SOAR-style workflows" },
   { key: "ir", label: "Incident Response / DFIR", state: "planned", note: "Triage, containment, forensics" },
   { key: "purple", label: "Purple / Red Team", state: "planned", note: "Adversary simulation and validation" },
@@ -70,6 +71,10 @@ window.PORTFOLIO_ROADMAP = [
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
     }[c]));
   }
+
+  const params = new URLSearchParams(window.location.search);
+  const domainFilter = params.get("domain");
+  const activeDomain = window.PORTFOLIO_ROADMAP.find(item => item.key === domainFilter);
 
   function projectCard(project) {
     const title = project.published && project.href
@@ -96,31 +101,47 @@ window.PORTFOLIO_ROADMAP = [
 
   document.querySelectorAll("[data-project-list]").forEach(container => {
     const mode = container.dataset.projectList;
-    const projects = window.PORTFOLIO_PROJECTS.filter(project => {
-      if (mode === "featured") return project.featured;
+    let projects = window.PORTFOLIO_PROJECTS.filter(project => {
+      if (mode === "featured") return project.featured && project.published;
       if (mode === "published") return project.published;
       return true;
     });
-    container.innerHTML = projects.map(projectCard).join("");
+
+    if (domainFilter && mode !== "featured") {
+      projects = projects.filter(project => project.domainKey === domainFilter);
+    }
+
+    container.innerHTML = projects.length
+      ? projects.map(projectCard).join("")
+      : `<div class="empty-state"><strong>No published case studies in this domain yet.</strong><p>This area is part of the portfolio roadmap and will activate as the work is completed and documented.</p></div>`;
   });
 
   document.querySelectorAll("[data-roadmap]").forEach(container => {
-    const completedCounts = window.PORTFOLIO_PROJECTS.reduce((counts, project) => {
-      if (project.published || project.id === "DET01") {
-        counts[project.domainKey] = (counts[project.domainKey] || 0) + 1;
-      }
+    const projectCounts = window.PORTFOLIO_PROJECTS.reduce((counts, project) => {
+      counts[project.domainKey] = (counts[project.domainKey] || 0) + 1;
       return counts;
     }, {});
 
     container.innerHTML = window.PORTFOLIO_ROADMAP.map(item => {
-      const count = completedCounts[item.key] || 0;
-      const meta = count ? `${count} completed project${count === 1 ? "" : "s"}` : item.note;
-      return `
-        <div class="roadmap-node roadmap-${esc(item.state)}">
-          <span class="roadmap-state">${esc(item.state === "active" ? "ACTIVE" : item.state === "next" ? "NEXT" : item.state === "foundation" ? "FOUNDATION" : "PLANNED")}</span>
-          <strong>${esc(item.label)}</strong>
-          <small>${esc(meta)}</small>
-        </div>`;
+      const count = projectCounts[item.key] || 0;
+      const meta = count ? `${count} project${count === 1 ? "" : "s"}` : item.note;
+      const current = domainFilter === item.key ? " roadmap-current" : "";
+      const content = `
+        <span class="roadmap-state">${esc(item.state === "active" ? "ACTIVE" : item.state === "next" ? "NEXT" : item.state === "foundation" ? "FOUNDATION" : "PLANNED")}</span>
+        <strong>${esc(item.label)}</strong>
+        <small>${esc(meta)}</small>`;
+
+      return count
+        ? `<a class="roadmap-node roadmap-${esc(item.state)}${current}" href="projects.html?domain=${encodeURIComponent(item.key)}">${content}</a>`
+        : `<div class="roadmap-node roadmap-${esc(item.state)}">${content}</div>`;
     }).join("");
+  });
+
+  document.querySelectorAll("[data-domain-heading]").forEach(el => {
+    if (activeDomain) el.textContent = `${activeDomain.label} projects`;
+  });
+
+  document.querySelectorAll("[data-domain-reset]").forEach(el => {
+    el.hidden = !activeDomain;
   });
 })();
