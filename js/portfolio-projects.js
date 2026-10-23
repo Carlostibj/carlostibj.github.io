@@ -38,13 +38,13 @@ window.PORTFOLIO_PROJECTS = [
     title: "Authentication Attack Detection & Investigation",
     domain: "Detection Engineering",
     domainKey: "detection",
-    status: "Technical work complete",
+    status: "Completed and validated",
     description: "A detection-engineering lab focused on repeated Kerberos authentication failures, Wazuh correlation, source and account separation, timing windows, negative testing, and analyst investigation.",
     skills: ["Wazuh", "Kerberos", "Windows Event 4771", "Correlation", "Detection Tuning"],
-    href: "",
-    pdf: "",
+    href: "project-det01.html",
+    pdf: "assets/det01.pdf",
     featured: true,
-    published: false
+    published: true
   }
 ];
 
