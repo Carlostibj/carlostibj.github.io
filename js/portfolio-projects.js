@@ -49,20 +49,32 @@ window.PORTFOLIO_PROJECTS = [
 ];
 
 window.PORTFOLIO_ROADMAP = [
-  { key: "networking", label: "Networking", state: "foundation", note: "Cisco coursework and network design" },
-  { key: "foundation", label: "Infrastructure Foundation", state: "active", note: "INFRA-BASE-v1", directHref: "project-enterprise-proxmox-lab.html" },
-  { key: "sysadmin", label: "Systems Administration", state: "foundation", note: "Built into the infrastructure track" },
-  { key: "soc", label: "Security Monitoring / SOC", state: "active", note: "SOC01", directHref: "project-soc01.html" },
-  { key: "detection", label: "Detection Engineering", state: "active", note: "DET01+" },
-  { key: "identity", label: "Identity Security", state: "next", note: "AD → PAM → Zero Trust → NHI" },
-  { key: "ai", label: "AI / ML Security", state: "next", note: "SOC copilots, agents, ML, AI security" },
-  { key: "cloud", label: "Cloud Security", state: "planned", note: "Azure / AWS / hybrid identity" },
-  { key: "threat-hunting", label: "Threat Hunting", state: "planned", note: "Multi-source investigations" },
-  { key: "vulnerability", label: "Vulnerability Management", state: "planned", note: "Discovery, prioritization, remediation" },
-  { key: "automation", label: "Security Automation", state: "planned", note: "Python, APIs, SOAR-style workflows" },
-  { key: "ir", label: "Incident Response / DFIR", state: "planned", note: "Triage, containment, forensics" },
-  { key: "purple", label: "Purple / Red Team", state: "planned", note: "Adversary simulation and validation" },
-  { key: "malware", label: "Malware Analysis", state: "planned", note: "Controlled behavior analysis" }
+  { key: "networking", label: "Networking", stage: "foundation", state: "foundation", note: "Cisco coursework and network design" },
+  { key: "foundation", label: "Infrastructure Foundation", stage: "foundation", state: "active", note: "INFRA-BASE-v1", directHref: "project-enterprise-proxmox-lab.html" },
+  { key: "sysadmin", label: "Systems Administration", stage: "foundation", state: "foundation", note: "Core Windows and Linux administration" },
+
+  { key: "soc", label: "Security Monitoring / SOC", stage: "soc", state: "active", note: "SOC01", directHref: "project-soc01.html" },
+
+  { key: "detection", label: "Detection Engineering", stage: "tracks", state: "active", note: "Custom detections and investigations" },
+  { key: "identity", label: "Identity Security", stage: "tracks", state: "next", note: "AD → PAM → Zero Trust → NHI" },
+  { key: "ai", label: "AI / ML Security", stage: "tracks", state: "next", note: "SOC copilots, agents, ML, AI security" },
+
+  { key: "cloud", label: "Cloud Security", stage: "advanced", state: "planned", note: "Azure / AWS / hybrid identity" },
+  { key: "threat-hunting", label: "Threat Hunting", stage: "advanced", state: "planned", note: "Multi-source investigations" },
+  { key: "vulnerability", label: "Vulnerability Management", stage: "advanced", state: "planned", note: "Discovery, prioritization, remediation" },
+
+  { key: "ir", label: "Incident Response / DFIR", stage: "response", state: "planned", note: "Triage, containment, forensics" },
+  { key: "automation", label: "Security Automation", stage: "response", state: "planned", note: "Python, APIs, SOAR-style workflows" },
+  { key: "malware", label: "Malware Analysis", stage: "response", state: "planned", note: "Controlled behavior analysis" },
+  { key: "purple", label: "Purple / Red Team", stage: "response", state: "planned", note: "Adversary simulation and validation" }
+];
+
+window.PORTFOLIO_STAGES = [
+  { key: "foundation", number: "01", label: "Foundation", description: "Networking, infrastructure, identity basics, and systems administration." },
+  { key: "soc", number: "02", label: "Security Operations", description: "Centralized endpoint, server, and network telemetry." },
+  { key: "tracks", number: "03", label: "Core Security Tracks", description: "Detection engineering, modern identity security, and AI/ML security." },
+  { key: "advanced", number: "04", label: "Advanced Capabilities", description: "Cloud security, threat hunting, and vulnerability management." },
+  { key: "response", number: "05", label: "Response & Automation", description: "Incident response, DFIR, automation, malware analysis, and adversary validation." }
 ];
 
 (function () {
@@ -122,22 +134,42 @@ window.PORTFOLIO_ROADMAP = [
       return counts;
     }, {});
 
-    container.innerHTML = window.PORTFOLIO_ROADMAP.map(item => {
+    function node(item) {
       const count = projectCounts[item.key] || 0;
-      const meta = count ? `${count} project${count === 1 ? "" : "s"}` : item.note;
+      const meta = item.directHref
+        ? item.note
+        : count
+          ? `${count} project${count === 1 ? "" : "s"}`
+          : item.note;
+
       const current = domainFilter === item.key ? " roadmap-current" : "";
-      const content = `
+      const inner = `
         <span class="roadmap-state">${esc(item.state === "active" ? "ACTIVE" : item.state === "next" ? "NEXT" : item.state === "foundation" ? "FOUNDATION" : "PLANNED")}</span>
         <strong>${esc(item.label)}</strong>
         <small>${esc(meta)}</small>`;
 
       if (item.directHref) {
-        return `<a class="roadmap-node roadmap-${esc(item.state)}${current}" href="${esc(item.directHref)}">${content}</a>`;
+        return `<a class="roadmap-node roadmap-${esc(item.state)}${current}" href="${esc(item.directHref)}">${inner}</a>`;
       }
 
       return count
-        ? `<a class="roadmap-node roadmap-${esc(item.state)}${current}" href="projects.html?domain=${encodeURIComponent(item.key)}#project-catalog">${content}</a>`
-        : `<div class="roadmap-node roadmap-${esc(item.state)}">${content}</div>`;
+        ? `<a class="roadmap-node roadmap-${esc(item.state)}${current}" href="projects.html?domain=${encodeURIComponent(item.key)}#project-catalog">${inner}</a>`
+        : `<div class="roadmap-node roadmap-${esc(item.state)}">${inner}</div>`;
+    }
+
+    container.innerHTML = window.PORTFOLIO_STAGES.map((stage, index) => {
+      const items = window.PORTFOLIO_ROADMAP.filter(item => item.stage === stage.key);
+      return `
+        <div class="roadmap-stage">
+          <div class="roadmap-stage-heading">
+            <span>${esc(stage.number)}</span>
+            <div><strong>${esc(stage.label)}</strong><small>${esc(stage.description)}</small></div>
+          </div>
+          <div class="roadmap-stage-nodes roadmap-stage-${esc(stage.key)}">
+            ${items.map(node).join("")}
+          </div>
+        </div>
+        ${index < window.PORTFOLIO_STAGES.length - 1 ? '<div class="roadmap-arrow" aria-hidden="true">↓</div>' : ''}`;
     }).join("");
   });
 
