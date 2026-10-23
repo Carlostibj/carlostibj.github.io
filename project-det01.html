@@ -87,17 +87,15 @@
 
     <section id="evidence" class="case-section">
       <p class="eyebrow">SELECTED EVIDENCE</p>
-      <h2>The strongest screenshots from the test session</h2>
-      <p>Each image opens at full size. The PDF contains the complete evidence sequence and the supporting event-record timeline.</p>
+      <h2>Four screenshots that prove the detection behavior</h2>
+      <p>The webpage keeps only the strongest evidence for a quick technical review. The PDF contains the complete five-test evidence sequence, event timeline, troubleshooting notes, and supporting screenshots.</p>
       <div class="evidence-grid">
-        <figure class="evidence-wide"><a href="assets/det01/correlation-alert.png"><img src="assets/det01/correlation-alert.png" alt="Wazuh alert for rule 110101 showing level 10, frequency 5, and previous output"></a><figcaption><strong>Positive result.</strong> Rule 110101 fired at level 10 after five qualifying failures.</figcaption></figure>
-        <figure><a href="assets/det01/below-threshold-events.png"><img src="assets/det01/below-threshold-events.png" alt="Wazuh search showing four base-rule alerts"></a><figcaption><strong>Below threshold.</strong> Four base alerts were visible, confirming telemetry arrived.</figcaption></figure>
-        <figure><a href="assets/det01/below-threshold-no-alert.png"><img src="assets/det01/below-threshold-no-alert.png" alt="Wazuh search showing no rule 110101 result for four failures"></a><figcaption><strong>No correlation alert.</strong> Four failures did not satisfy the five-event threshold.</figcaption></figure>
-        <figure><a href="assets/det01/source-it.png"><img src="assets/det01/source-it.png" alt="Expanded Event 4771 from IT-PC01 client address 10.20.10.121"></a><figcaption><strong>IT-PC01 source.</strong> The client address is <code>10.20.10.121</code>; DC01 is the collecting agent.</figcaption></figure>
-        <figure><a href="assets/det01/source-sales.png"><img src="assets/det01/source-sales.png" alt="Expanded Event 4771 from SALES-PC01 client address 10.20.20.168"></a><figcaption><strong>SALES-PC01 source.</strong> The same account failed from a different client address.</figcaption></figure>
-        <figure><a href="assets/det01/time-window-events.png"><img src="assets/det01/time-window-events.png" alt="Five base-rule alerts split into two groups more than 120 seconds apart"></a><figcaption><strong>Time-window test.</strong> Five base alerts appeared in two groups separated by more than two minutes.</figcaption></figure>
-        <figure><a href="assets/det01/account-separation-events.png"><img src="assets/det01/account-separation-events.png" alt="Five alerts from one source showing two usernames in separate table rows"></a><figcaption><strong>Account separation.</strong> Two failures for user01 and three for user02 stayed in separate groups.</figcaption></figure>
+        <figure class="evidence-wide"><a href="assets/det01/correlation-alert.png"><img src="assets/det01/correlation-alert.png" alt="Wazuh alert for rule 110101 showing level 10, frequency 5, and previous output"></a><figcaption><strong>Positive detection.</strong> Rule 110101 fired at level 10 after five qualifying Kerberos failures from the same source against the same account.</figcaption></figure>
+        <figure><a href="assets/det01/below-threshold-no-alert.png"><img src="assets/det01/below-threshold-no-alert.png" alt="Wazuh search showing no rule 110101 result for four failures"></a><figcaption><strong>Threshold boundary.</strong> Four failures did not satisfy the five-event condition, so the correlation alert stayed quiet.</figcaption></figure>
+        <figure><a href="assets/det01/source-it.png"><img src="assets/det01/source-it.png" alt="Expanded Event 4771 from IT-PC01 client address 10.20.10.121"></a><figcaption><strong>Source identification.</strong> Event 4771 records the client address for IT-PC01 inside the authentication event rather than using the DC01 Wazuh agent address as the source.</figcaption></figure>
+        <figure><a href="assets/det01/source-sales.png"><img src="assets/det01/source-sales.png" alt="Expanded Event 4771 from SALES-PC01 client address 10.20.20.168"></a><figcaption><strong>Source separation.</strong> SALES-PC01 produced the same authentication failure from a different client address, supporting source-aware correlation.</figcaption></figure>
       </div>
+      <p class="evidence-more"><a class="text-link" href="assets/det01.pdf">View the complete validation evidence in the PDF →</a></p>
     </section>
 
     <section id="lessons" class="case-section">
