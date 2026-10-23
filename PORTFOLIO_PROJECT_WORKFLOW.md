@@ -78,3 +78,12 @@ The homepage should remain fast to scan. Keep roughly 3–5 strongest/most relev
 - A roadmap box representing a growing project family must open the filtered project catalog for that domain (for example Detection Engineering, Identity Security, or AI / ML Security).
 - As soon as a domain receives its first project, the box becomes clickable automatically through the centralized catalog.
 - Keep the roadmap ordered as Foundation → Security Operations → Core Security Tracks → Advanced Capabilities → Response & Automation.
+
+
+## Web evidence rule
+
+- The default Projects page is a capability map, not a duplicate list of every project.
+- Project cards appear when a user enters a multi-project domain such as Detection Engineering, Identity Security, or AI / ML Security.
+- Keep individual web case studies concise and recruiter-friendly.
+- Show roughly 3–4 of the strongest screenshots on the webpage.
+- Keep the complete validation sequence, supporting screenshots, detailed troubleshooting, and deeper evidence in the project PDF.
