@@ -49,24 +49,24 @@ window.PORTFOLIO_PROJECTS = [
 ];
 
 window.PORTFOLIO_ROADMAP = [
-  { key: "networking", label: "Networking", stage: "foundation", state: "foundation", note: "Cisco coursework and network design" },
-  { key: "foundation", label: "Infrastructure Foundation", stage: "foundation", state: "active", note: "INFRA-BASE-v1", directHref: "project-enterprise-proxmox-lab.html" },
-  { key: "sysadmin", label: "Systems Administration", stage: "foundation", state: "foundation", note: "Core Windows and Linux administration" },
+  { key: "networking", label: "Networking", stage: "foundation", state: "foundation", note: "Cisco coursework and network design", visible: false },
+  { key: "foundation", label: "Infrastructure Foundation", stage: "foundation", state: "active", note: "INFRA-BASE-v1", directHref: "project-enterprise-proxmox-lab.html", visible: true },
+  { key: "sysadmin", label: "Systems Administration", stage: "foundation", state: "foundation", note: "Core Windows and Linux administration", visible: false },
 
-  { key: "soc", label: "Security Monitoring / SOC", stage: "soc", state: "active", note: "SOC01", directHref: "project-soc01.html" },
+  { key: "soc", label: "Security Monitoring / SOC", stage: "soc", state: "active", note: "SOC01", directHref: "project-soc01.html", visible: true },
 
-  { key: "detection", label: "Detection Engineering", stage: "tracks", state: "active", note: "Custom detections and investigations" },
-  { key: "identity", label: "Identity Security", stage: "tracks", state: "next", note: "AD → PAM → Zero Trust → NHI" },
-  { key: "ai", label: "AI / ML Security", stage: "tracks", state: "next", note: "SOC copilots, agents, ML, AI security" },
+  { key: "detection", label: "Detection Engineering", stage: "tracks", state: "active", note: "Custom detections and investigations", visible: true },
+  { key: "identity", label: "Identity Security", stage: "tracks", state: "next", note: "AD → PAM → Zero Trust → NHI", visible: false },
+  { key: "ai", label: "AI / ML Security", stage: "tracks", state: "next", note: "SOC copilots, agents, ML, AI security", visible: false },
 
-  { key: "cloud", label: "Cloud Security", stage: "advanced", state: "planned", note: "Azure / AWS / hybrid identity" },
-  { key: "threat-hunting", label: "Threat Hunting", stage: "advanced", state: "planned", note: "Multi-source investigations" },
-  { key: "vulnerability", label: "Vulnerability Management", stage: "advanced", state: "planned", note: "Discovery, prioritization, remediation" },
+  { key: "cloud", label: "Cloud Security", stage: "advanced", state: "planned", note: "Azure / AWS / hybrid identity", visible: false },
+  { key: "threat-hunting", label: "Threat Hunting", stage: "advanced", state: "planned", note: "Multi-source investigations", visible: false },
+  { key: "vulnerability", label: "Vulnerability Management", stage: "advanced", state: "planned", note: "Discovery, prioritization, remediation", visible: false },
 
-  { key: "ir", label: "Incident Response / DFIR", stage: "response", state: "planned", note: "Triage, containment, forensics" },
-  { key: "automation", label: "Security Automation", stage: "response", state: "planned", note: "Python, APIs, SOAR-style workflows" },
-  { key: "malware", label: "Malware Analysis", stage: "response", state: "planned", note: "Controlled behavior analysis" },
-  { key: "purple", label: "Purple / Red Team", stage: "response", state: "planned", note: "Adversary simulation and validation" }
+  { key: "ir", label: "Incident Response / DFIR", stage: "response", state: "planned", note: "Triage, containment, forensics", visible: false },
+  { key: "automation", label: "Security Automation", stage: "response", state: "planned", note: "Python, APIs, SOAR-style workflows", visible: false },
+  { key: "malware", label: "Malware Analysis", stage: "response", state: "planned", note: "Controlled behavior analysis", visible: false },
+  { key: "purple", label: "Purple / Red Team", stage: "response", state: "planned", note: "Adversary simulation and validation", visible: false }
 ];
 
 window.PORTFOLIO_STAGES = [
@@ -157,8 +157,14 @@ window.PORTFOLIO_STAGES = [
         : `<div class="roadmap-node roadmap-${esc(item.state)}">${inner}</div>`;
     }
 
-    container.innerHTML = window.PORTFOLIO_STAGES.map((stage, index) => {
-      const items = window.PORTFOLIO_ROADMAP.filter(item => item.stage === stage.key);
+    const visibleStages = window.PORTFOLIO_STAGES
+      .map(stage => ({
+        ...stage,
+        items: window.PORTFOLIO_ROADMAP.filter(item => item.stage === stage.key && item.visible !== false)
+      }))
+      .filter(stage => stage.items.length);
+
+    container.innerHTML = visibleStages.map((stage, index) => {
       return `
         <div class="roadmap-stage">
           <div class="roadmap-stage-heading">
@@ -166,10 +172,10 @@ window.PORTFOLIO_STAGES = [
             <div><strong>${esc(stage.label)}</strong><small>${esc(stage.description)}</small></div>
           </div>
           <div class="roadmap-stage-nodes roadmap-stage-${esc(stage.key)}">
-            ${items.map(node).join("")}
+            ${stage.items.map(node).join("")}
           </div>
         </div>
-        ${index < window.PORTFOLIO_STAGES.length - 1 ? '<div class="roadmap-arrow" aria-hidden="true">↓</div>' : ''}`;
+        ${index < visibleStages.length - 1 ? '<div class="roadmap-arrow" aria-hidden="true">↓</div>' : ''}`;
     }).join("");
   });
 
