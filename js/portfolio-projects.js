@@ -173,6 +173,10 @@ window.PORTFOLIO_STAGES = [
     }).join("");
   });
 
+  document.querySelectorAll("[data-domain-section]").forEach(section => {
+    section.hidden = !activeDomain;
+  });
+
   document.querySelectorAll("[data-domain-heading]").forEach(el => {
     if (activeDomain) el.textContent = `${activeDomain.label} projects`;
   });
