@@ -70,3 +70,11 @@ Networking coursework can be added under Networking as curated portfolio entries
 ## Recruiter-facing rule
 
 The homepage should remain fast to scan. Keep roughly 3–5 strongest/most relevant projects featured. The full project catalog belongs on the Projects page.
+
+
+## Navigation rule
+
+- A roadmap box representing one foundational project may link directly to that case study (for example INFRA-BASE-v1 or SOC01).
+- A roadmap box representing a growing project family must open the filtered project catalog for that domain (for example Detection Engineering, Identity Security, or AI / ML Security).
+- As soon as a domain receives its first project, the box becomes clickable automatically through the centralized catalog.
+- Keep the roadmap ordered as Foundation → Security Operations → Core Security Tracks → Advanced Capabilities → Response & Automation.
