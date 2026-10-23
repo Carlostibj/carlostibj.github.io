@@ -87,3 +87,13 @@ The homepage should remain fast to scan. Keep roughly 3–5 strongest/most relev
 - Keep individual web case studies concise and recruiter-friendly.
 - Show roughly 3–4 of the strongest screenshots on the webpage.
 - Keep the complete validation sequence, supporting screenshots, detailed troubleshooting, and deeper evidence in the project PDF.
+
+
+## Domain visibility rule
+
+- Roadmap domains remain stored in `js/portfolio-projects.js` even when they are not shown publicly.
+- Use `visible: true` only when that domain has at least one real portfolio project ready to represent it.
+- Keep future or empty domains as `visible: false`.
+- Do not show empty roadmap boxes to recruiters.
+- When the first project in a domain is published, switch that domain to `visible: true`.
+- Networking should remain hidden until the strongest Cisco/Packet Tracer coursework has been selected and converted into portfolio entries.
