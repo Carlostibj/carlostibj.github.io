@@ -97,3 +97,11 @@ The homepage should remain fast to scan. Keep roughly 3–5 strongest/most relev
 - Do not show empty roadmap boxes to recruiters.
 - When the first project in a domain is published, switch that domain to `visible: true`.
 - Networking should remain hidden until the strongest Cisco/Packet Tracer coursework has been selected and converted into portfolio entries.
+
+
+## Supporting project rule
+
+- Not every useful project needs a roadmap domain.
+- Small but meaningful lab improvements such as remote management, backup/recovery, infrastructure access, or operational tooling belong under **Lab Enhancements / Supporting Infrastructure**.
+- Supporting projects should use `supporting: true`, remain `featured: false` by default, and should not create a new roadmap box.
+- They may receive their own concise case-study page when they demonstrate real implementation, validation, and operational reasoning.
