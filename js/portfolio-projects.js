@@ -33,6 +33,21 @@ window.PORTFOLIO_PROJECTS = [
     published: true
   },
   {
+    id: "REMOTE01",
+    number: "REMOTE01",
+    title: "Secure Proxmox Remote Access with Tailscale",
+    domain: "Supporting Infrastructure",
+    domainKey: "supporting",
+    status: "Completed and validated",
+    description: "A secure remote-management path for Proxmox using a dedicated unprivileged Ubuntu LXC container, Tailscale subnet routing, a host-only /32 route, and narrowly scoped access to TCP 8006.",
+    skills: ["Proxmox", "Tailscale", "Linux Routing", "LXC", "Access Control"],
+    href: "project-remote01.html",
+    pdf: "",
+    featured: false,
+    supporting: true,
+    published: true
+  },
+  {
     id: "DET01",
     number: "03",
     title: "Authentication Attack Detection & Investigation",
@@ -115,11 +130,12 @@ window.PORTFOLIO_STAGES = [
     const mode = container.dataset.projectList;
     let projects = window.PORTFOLIO_PROJECTS.filter(project => {
       if (mode === "featured") return project.featured && project.published;
+      if (mode === "supporting") return project.supporting && project.published;
       if (mode === "published") return project.published;
       return true;
     });
 
-    if (domainFilter && mode !== "featured") {
+    if (domainFilter && mode !== "featured" && mode !== "supporting") {
       projects = projects.filter(project => project.domainKey === domainFilter);
     }
 
@@ -181,6 +197,10 @@ window.PORTFOLIO_STAGES = [
 
   document.querySelectorAll("[data-domain-section]").forEach(section => {
     section.hidden = !activeDomain;
+  });
+
+  document.querySelectorAll("[data-supporting-section]").forEach(section => {
+    section.hidden = Boolean(activeDomain);
   });
 
   document.querySelectorAll("[data-domain-heading]").forEach(el => {
