@@ -34,7 +34,7 @@ window.PORTFOLIO_PROJECTS = [
   },
   {
     id: "REMOTE01",
-    number: "REMOTE01",
+    number: "LAB",
     title: "Secure Proxmox Remote Access with Tailscale",
     domain: "Supporting Infrastructure",
     domainKey: "supporting",
@@ -159,10 +159,12 @@ window.PORTFOLIO_STAGES = [
   });
 
   document.querySelectorAll("[data-roadmap]").forEach(container => {
-    const projectCounts = window.PORTFOLIO_PROJECTS.reduce((counts, project) => {
-      counts[project.domainKey] = (counts[project.domainKey] || 0) + 1;
-      return counts;
-    }, {});
+    const projectCounts = window.PORTFOLIO_PROJECTS
+      .filter(project => project.published)
+      .reduce((counts, project) => {
+        counts[project.domainKey] = (counts[project.domainKey] || 0) + 1;
+        return counts;
+      }, {});
 
     function node(item) {
       const count = projectCounts[item.key] || 0;
