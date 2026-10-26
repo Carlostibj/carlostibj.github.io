@@ -1,56 +1,57 @@
-# Carlos Tiburcio — Portfolio
+# Carlos Tiburcio — Cybersecurity & Infrastructure Portfolio
 
 Live site: https://carlostibj.github.io
 
-Plain HTML and CSS on GitHub Pages. No installation, build step, JavaScript, or paid service is required for the main portfolio.
+A plain HTML/CSS/JavaScript portfolio hosted on GitHub Pages. The site is organized around completed technical capabilities and documented case studies from my cybersecurity homelab, coursework, and authorized training.
 
-## Files you will edit
+## Portfolio structure
 
 | File | Purpose |
 | --- | --- |
-| `index.html` | Introduction, featured project, skills, contact |
-| `projects.html` | All completed project cards |
-| `project-enterprise-proxmox-lab.html` | INFRA-BASE-v1 case study |
-| `certifications.html` | Credentials and education |
-| `experience.html` | Independent IT labs, training, and opportunity statement |
-| `assets/style.css` | Shared colors, spacing, typography, responsive layout |
-| `assets/infra-base-v1.pdf` | Full evidence document |
-| `templates/` | Reusable starting points for future projects |
+| `index.html` | Recruiter-facing homepage, featured projects, skills, and contact |
+| `projects.html` | Capability roadmap, domain views, and supporting lab enhancements |
+| `js/portfolio-projects.js` | Central project catalog and roadmap configuration |
+| `experience.html` | Independent hands-on technical experience and training |
+| `certifications.html` | Education, certifications, and current development |
+| `project-*.html` | Individual web case studies |
+| `assets/*.pdf` | Full technical case-study PDFs |
+| `assets/<project>/` | Selected screenshot evidence |
+| `assets/style.css` | Shared site styling |
+| `PORTFOLIO_PROJECT_WORKFLOW.md` | Project publishing and evidence-selection workflow |
 
-## Edit text on GitHub
+## Current published work
 
-1. Open the file in this repository, then select the pencil (Edit).
-2. Change the text between the HTML tags, preserving the tags. For example, `<h1>My title</h1>`.
-3. Select Preview or inspect the diff, then commit your change to `main`.
-4. Wait for GitHub Pages to finish deploying, then refresh the live page.
+- **INFRA-BASE-v1** — Enterprise Cybersecurity Homelab Infrastructure
+- **SOC01** — Enterprise Security Monitoring & Telemetry Platform
+- **DET01** — Authentication Attack Detection & Investigation
+- **ID01** — Active Directory Identity Abuse & Privilege Monitoring
+- **REMOTE01** — Secure Proxmox Remote Access with Tailscale (supporting lab enhancement)
 
-## Add a completed project
+## Project publishing workflow
 
-1. Copy `templates/project-template.html` into a new file at the repository root, such as `project-soc01.html`. Use **Add file → Create new file** on GitHub and paste the template contents.
-2. Replace the sample title, description, objective, implementation, tests, and lessons with your actual work. Remove the template comment.
-3. Upload supporting PDFs or images into `assets/`. Link to them with relative paths such as `assets/soc01.pdf`. Add useful `alt` text for images.
-4. Copy the article from `templates/project-card.html` into `projects.html`, below the existing card. Update its number, title, status, description, tags, and both links to your new page.
-5. If you want to feature it, replace the project article on `index.html` with the new card too.
-6. Commit and check the live links on your phone and desktop.
+Build and troubleshoot the project first. Capture evidence during the work, validate the final behavior, then select the strongest screenshots and publish the case study at the end.
 
-Only add completed case studies for now. Use clear scope and status; lab work is independent simulated experience, not employment or client work. Do not claim a restore test merely because a backup succeeded.
+For a new completed project:
 
-## Replace the INFRA PDF
+1. Create the web case study from the existing project-page pattern.
+2. Upload the full PDF and selected screenshots under `assets/`.
+3. Add the project once to `js/portfolio-projects.js`.
+4. Mark the relevant roadmap domain visible only when it has completed, documented work.
+5. Feature only the strongest projects on the homepage.
+6. Check local links, PDF links, screenshots, mobile layout, and GitHub Pages deployment.
 
-Upload a replacement with the same name, `assets/infra-base-v1.pdf`. Existing links will keep working. Update the case study text if scope or outcomes change.
+The website keeps each case study concise; the PDF carries the full technical evidence package.
 
-## Navigation and styling
+## Accuracy rules
 
-Each page includes its own small header and footer to keep the site build-free. If you change navigation or your email, update it across the main HTML pages. To change the palette, edit the variables at the top of `assets/style.css`.
+- Lab work is presented as independent simulated experience, not employment or client work.
+- Only tests actually performed are described as validated.
+- Negative tests and limitations are documented when they materially affect the result.
+- Supporting lab improvements stay separate from the main security-domain roadmap.
+- Empty future domains remain hidden until there is completed work to publish.
 
-The previous category URLs redirect to `projects.html` so old links still lead somewhere useful. Existing legacy CSS/JS files are retained but the new pages do not depend on them.
+## Contact
 
-## Preview locally (optional)
+Public contact: **carlomtj15@gmail.com**
 
-From the repository folder: `python3 -m http.server 8000`, then visit `http://localhost:8000`. Otherwise edit directly in GitHub and check Pages after deployment.
-
-## Contact and skills
-
-Public contact uses only `carlomtj15@gmail.com`. The homepage lists the broader technical toolkit; each project page documents the skills actually demonstrated by that project. The Experience page presents independent technical practice and training, without unrelated work history.
-
-Contact buttons open Gmail compose in a new tab. The correct address, `carlomtj15@gmail.com`, is also visible for visitors using another email service. Gmail links only open a draft; they do not send a message.
+The visible email address works with any mail provider. Gmail compose links are provided as a convenience and do not send messages automatically.
