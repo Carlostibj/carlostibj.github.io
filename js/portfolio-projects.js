@@ -42,7 +42,7 @@ window.PORTFOLIO_PROJECTS = [
     description: "A secure remote-management path for Proxmox using a dedicated unprivileged Ubuntu LXC container, Tailscale subnet routing, a host-only /32 route, and narrowly scoped access to TCP 8006.",
     skills: ["Proxmox", "Tailscale", "Linux Routing", "LXC", "Access Control"],
     href: "project-remote01.html",
-    pdf: "",
+    pdf: "assets/remote01.pdf",
     featured: false,
     supporting: true,
     published: true
@@ -225,3 +225,4 @@ window.PORTFOLIO_STAGES = [
     el.hidden = !activeDomain;
   });
 })();
+

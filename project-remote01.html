@@ -25,6 +25,7 @@
       <p class="eyebrow">SUPPORTING INFRASTRUCTURE / REMOTE01</p>
       <h1>Secure Proxmox Remote Access with Tailscale</h1>
       <p class="lead">I built a private remote-management path to my Proxmox server so I could work on the homelab away from home without exposing the Proxmox web interface through a public router port-forward.</p>
+      <div class="actions"><a class="button" href="assets/remote01.pdf">View full case study (PDF) ↗</a><a class="button secondary" href="assets/remote01.pdf" download>Download PDF</a></div>
       <div class="supporting-label">Lab enhancement, not a standalone security domain</div>
     </section>
 
@@ -36,7 +37,7 @@
     </div>
 
     <nav class="toc" aria-label="Case study sections">
-      <a href="#problem">Problem</a><a href="#design">Design</a><a href="#access">Access control</a><a href="#validation">Validation</a><a href="#limits">Limits</a>
+      <a href="#problem">Problem</a><a href="#design">Design</a><a href="#setup">Setup</a><a href="#access">Access control</a><a href="#validation">Validation</a><a href="#evidence">Evidence</a><a href="#lessons">Lessons</a><a href="#limits">Limits</a>
     </nav>
 
     <section id="problem" class="case-section">
@@ -57,6 +58,16 @@
       <div class="note"><strong>Design choice:</strong> Browser VM consoles travel through the Proxmox management interface, so the individual lab VMs do not need their own Tailscale installations for this workflow.</div>
     </section>
 
+    <section id="setup" class="case-section">
+      <p class="eyebrow">GATEWAY SETUP</p>
+      <h2>A small Linux container on the management network</h2>
+      <p>I downloaded the Ubuntu 24.04 standard LXC template and created container 500 as VPN01, with one CPU core, 512MB RAM, 512MB swap, and an 8GB root disk. Its eth0 interface connects to vmbr0 with IPv4 DHCP and no VLAN tag.</p>
+      <p>While the container was stopped, I added <code>/dev/net/tun</code> through Proxmox Device Passthrough. After starting it, I verified the TUN device, the assigned address, and connectivity to the Proxmox management host before installing Tailscale.</p>
+      <div class="evidence-grid"><figure><a href="assets/remote01/container-resources.png"><img src="assets/remote01/container-resources.png" alt="Proxmox VPN01 resources showing one core, 512MB RAM and an 8GB disk" loading="lazy"></a><figcaption><strong>Dedicated gateway.</strong> The resource allocation before TUN passthrough was added.</figcaption></figure><figure><a href="assets/remote01/tun-and-connectivity.png"><img src="assets/remote01/tun-and-connectivity.png" alt="VPN01 console showing the TUN device, DHCP address and three successful probes to Proxmox" loading="lazy"></a><figcaption><strong>Local checks.</strong> TUN is available, eth0 has a DHCP address, and Proxmox responds without packet loss.</figcaption></figure></div>
+      <p>I installed Tailscale inside VPN01 and on the Windows laptop, enrolled both with my personal account, enabled persistent IPv4 forwarding, and approved <code>192.168.1.10/32</code>. Exit-node mode remained off.</p>
+      <p>VPN01 is configured to start at boot. I disabled gateway key expiry to avoid unattended reauthentication interrupting access. The tested recovery covers the container reboot, not a full host restart.</p>
+    </section>
+
     <section id="access" class="case-section">
       <p class="eyebrow">ACCESS CONTROL</p>
       <h2>Limit the path to the device and service I actually needed</h2>
@@ -74,6 +85,7 @@
         </table>
       </div>
       <p>Proxmox still requires its normal application login. The Tailscale policy controls the network path; it does not replace Proxmox authentication.</p>
+      <div class="evidence-grid"><figure class="evidence-wide"><a href="assets/remote01/approved-host-route.png"><img src="assets/remote01/approved-host-route.png" alt="Tailscale route settings showing the selected 192.168.1.10/32 host route with exit-node mode off" loading="lazy"></a><figcaption><strong>Host-scoped routing.</strong> Only Proxmox is advertised. This capture precedes disabling gateway key expiry; the warning was resolved afterward.</figcaption></figure></div>
     </section>
 
     <section id="validation" class="case-section">
@@ -93,6 +105,19 @@
       <p>This confirmed that the remote session depended on the VPN path and that the gateway could recover after a container reboot without repeating registration or setup.</p>
     </section>
 
+    <section id="evidence" class="case-section">
+      <p class="eyebrow">SELECTED EVIDENCE</p>
+      <h2>The management workflow and its recovery</h2>
+      <p>The PDF follows the full implementation and includes the policy and command sequence. These views show the key behaviors. Screenshots are cropped to relevant results without changing settings or output.</p>
+      <div class="evidence-grid"><figure class="evidence-wide"><a href="assets/remote01/hotspot-console.png"><img src="assets/remote01/hotspot-console.png" alt="Proxmox displaying IT-PC01 and Wazuh while the remote laptop is connected to an iPhone hotspot" loading="lazy"></a><figcaption><strong>External access.</strong> The Proxmox dashboard and Windows VM console work over the phone hotspot. Wazuh is reached inside the VM, not directly from the laptop.</figcaption></figure><figure><a href="assets/remote01/vpn-disconnected.png"><img src="assets/remote01/vpn-disconnected.png" alt="Proxmox connection error with the laptop Tailscale client showing Not connected" loading="lazy"></a><figcaption><strong>VPN disconnected.</strong> Proxmox loses connectivity while the laptop remains on the hotspot.</figcaption></figure><figure><a href="assets/remote01/vpn-reconnected.png"><img src="assets/remote01/vpn-reconnected.png" alt="Proxmox connected again with the laptop Tailscale client showing Connected" loading="lazy"></a><figcaption><strong>VPN reconnected.</strong> Proxmox access returns. VPN01 also shows Start at boot set to Yes.</figcaption></figure><figure class="evidence-wide"><a href="assets/remote01/reboot-service-checks.png"><img src="assets/remote01/reboot-service-checks.png" alt="After VPN01 reboot, tailscaled is active and the corrected sysctl check shows IPv4 forwarding enabled" loading="lazy"></a><figcaption><strong>Persistent configuration.</strong> After the container reboot, the service is active and forwarding is 1. An initial systemctl typo is corrected to sysctl.</figcaption></figure><figure class="evidence-wide"><a href="assets/remote01/post-reboot-console.png"><img src="assets/remote01/post-reboot-console.png" alt="IT-PC01 Windows console accessible over iPhone hotspot after the gateway container reboot" loading="lazy"></a><figcaption><strong>Recovery confirmed.</strong> The remote Windows console works again without re-registering VPN01.</figcaption></figure></div>
+    </section>
+    <section id="lessons" class="case-section">
+      <p class="eyebrow">LESSONS AND TRADEOFFS</p>
+      <h2>Verify the workflow and keep the route narrow</h2>
+      <p>The VM console test mattered because a dashboard login alone would not prove I could continue a lab project. The hotspot removed the normal home-network path, and the disconnect/reconnect test confirmed that the session depended on Tailscale.</p>
+      <p>A single-host route and TCP 8006 grant supplied the workflow I needed. Direct access to the lab VLANs was unnecessary for browser consoles. The gateway remains an operational dependency, so backups and a future full-host recovery test are worthwhile next steps.</p>
+    </section>
+
     <section id="limits" class="case-section">
       <p class="eyebrow">OPERATING LIMITS</p>
       <h2>Document what I tested and what I did not</h2>
@@ -105,7 +130,7 @@
       <p class="eyebrow">WHY I KEPT THIS PROJECT</p>
       <h2>A practical improvement to the lab itself.</h2>
       <p>REMOTE01 is smaller than the main domain projects, but it demonstrates Proxmox administration, Linux networking, subnet routing, scoped remote access, operational testing, and clear documentation of validation limits.</p>
-      <a class="button" href="projects.html">Return to project hub →</a>
+      <div class="actions"><a class="button" href="assets/remote01.pdf">Read the full PDF ↗</a><a class="button secondary" href="projects.html">Return to project hub →</a></div>
     </section>
   </main>
 
