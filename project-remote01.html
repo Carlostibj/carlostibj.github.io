@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>REMOTE01 | Secure Proxmox Remote Access with Tailscale | Carlos Tiburcio</title>
+  <meta name="description" content="A supporting infrastructure case study showing secure remote Proxmox management through Tailscale, an unprivileged Ubuntu LXC gateway, host-scoped routing, and access validation.">
+  <meta name="theme-color" content="#132c43">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="nav-wrap">
+      <a class="brand" href="index.html">CT<span>Carlos Tiburcio</span></a>
+      <nav aria-label="Main navigation">
+        <a href="index.html">Home</a><a href="projects.html">Projects</a><a href="certifications.html">Education</a><a href="experience.html">Experience</a><a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="page-hero">
+      <a class="text-link" href="projects.html#roadmap">← Project hub</a>
+      <p class="eyebrow">SUPPORTING INFRASTRUCTURE / REMOTE01</p>
+      <h1>Secure Proxmox Remote Access with Tailscale</h1>
+      <p class="lead">I built a private remote-management path to my Proxmox server so I could work on the homelab away from home without exposing the Proxmox web interface through a public router port-forward.</p>
+      <div class="supporting-label">Lab enhancement, not a standalone security domain</div>
+    </section>
+
+    <div class="metrics">
+      <div><strong>1</strong><span>Dedicated Ubuntu LXC gateway</span></div>
+      <div><strong>/32</strong><span>Route scoped to one management host</span></div>
+      <div><strong>8006</strong><span>Only Proxmox TCP service permitted</span></div>
+      <div><strong>4</strong><span>Observed validation behaviors</span></div>
+    </div>
+
+    <nav class="toc" aria-label="Case study sections">
+      <a href="#problem">Problem</a><a href="#design">Design</a><a href="#access">Access control</a><a href="#validation">Validation</a><a href="#limits">Limits</a>
+    </nav>
+
+    <section id="problem" class="case-section">
+      <p class="eyebrow">THE PROBLEM</p>
+      <h2>Remote access without publishing Proxmox to the internet</h2>
+      <p>My cybersecurity projects run on a Proxmox server at home. I wanted to continue building and testing while away, but I did not want to create a public port-forward to the Proxmox management interface.</p>
+      <p>The solution also had to fit the infrastructure I already had in place, including my ISP router and the lab OPNsense VM.</p>
+    </section>
+
+    <section id="design" class="case-section">
+      <p class="eyebrow">DESIGN</p>
+      <h2>A separate gateway instead of installing VPN software on the host</h2>
+      <p>I created <strong>VPN01</strong>, an unprivileged Ubuntu 24.04 LXC container attached to the Proxmox management bridge. Tailscale runs inside the container rather than directly on the Proxmox host.</p>
+      <div class="architecture-flow" aria-label="Remote access path">
+        <span>Remote Windows laptop</span><b>→</b><span>Tailscale</span><b>→</b><span>VPN01 LXC gateway</span><b>→</b><span>Proxmox :8006</span>
+      </div>
+      <p>VPN01 received a TUN device for Tailscale and persistent IPv4 forwarding. Instead of advertising the full home subnet, it advertises only the Proxmox management address as a <code>/32</code> route.</p>
+      <div class="note"><strong>Design choice:</strong> Browser VM consoles travel through the Proxmox management interface, so the individual lab VMs do not need their own Tailscale installations for this workflow.</div>
+    </section>
+
+    <section id="access" class="case-section">
+      <p class="eyebrow">ACCESS CONTROL</p>
+      <h2>Limit the path to the device and service I actually needed</h2>
+      <p>The initial Tailscale policy was broad. I replaced it with a grant that permits the registered laptop to reach the Proxmox management host on <strong>TCP 8006</strong>.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Control</th><th>REMOTE01 decision</th></tr></thead>
+          <tbody>
+            <tr><td>Source</td><td>Registered Windows laptop in the Tailscale network</td></tr>
+            <tr><td>Destination</td><td>Only the Proxmox management host</td></tr>
+            <tr><td>Route scope</td><td>Single-host <code>/32</code> route instead of the entire home subnet</td></tr>
+            <tr><td>Permitted service</td><td>TCP 8006 for the Proxmox web interface and browser consoles</td></tr>
+            <tr><td>Public exposure</td><td>No public Proxmox port-forward or Dynamic DNS configuration added</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Proxmox still requires its normal application login. The Tailscale policy controls the network path; it does not replace Proxmox authentication.</p>
+    </section>
+
+    <section id="validation" class="case-section">
+      <p class="eyebrow">VALIDATION</p>
+      <h2>Test the path from a different internet connection and after failure</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Test</th><th>Observed result</th></tr></thead>
+          <tbody>
+            <tr><td>Phone hotspot + Tailscale connected</td><td>Proxmox dashboard and browser VM console worked remotely</td></tr>
+            <tr><td>Disconnect Tailscale</td><td>Remote Proxmox connectivity failed</td></tr>
+            <tr><td>Reconnect Tailscale</td><td>Remote access returned</td></tr>
+            <tr><td>Restart VPN01</td><td>Tailscale service and IPv4 forwarding recovered automatically; remote access worked again</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>This confirmed that the remote session depended on the VPN path and that the gateway could recover after a container reboot without repeating registration or setup.</p>
+    </section>
+
+    <section id="limits" class="case-section">
+      <p class="eyebrow">OPERATING LIMITS</p>
+      <h2>Document what I tested and what I did not</h2>
+      <p>A full Proxmox-host reboot recovery test was not performed. I configured VPN01 to start at boot, but the completed recovery test covered the container reboot only.</p>
+      <p>I also did not independently test every denied port or a separate unauthorized device. Those boundaries come from the configured policy and are not presented as completed validation.</p>
+      <div class="note"><strong>Future improvements:</strong> Back up VPN01, verify removal of unneeded nesting, test denied services and an unauthorized device, and perform a controlled full-host restart.</div>
+    </section>
+
+    <section class="contact">
+      <p class="eyebrow">WHY I KEPT THIS PROJECT</p>
+      <h2>A practical improvement to the lab itself.</h2>
+      <p>REMOTE01 is smaller than the main domain projects, but it demonstrates Proxmox administration, Linux networking, subnet routing, scoped remote access, operational testing, and clear documentation of validation limits.</p>
+      <a class="button" href="projects.html">Return to project hub →</a>
+    </section>
+  </main>
+
+  <footer><div class="wrap"><p>© 2026 Carlos Tiburcio · Cybersecurity &amp; Infrastructure</p><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=carlomtj15%40gmail.com" target="_blank" rel="noopener noreferrer">carlomtj15@gmail.com</a></div></footer>
+</body>
+</html>
