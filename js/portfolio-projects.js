@@ -60,6 +60,20 @@ window.PORTFOLIO_PROJECTS = [
     pdf: "assets/det01.pdf",
     featured: true,
     published: true
+  },
+  {
+    id: "ID01",
+    number: "04",
+    title: "Active Directory Identity Abuse & Privilege Monitoring",
+    domain: "Identity Security",
+    domainKey: "identity",
+    status: "Completed and validated",
+    description: "An identity-security lab covering AD account lifecycle events, privileged-group changes, Administrator activity, actor-target attribution, logon-session correlation, and negative testing.",
+    skills: ["Active Directory", "Wazuh", "Windows Security Events", "MITRE ATT&CK", "Identity Investigation"],
+    href: "project-id01.html",
+    pdf: "assets/id01.pdf",
+    featured: true,
+    published: true
   }
 ];
 
@@ -71,7 +85,7 @@ window.PORTFOLIO_ROADMAP = [
   { key: "soc", label: "Security Monitoring / SOC", stage: "soc", state: "active", note: "SOC01", directHref: "project-soc01.html", visible: true },
 
   { key: "detection", label: "Detection Engineering", stage: "tracks", state: "active", note: "Custom detections and investigations", visible: true },
-  { key: "identity", label: "Identity Security", stage: "tracks", state: "next", note: "AD → PAM → Zero Trust → NHI", visible: false },
+  { key: "identity", label: "Identity Security", stage: "tracks", state: "active", note: "AD → PAM → Zero Trust → NHI", visible: true },
   { key: "ai", label: "AI / ML Security", stage: "tracks", state: "next", note: "SOC copilots, agents, ML, AI security", visible: false },
 
   { key: "cloud", label: "Cloud Security", stage: "advanced", state: "planned", note: "Azure / AWS / hybrid identity", visible: false },

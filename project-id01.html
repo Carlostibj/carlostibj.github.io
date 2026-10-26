@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ID01 | Active Directory Identity Abuse &amp; Privilege Monitoring | Carlos Tiburcio</title>
+  <meta name="description" content="An Active Directory identity-security case study by Carlos Tiburcio covering account lifecycle events, privileged-group changes, Administrator activity, actor-target attribution, and Wazuh detection validation.">
+  <meta name="theme-color" content="#132c43">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header><div class="nav-wrap"><a class="brand" href="index.html">CT<span>Carlos Tiburcio</span></a><nav aria-label="Main navigation"><a href="index.html">Home</a><a href="projects.html">Projects</a><a href="certifications.html">Education</a><a href="experience.html">Experience</a><a href="index.html#contact">Contact</a></nav></div></header>
+
+  <main id="main" class="wrap">
+    <section class="page-hero">
+      <a class="text-link" href="projects.html?domain=identity#project-catalog">← Identity Security projects</a>
+      <p class="eyebrow">04 / ID01</p>
+      <h1>Active Directory Identity Abuse &amp; Privilege Monitoring</h1>
+      <p class="lead">I built and validated a Wazuh detection layer for high-value Active Directory changes, with enough context to answer two questions quickly: who performed the action, and which identity or privilege was affected?</p>
+      <p><strong>Balcom Insurance</strong> is a fictional company I use to give the lab a realistic structure. Every account and administrative action shown here was created specifically for controlled testing in my personal homelab.</p>
+      <div class="actions"><a class="button" href="assets/id01.pdf">View full case study (PDF) ↗</a><a class="button secondary" href="assets/id01.pdf" download>Download PDF</a></div>
+    </section>
+
+    <div class="metrics"><div><strong>9</strong><span>Custom Wazuh rules</span></div><div><strong>9</strong><span>Windows event types</span></div><div><strong>3</strong><span>MITRE ATT&amp;CK mappings</span></div><div><strong>1</strong><span>Negative control</span></div></div>
+
+    <nav class="toc" aria-label="Case study sections"><a href="#overview">Overview</a><a href="#architecture">Design</a><a href="#coverage">Coverage</a><a href="#validation">Validation</a><a href="#evidence">Evidence</a><a href="#lessons">Lessons</a><a href="#outcome">Outcome</a></nav>
+
+    <section id="overview" class="case-section">
+      <p class="eyebrow">THE OBJECTIVE</p><h2>Make identity changes useful to an investigator</h2>
+      <p>Active Directory records important security events, but a raw event ID is only the starting point. I wanted a focused monitoring layer that elevated risky actions, preserved actor-versus-target context, and connected privileged activity across a single logon session.</p>
+      <p>The project covered account creation and deletion, enable and disable actions, password resets, Domain Admins membership changes, privileged logons, and command-shell activity by the built-in domain Administrator. I validated each path with controlled actions and kept the test identities separate from normal lab accounts.</p>
+      <div class="note"><strong>Why this matters:</strong> identity abuse often looks like legitimate administration. The useful distinction comes from the combination of actor, target, privilege, timing, and follow-on activity—not from an event ID in isolation.</div>
+    </section>
+
+    <section id="architecture" class="case-section">
+      <p class="eyebrow">LAB &amp; DETECTION DESIGN</p><h2>Delegated administration, centralized telemetry, focused rules</h2>
+      <p>DC01 in the <code>homelab.internal</code> domain generated the Security events and forwarded them through its Wazuh agent to WAZUH01. I created a dedicated <code>ID01-Lab</code> organizational unit, a delegated operator, a normal target identity, and a disposable lifecycle account.</p>
+      <div class="table-wrap"><table><thead><tr><th>Identity</th><th>Purpose</th><th>Security boundary</th></tr></thead><tbody>
+        <tr><td><strong>id01.operator</strong></td><td>Performed delegated account-management tests</td><td>Not a Domain Admin; scoped to the ID01 OU</td></tr>
+        <tr><td><strong>id01.target</strong></td><td>Received controlled privileged-group changes</td><td>Normal user before and after testing</td></tr>
+        <tr><td><strong>id01.rule01</strong></td><td>Disposable lifecycle test account</td><td>Deleted during cleanup</td></tr>
+        <tr><td><strong>Administrator</strong></td><td>Generated privileged logon and process activity</td><td>Matched by the domain RID-500 SID suffix</td></tr>
+      </tbody></table></div>
+      <p>Using a delegated operator was important. It proved that ordinary account administration could be attributed without turning the test account into a Domain Admin. A denied interactive logon on DC01 also confirmed that the delegation did not silently grant broader logon rights.</p>
+    </section>
+
+    <section id="coverage" class="case-section">
+      <p class="eyebrow">DETECTION COVERAGE</p><h2>Nine rules organized around identity risk</h2>
+      <div class="table-wrap"><table><caption>Custom rules in id01_rules.xml</caption><thead><tr><th>Rule</th><th>Level</th><th>Event</th><th>Detection purpose</th></tr></thead><tbody>
+        <tr><td>110200</td><td>8</td><td>4720</td><td>Account created</td></tr><tr><td>110201</td><td>7</td><td>4722</td><td>Account enabled</td></tr><tr><td>110202</td><td>10</td><td>4724</td><td>Password reset</td></tr><tr><td>110203</td><td>7</td><td>4725</td><td>Account disabled</td></tr><tr><td>110204</td><td>9</td><td>4726</td><td>Account deleted</td></tr><tr><td>110205</td><td>12</td><td>4728</td><td>Member added to Domain Admins</td></tr><tr><td>110206</td><td>10</td><td>4729</td><td>Member removed from Domain Admins</td></tr><tr><td>110207</td><td>9</td><td>4672</td><td>RID-500 Administrator privileged logon</td></tr><tr><td>110208</td><td>10</td><td>4688</td><td>RID-500 Administrator command shell</td></tr>
+      </tbody></table></div>
+      <p>The descriptions surface the actor, target or member, group, logon ID, process, and command line where those fields are available. Rules 110205, 110206, 110207, and 110208 also map the tested behavior to MITRE ATT&amp;CK T1098, T1531, T1078.002, and T1059 as appropriate.</p>
+    </section>
+
+    <section id="validation" class="case-section">
+      <p class="eyebrow">VALIDATION METHOD</p><h2>Positive tests, correlation, and one deliberate non-alert</h2>
+      <ol class="timeline-bullets"><li>I exercised the complete account lifecycle with <code>id01.operator</code> acting on <code>id01.rule01</code> and verified actor-target attribution in Wazuh.</li><li>I added <code>id01.target</code> to Domain Admins as Administrator, confirmed the high-severity alert, then removed the membership and verified the removal alert.</li><li>I joined Event 4624, 4672, and 4688 records by a shared logon ID to reconstruct logon → special privileges → process creation.</li><li>I launched a marked <code>cmd.exe</code> process as the built-in Administrator and confirmed rule 110208 captured its parent, child, command line, SID, and logon ID.</li><li>I repeated the same process pattern as <code>id01.operator</code>. Raw Event 4688 telemetry arrived, but rule 110208 correctly stayed quiet because the actor SID did not end in RID 500.</li></ol>
+      <div class="note"><strong>What the negative control proved:</strong> the quiet result was caused by the identity condition, not a missing event or broken collection pipeline.</div>
+    </section>
+
+    <section id="evidence" class="case-section">
+      <p class="eyebrow">SELECTED EVIDENCE</p><h2>Four views that show the detection working end to end</h2>
+      <p>The webpage keeps the evidence concise. The PDF includes the complete rule matrix, additional lifecycle records, cleanup verification, and final Wazuh health check.</p>
+      <div class="evidence-grid">
+        <figure class="evidence-wide"><a href="assets/id01/investigation-overview.png"><img src="assets/id01/investigation-overview.png" alt="Wazuh investigation table showing ID01 rule IDs, levels, Windows events, agent, and descriptions"></a><figcaption><strong>Investigation view.</strong> A saved ID01 search presents the custom rule, severity, event ID, source agent, and human-readable actor/target context in one table.</figcaption></figure>
+        <figure><a href="assets/id01/domain-admin-addition.png"><img src="assets/id01/domain-admin-addition.png" alt="Windows Event 4728 showing Administrator adding ID01 Target to Domain Admins"></a><figcaption><strong>Privilege escalation evidence.</strong> Event 4728 identifies Administrator as the actor, ID01 Target as the member, and Domain Admins as the affected group.</figcaption></figure>
+        <figure><a href="assets/id01/logon-privilege-process-correlation.png"><img src="assets/id01/logon-privilege-process-correlation.png" alt="Wazuh table correlating Event 4624, 4672, and 4688 records by a shared logon ID"></a><figcaption><strong>Session reconstruction.</strong> A shared logon ID connects the successful logon, special-privilege assignment, and subsequent process creation.</figcaption></figure>
+        <figure><a href="assets/id01/administrator-shell-detection.png"><img src="assets/id01/administrator-shell-detection.png" alt="Rule 110208 alert showing Administrator, RID-500 SID, cmd.exe, PowerShell parent, command line, and logon ID"></a><figcaption><strong>Administrator shell detection.</strong> Rule 110208 captured the built-in Administrator launching a marked command shell from PowerShell.</figcaption></figure>
+        <figure><a href="assets/id01/operator-negative-control-event.png"><img src="assets/id01/operator-negative-control-event.png" alt="Raw Event 4688 showing id01.operator running the negative-control command shell"></a><figcaption><strong>Negative control.</strong> The same process pattern arrived as raw telemetry for id01.operator, but the Administrator-only custom rule did not fire.</figcaption></figure>
+      </div>
+      <p class="evidence-more"><a class="text-link" href="assets/id01.pdf">View the full technical evidence in the PDF →</a></p>
+    </section>
+
+    <section id="lessons" class="case-section">
+      <p class="eyebrow">TROUBLESHOOTING &amp; LESSONS</p><h2>The project improved when I tested the boundaries</h2>
+      <details open><summary>A lifecycle query returned no 4720 result</summary><p>I verified the time range and searched by the target identity instead of assuming the event was absent. The surrounding records exposed the actual test sequence and helped me separate a search problem from an audit problem.</p></details>
+      <details><summary>The delegated operator could not log on to DC01</summary><p>The <code>runas</code> attempt returned Windows error 1385 because the account did not have that logon right. I kept the least-privilege boundary intact and moved the operator test to IT-PC01 instead of broadening DC01 access for convenience.</p></details>
+      <details><summary>Raw process telemetry existed, but the custom rule did not fire</summary><p>That was the intended negative control. The operator event used a SID ending in 1625, while rule 110208 requires the built-in Administrator SID ending in 500.</p></details>
+      <details><summary>The investigation crossed more than one day</summary><p>I expanded the Wazuh search to seven days and saved a reusable ID01 investigation view. That produced a defensible project-wide result set without relying on a narrow “last 24 hours” window.</p></details>
+      <h3>How I would investigate a real alert</h3><ol class="timeline-bullets"><li>Validate the actor, target, group, domain controller, timestamp, and record ID.</li><li>Determine whether the action matches an approved change and the actor’s normal scope.</li><li>Pivot on the actor’s logon ID to review authentication, assigned privileges, and follow-on processes.</li><li>Check for persistence or escalation: additional group changes, password resets, new accounts, or remote activity.</li><li>Contain only after preserving evidence and confirming that the activity is unauthorized or unsafe.</li></ol>
+    </section>
+
+    <section id="outcome" class="case-section">
+      <p class="eyebrow">OUTCOME &amp; LIMITS</p><h2>A validated identity-monitoring baseline, not just a list of event IDs</h2>
+      <p>ID01 produced a reusable Wazuh ruleset and investigation workflow for the highest-value identity actions in this lab. All positive paths fired as designed, the Administrator command-shell negative control stayed quiet for a non-RID-500 account, and final cleanup confirmed that no test account retained Domain Admin membership.</p>
+      <p>The project demonstrates identity-security engineering, detection development, Windows event analysis, and incident-investigation thinking. It also builds directly on the centralized telemetry from SOC01 and the validation discipline developed in DET01.</p>
+      <div class="note"><strong>Coverage boundary:</strong> the rules target the tested events and the built-in domain Administrator account. They do not by themselves detect every privileged user, nested group path, directory replication abuse, service-account misuse, or cloud identity change. Those require additional identity context and detection logic.</div>
+    </section>
+
+    <section class="contact"><p class="eyebrow">PROJECT OUTCOME</p><h2>ID01 is complete, validated, and cleaned up.</h2><p>The full PDF contains the architecture, nine-rule matrix, validation evidence, correlation workflow, negative control, troubleshooting notes, response approach, and limitations.</p><a class="button" href="assets/id01.pdf">Explore the full evidence (PDF) ↗</a></section>
+  </main>
+  <footer><div class="wrap"><p>© 2026 Carlos Tiburcio · Cybersecurity &amp; Infrastructure</p><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=carlomtj15%40gmail.com" target="_blank" rel="noopener noreferrer">carlomtj15@gmail.com</a></div></footer>
+</body>
+</html>
