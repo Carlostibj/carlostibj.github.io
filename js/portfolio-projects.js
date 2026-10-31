@@ -74,11 +74,25 @@ window.PORTFOLIO_PROJECTS = [
     pdf: "assets/id01.pdf",
     featured: true,
     published: true
+  },
+  {
+    id: "NET01",
+    number: "05",
+    title: "Segmented Office Network with Cisco Switching & Routing",
+    domain: "Networking",
+    domainKey: "networking",
+    status: "Completed and validated",
+    description: "A Cisco Packet Tracer extension of INFRA-BASE-v1: six VLANs, two switches, 802.1Q trunks, router-on-a-stick routing, four DHCP pools, and verified client/server connectivity.",
+    skills: ["Cisco IOS", "VLANs & Trunking", "Inter-VLAN Routing", "DHCP", "Network Troubleshooting"],
+    href: "project-net01.html",
+    pdf: "assets/net01.pdf",
+    featured: true,
+    published: true
   }
 ];
 
 window.PORTFOLIO_ROADMAP = [
-  { key: "networking", label: "Networking", stage: "foundation", state: "foundation", note: "Cisco coursework and network design", visible: false },
+  { key: "networking", label: "Networking", stage: "foundation", state: "active", note: "Cisco switching, routing, and troubleshooting", visible: true },
   { key: "foundation", label: "Infrastructure Foundation", stage: "foundation", state: "active", note: "INFRA-BASE-v1", directHref: "project-enterprise-proxmox-lab.html", visible: true },
   { key: "sysadmin", label: "Systems Administration", stage: "foundation", state: "foundation", note: "Core Windows and Linux administration", visible: false },
 
@@ -226,5 +240,10 @@ window.PORTFOLIO_STAGES = [
   document.querySelectorAll("[data-domain-reset]").forEach(el => {
     el.hidden = !activeDomain;
   });
+
+  // The catalog starts hidden; apply its incoming anchor after rendering.
+  if (activeDomain && window.location.hash === "#project-catalog") {
+    requestAnimationFrame(() => document.getElementById("project-catalog")?.scrollIntoView());
+  }
 })();
 

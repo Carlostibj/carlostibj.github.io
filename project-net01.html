@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NET01 | Cisco Switching &amp; Routing | Carlos Tiburcio</title>
+  <meta name="description" content="A Cisco Packet Tracer networking case study: six VLANs, two switches, 802.1Q trunks, router-on-a-stick routing, four DHCP pools, and verified client and server connectivity.">
+  <meta name="theme-color" content="#132c43">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+<header><div class="nav-wrap"><a class="brand" href="index.html">CT<span>Carlos Tiburcio</span></a><nav aria-label="Main navigation"><a href="index.html">Home</a><a href="projects.html">Projects</a><a href="certifications.html">Education</a><a href="experience.html">Experience</a><a href="index.html#contact">Contact</a></nav></div></header>
+  <main id="main" class="wrap">
+    <section class="page-hero">
+      <a class="text-link" href="projects.html?domain=networking#project-catalog">← Networking projects</a>
+      <p class="eyebrow">05 / NET01 / CISCO PACKET TRACER</p>
+      <h1>Segmented Office Network with Cisco Switching &amp; Routing</h1>
+      <p class="lead">I adapted the network architecture from INFRA-BASE-v1 into a Cisco Packet Tracer lab to practice access-port configuration, VLAN trunking, inter-VLAN routing, DHCP, and methodical connectivity checks.</p>
+      <p><strong>Balcom Insurance</strong> is the fictional company behind my homelab. NET01 is an independent simulation of its office network, with Cisco switches and a router taking the place of the virtual switching and OPNsense routing used in the original build.</p>
+      <div class="actions"><a class="button" href="assets/net01.pdf">View full case study (PDF) ↗</a><a class="button secondary" href="assets/net01.pdf" download>Download PDF</a><a class="button secondary" href="assets/net01/configuration-reference.md" download>Configuration reference</a></div>
+    </section>
+
+    <div class="metrics"><div><strong>6</strong><span>VLANs and routed subnets</span></div><div><strong>2</strong><span>Cisco access switches</span></div><div><strong>4</strong><span>Verified DHCP client leases</span></div><div><strong>2</strong><span>Static infrastructure endpoints</span></div></div>
+    <nav class="toc" aria-label="Case study sections"><a href="#objective">Objective</a><a href="#design">Design</a><a href="#implementation">Implementation</a><a href="#evidence">Evidence</a><a href="#lessons">Troubleshooting</a><a href="#outcome">Outcome</a></nav>
+
+    <section id="objective" class="case-section">
+      <p class="eyebrow">THE OBJECTIVE</p><h2>Build the network behind the lab</h2>
+      <p>My infrastructure and security projects depend on working network paths. For NET01, I focused on the configuration behind those paths: which VLAN an endpoint belongs to, which links carry that VLAN, where its gateway lives, and how it receives an address.</p>
+      <p>I built one office with IT, Sales, HR, Marketing, Servers, and Monitoring networks. The aim was a working baseline I could explain and troubleshoot, then extend with controlled faults, replacement hardware, and another building.</p>
+    </section>
+
+    <section id="design" class="case-section">
+      <p class="eyebrow">ARCHITECTURE</p><h2>Familiar subnets, explicit switch and router roles</h2>
+      <figure class="net01-topology"><a href="assets/net01/topology.svg"><img src="assets/net01/topology.svg" alt="NET01 topology: R1 connects to SW1 over a six-VLAN trunk. SW1 serves IT, Server and Monitoring, and connects to SW2 over a trunk for Sales, HR and Marketing." width="1050" height="465"></a><figcaption>Logical topology redrawn from the documented build. The full PDF includes the physical port map.</figcaption></figure>
+      <p>A Cisco 2911 provides the six gateways through subinterfaces on <code>Gi0/0</code>. Two Cisco 2960-24TT switches carry the VLANs. SW1 hosts IT and the infrastructure endpoints; SW2 hosts Sales, HR, and Marketing.</p>
+      <div class="table-wrap"><table><caption>NET01 addressing plan. All networks use a /24 mask.</caption><thead><tr><th>VLAN</th><th>Purpose</th><th>Subnet</th><th>Gateway</th><th>Addressing</th></tr></thead><tbody>
+        <tr><td>10</td><td>IT</td><td>10.20.10.0/24</td><td>10.20.10.1</td><td>DHCP</td></tr>
+        <tr><td>20</td><td>Sales</td><td>10.20.20.0/24</td><td>10.20.20.1</td><td>DHCP</td></tr>
+        <tr><td>30</td><td>HR</td><td>10.20.30.0/24</td><td>10.20.30.1</td><td>DHCP</td></tr>
+        <tr><td>40</td><td>Marketing</td><td>10.20.40.0/24</td><td>10.20.40.1</td><td>DHCP</td></tr>
+        <tr><td>110</td><td>Servers</td><td>10.10.20.0/24</td><td>10.10.20.1</td><td>SERVER01: .100 static</td></tr>
+        <tr><td>160</td><td>Monitoring</td><td>10.10.30.0/24</td><td>10.10.30.1</td><td>MONITORING01: .100 static</td></tr>
+      </tbody></table></div>
+      <p>The source architecture used separate interfaces for Servers and Monitoring. VLANs 110 and 160 are deliberate mappings for this simulation. The unused Clients network, malware lab, and home/WAN connection are outside NET01.</p>
+    </section>
+
+    <section id="implementation" class="case-section">
+      <p class="eyebrow">IMPLEMENTATION</p><h2>Configure each layer, then check the result</h2>
+      <ol class="timeline-bullets">
+        <li><strong>Access ports:</strong> I created all six VLANs on both switches and assigned each endpoint port to its intended VLAN.</li>
+        <li><strong>Trunks:</strong> SW1 Gi0/2 to SW2 Gi0/1 carries VLANs 20, 30, and 40. SW1 Gi0/1 to R1 Gi0/0 carries all six. Both ends retain native VLAN 1.</li>
+        <li><strong>Routing:</strong> I configured one tagged subinterface and .1 gateway per subnet, then verified that all six were up/up.</li>
+        <li><strong>DHCP:</strong> I created a pool per department and excluded .1 through .99. All four workstations received .100 in their respective subnets. The two servers stayed static.</li>
+        <li><strong>Validation:</strong> I checked gateway reachability, DHCP bindings, selected department-to-department paths, and client/server connectivity.</li>
+      </ol>
+      <div class="note"><strong>Design detail:</strong> R1 directly serves each client VLAN through its subinterfaces, so this topology does not need a DHCP relay. The switches provide Layer 2 connectivity; routing stays on R1.</div>
+    </section>
+
+    <section id="evidence" class="case-section">
+      <p class="eyebrow">SELECTED EVIDENCE</p><h2>From interface state to endpoint reachability</h2>
+      <p>These four views show the main result. Images open at full size. The PDF also includes access-port membership, IT's DHCP settings, and server-to-monitoring tests in both directions.</p>
+      <div class="evidence-grid">
+        <figure><a href="assets/net01/router-subinterfaces.png"><img loading="lazy" src="assets/net01/router-subinterfaces.png" alt="R1 show ip interface brief with six subinterfaces and their gateway addresses, all up/up" width="621" height="178"></a><figcaption><strong>Six operational gateways.</strong> R1's physical link and VLAN subinterfaces are up/up. The unused router interfaces remain administratively down.</figcaption></figure>
+        <figure><a href="assets/net01/sw2-trunk-forwarding.png"><img loading="lazy" src="assets/net01/sw2-trunk-forwarding.png" alt="SW2 show interfaces trunk with VLANs 20, 30 and 40 allowed, active and forwarding" width="624" height="168"></a><figcaption><strong>Trunk forwarding.</strong> The final SW2 output lists VLANs 20, 30, and 40 as allowed, active, and forwarding after convergence.</figcaption></figure>
+        <figure class="evidence-wide"><a href="assets/net01/dhcp-bindings.png"><img loading="lazy" src="assets/net01/dhcp-bindings.png" alt="R1 DHCP bindings showing four automatic leases: 10.20.10.100, 10.20.20.100, 10.20.30.100 and 10.20.40.100" width="630" height="108"></a><figcaption><strong>Four actual leases.</strong> A pool being configured is not enough; these bindings confirm that each departmental client received an address.</figcaption></figure>
+        <figure class="evidence-wide"><a href="assets/net01/department-connectivity.png"><img loading="lazy" src="assets/net01/department-connectivity.png" alt="Sales, HR and Marketing command prompts each showing successful pings to SERVER01 at 10.10.20.100 with zero packet loss" width="1870" height="613"></a><figcaption><strong>End-user validation.</strong> Sales, HR, and Marketing each reached SERVER01 with four replies and 0% packet loss after the DHCP leases appeared.</figcaption></figure>
+      </div>
+      <p class="evidence-more"><a class="text-link" href="assets/net01.pdf">Open the complete evidence package →</a></p>
+    </section>
+
+    <section id="lessons" class="case-section">
+      <p class="eyebrow">TROUBLESHOOTING &amp; LESSONS</p><h2>Check the current state before assuming a fault</h2>
+      <details open><summary>One side of the switch link was a trunk before the other</summary><p>The other switch reported an 802.1Q BPDU on a non-trunk port. I completed the matching trunk configuration and let spanning tree converge. A later check showed all three required VLANs forwarding. I used the settled state to judge the result.</p></details>
+      <details><summary>The router-facing trunk was configured but down</summary><p>SW1's trunk configuration was present, but R1's physical interface still needed to be enabled. After <code>no shutdown</code> on Gi0/0, the link came up and the configured subinterfaces reached up/up.</p></details>
+      <details><summary>Only IT appeared in the DHCP binding table</summary><p>The other PCs still needed to request leases. Once I selected DHCP on Sales, HR, and Marketing, R1 listed four bindings. This separated server-side pool configuration from client-side address acquisition.</p></details>
+      <details><summary>A failed ping used the wrong destination</summary><p>The failed attempt targeted 10.10.20.11. The intended server was 10.10.20.100, and the corrected test succeeded. Checking the destination avoided an unnecessary configuration change.</p></details>
+      <p class="lesson">My diagnostic order: endpoint settings, gateway reachability, access VLAN, trunk forwarding, then the router interface. Compare with a working department to narrow the scope.</p>
+    </section>
+
+    <section id="outcome" class="case-section">
+      <p class="eyebrow">OUTCOME &amp; NEXT STEPS</p><h2>A documented baseline for practical network support</h2>
+      <p>NET01 gave me a working six-subnet office network and evidence for each major part of the build. It develops the port mapping, VLAN configuration, IP inventory, and troubleshooting skills used in network support, while making the traffic paths behind my security lab easier to explain.</p>
+      <div class="note"><strong>Scope:</strong> this is simulated Cisco IOS practice. VLANs separate broadcast domains, but inter-VLAN traffic is currently routed without ACL restrictions. DNS, Internet access, redundancy, application services, and reboot persistence were not validated in this project.</div>
+      <p>The <a href="assets/net01/configuration-reference.md">configuration reference</a> reconstructs the documented commands and verification steps; it is not an exported running configuration. The Packet Tracer file was not supplied for publication. Planned follow-up labs cover deliberate faults, switch replacement, a second building, routing between sites, redundancy, and access controls.</p>
+    </section>
+
+    <section class="contact"><p class="eyebrow">CONTINUE EXPLORING</p><h2>Networking is now its own project track.</h2><p>NET01 connects the infrastructure work to focused switching and routing practice. Future NET projects will appear in the same Networking section as they are completed.</p><div class="actions"><a class="button" href="assets/net01.pdf">Read the full case study ↗</a><a class="button secondary" href="projects.html?domain=networking#project-catalog">Networking projects →</a><a class="button secondary" href="project-enterprise-proxmox-lab.html">Original INFRA-BASE-v1 →</a></div></section>
+  </main>
+  <footer><div class="wrap"><p>© 2026 Carlos Tiburcio · Cybersecurity &amp; Infrastructure</p><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=carlomtj15%40gmail.com" target="_blank" rel="noopener noreferrer">carlomtj15@gmail.com</a></div></footer>
+</body>
+</html>

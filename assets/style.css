@@ -9,3 +9,6 @@
 
 /* Supporting lab enhancements */
 .supporting-projects{padding-top:48px}.supporting-list .project-card{border-left:3px solid #7b8da0}.supporting-label{display:inline-block;margin-top:8px;padding:6px 10px;border:1px solid var(--line);border-radius:4px;color:var(--muted);font-size:13px}.architecture-flow{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:24px 0;padding:18px 20px;background:white;border:1px solid var(--line);border-radius:7px}.architecture-flow span{padding:7px 10px;background:#edf2f5;border-radius:4px;font-size:14px;color:var(--ink)}.architecture-flow b{color:var(--accent)}@media(max-width:650px){.architecture-flow{align-items:flex-start;flex-direction:column}.architecture-flow b{transform:rotate(90deg);margin-left:14px}}
+
+/* NET01 exact network diagram */
+.net01-topology{margin:26px 0;background:white;border:1px solid var(--line);border-radius:7px;overflow:hidden}.net01-topology img{display:block;width:100%;height:auto}.net01-topology figcaption{padding:14px 18px;color:var(--muted);font-size:14px}.net01-topology a{display:block}
