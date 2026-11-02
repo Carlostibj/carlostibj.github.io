@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NET02 | Layer 2 Endpoint Investigation | Carlos Tiburcio</title>
+  <meta name="description" content="A Packet Tracer investigation tracing three flagged MAC addresses through switch tables and CDP, containing their endpoint ports, and validating remaining reachability.">
+  <meta name="theme-color" content="#132c43">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+<header><div class="nav-wrap"><a class="brand" href="index.html">CT<span>Carlos Tiburcio</span></a><nav aria-label="Main navigation"><a href="index.html">Home</a><a href="projects.html">Projects</a><a href="certifications.html">Education</a><a href="experience.html">Experience</a><a href="index.html#contact">Contact</a></nav></div></header>
+  <main id="main" class="wrap">
+<section class="page-hero">
+<a class="text-link" href="projects.html?domain=networking#project-catalog">← Networking projects</a>
+<p class="eyebrow">06 / NET02 / CISCO PACKET TRACER</p>
+<h1>Tracing &amp; Containing Suspicious Network Endpoints</h1>
+<p class="lead">I followed three flagged MAC addresses through an unfamiliar switched network, located their endpoint ports, and disabled those connections while checking that the remaining hosts still responded.</p>
+<p>This investigation uses Practical Networking’s <strong>Find the Imposter – Layer 2</strong> challenge. The topology and flagged addresses were supplied; I carried out the CLI investigation with coaching on command use and evidence interpretation.</p>
+<div class="actions"><a class="button" href="assets/net02.pdf">View full case study (PDF) ↗</a><a class="button secondary" href="assets/net02.pdf" download>Download PDF</a></div>
+</section>
+<div class="metrics"><div><strong>3</strong><span>Flagged MAC addresses traced</span></div><div><strong>3</strong><span>Endpoint ports disabled</span></div><div><strong>8</strong><span>Remaining ICMP responders</span></div><div><strong>3</strong><span>Configuration saves confirmed</span></div></div>
+<nav class="toc" aria-label="Case study sections"><a href="#objective">Objective</a><a href="#method">Method</a><a href="#findings">Findings</a><a href="#evidence">Evidence</a><a href="#outcome">Outcome</a></nav>
+<section id="objective" class="case-section"><p class="eyebrow">THE OBJECTIVE</p><h2>Locate the host without guessing or inspecting its console</h2>
+<p>The brief identified three MAC addresses as malicious. Starting at Switch0, I had to trace each one to its attachment port and shut that port down. The rules prohibited access to PC1 through PC10 and random switch visits.</p>
+<p>The practical challenge was distinguishing a shared transit link from a host connection. A MAC entry on an uplink tells me where to look next; disabling it could disconnect other users.</p>
+<div class="note"><strong>Scope:</strong> this is a simulated endpoint-location and containment exercise. The lab supplied the suspicious indicators. I did not independently detect malware, investigate malicious traffic, or remediate the PCs.</div></section>
+<section id="method" class="case-section"><p class="eyebrow">INVESTIGATION METHOD</p><h2>Follow the evidence one hop at a time</h2>
+<ol class="timeline-bullets">
+<li><strong>Refresh the evidence:</strong> the first MAC table lacked the targets after I stopped the traffic generator. I restarted <code>ping -t 10.9.9.255</code> on PC0 and left it running. The refreshed table included all three targets. Aging was a plausible explanation for the earlier sparse table; I did not measure the timer.</li>
+<li><strong>Find the learned port:</strong> <code>show mac address-table</code> located each target. All three initially pointed through Switch0 Fa0/1, then Switch1 Fa0/2.</li>
+<li><strong>Identify the next switch:</strong> <code>show cdp neighbors</code> mapped each local port to its neighbor. The shared path led to Switch4, where the targets split toward Switch9, Switch10, and Switch12.</li>
+<li><strong>Confirm the attachment:</strong> I checked interface status, operational access mode, VLAN 1 membership, and cable connections. The absence of a CDP entry alone would not prove that a port connects to a PC.</li>
+<li><strong>Contain and verify:</strong> I disabled only the three endpoint ports, checked for <code>disabled</code> status, saved each switch configuration, and compared fresh ICMP responders with the initial baseline.</li>
+</ol></section>
+<section id="findings" class="case-section"><p class="eyebrow">FINDINGS &amp; CHANGE RECORD</p><h2>Three targets, three confirmed attachments</h2>
+<p>All three traces shared Switch0 → Switch1 → Switch4. From there, each target led to a different endpoint switch. I completed one trace before following the next branch.</p>
+<div class="table-wrap"><table><caption>Final attachment map. All observed target entries were in VLAN 1.</caption><thead><tr><th>Target MAC</th><th>Switch4 next hop</th><th>Attachment port</th><th>Endpoint</th><th>Result</th></tr></thead><tbody>
+<tr><td><code>0001.9666.3d1b</code></td><td>Fa0/2 → Switch9</td><td>Switch9 Fa0/4</td><td>PC1</td><td>Disabled; saved [OK]</td></tr>
+<tr><td><code>0000.0c07.be8e</code></td><td>Fa0/3 → Switch10</td><td>Switch10 Fa0/7</td><td>PC4</td><td>Disabled; saved [OK]</td></tr>
+<tr><td><code>0006.2a55.34de</code></td><td>Fa0/5 → Switch12</td><td>Switch12 Fa0/7</td><td>PC8</td><td>Disabled; saved [OK]</td></tr>
+</tbody></table></div>
+<p>I used <code>shutdown</code> on each confirmed attachment and <code>copy running-config startup-config</code> to save the change. The screenshots show successful saves on all three switches. I did not perform a reload test.</p></section>
+<section id="evidence" class="case-section"><p class="eyebrow">SELECTED EVIDENCE</p><h2>From a learned MAC to a targeted disconnection</h2><p>Images open at full size. The nine-page PDF includes the initial evidence gap, hop-by-hop tables, port checks, and all three configuration saves.</p><div class="evidence-grid">
+<figure class="evidence-wide"><a href="assets/net02/switch4-branches.png"><img loading="lazy" src="assets/net02/switch4-branches.png" alt="Switch4 MAC table and CDP output showing target paths toward Switch9, Switch10, and Switch12" width="787" height="437"></a><figcaption><strong>The branch point.</strong> Switch4’s MAC table and CDP neighbors identify which switch to inspect for each target.</figcaption></figure>
+<figure class="evidence-wide"><a href="assets/net02/switch9-trace.png"><img loading="lazy" src="assets/net02/switch9-trace.png" alt="Switch9 learns 0001.9666.3d1b on Fa0/4, which has no CDP neighbor" width="785" height="255"></a><figcaption><strong>The final learned port.</strong> Switch9 learns the first target on Fa0/4. Interface and cable checks then confirm the PC1 attachment.</figcaption></figure>
+<figure><a href="assets/net02/remaining-responses.png"><img loading="lazy" src="assets/net02/remaining-responses.png" alt="PC0 fresh broadcast ping with eight distinct responding IP addresses" width="764" height="373"></a><figcaption><strong>Remaining reachability.</strong> A fresh PC0 broadcast ping shows eight distinct responding IPs after containment.</figcaption></figure>
+<figure><a href="assets/net02/contained-endpoints.png"><img loading="lazy" src="assets/net02/contained-endpoints.png" alt="Packet Tracer endpoint links showing PC1, PC4, and PC8 disconnected" width="503" height="712"></a><figcaption><strong>Targeted disconnections.</strong> PC1, PC4, and PC8 have red links. Other endpoint links remain green.</figcaption></figure>
+</div></section>
+<section id="outcome" class="case-section"><p class="eyebrow">OUTCOME &amp; LESSONS</p><h2>Confirm the change and check what still works</h2>
+<p>The final ping showed replies from 10.9.9.254, .102, .103, .105, .106, .108, .109, and .110. That is eight distinct responders, compared with eleven initially. Together with the disabled attachment ports and disconnected endpoint links, this supports the intended containment result.</p>
+<p>I compared distinct responders rather than treating the broadcast ping’s aggregate counters as ordinary packet-loss statistics: in this simulation, one request can receive multiple replies. The check demonstrates ICMP reachability from PC0 during the test, not application availability or all-pairs connectivity.</p>
+<p>The main lesson was to keep each decision tied to current evidence. A sparse MAC table does not prove a device is gone. A missing CDP entry does not prove there is no connection. A learned uplink is a direction to investigate, not automatically the right place to make a change.</p>
+<p>This work develops practical switch-port tracing, device-location, and containment habits that support both network operations and security investigations.</p>
+<div class="note"><strong>Lab attribution:</strong> <a href="https://www.practicalnetworking.net/stand-alone/packet-tracer-labs/" target="_blank" rel="noopener noreferrer">Practical Networking – Find the Imposter, Layer 2</a>. The network design and challenge belong to the author. This page documents my guided investigation and results; the original exercise file is not redistributed.</div>
+</section>
+<section class="contact"><p class="eyebrow">CONTINUE EXPLORING</p><h2>Networking: build it, then investigate it.</h2><p>NET01 covers a segmented Cisco office network. NET02 follows evidence through a supplied topology to locate and contain specific endpoints.</p><div class="actions"><a class="button" href="assets/net02.pdf">Read the full case study ↗</a><a class="button secondary" href="projects.html?domain=networking#project-catalog">Networking projects →</a><a class="button secondary" href="project-net01.html">NET01: switching &amp; routing →</a></div></section>
+</main>
+  <footer><div class="wrap"><p>© 2026 Carlos Tiburcio · Cybersecurity &amp; Infrastructure</p><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=carlomtj15%40gmail.com" target="_blank" rel="noopener noreferrer">carlomtj15@gmail.com</a></div></footer>
+</body>
+</html>

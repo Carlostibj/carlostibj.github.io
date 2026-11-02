@@ -88,6 +88,20 @@ window.PORTFOLIO_PROJECTS = [
     pdf: "assets/net01.pdf",
     featured: true,
     published: true
+  },
+  {
+    id: "NET02",
+    number: "06",
+    title: "Tracing & Containing Suspicious Network Endpoints",
+    domain: "Networking",
+    domainKey: "networking",
+    status: "Completed and validated",
+    description: "A Practical Networking Packet Tracer challenge: trace three flagged MAC addresses through MAC tables and CDP, disable their endpoint ports, and verify eight remaining ICMP responders.",
+    skills: ["Cisco IOS", "MAC Address Tracing", "CDP", "Endpoint Containment", "Network Troubleshooting"],
+    href: "project-net02.html",
+    pdf: "assets/net02.pdf",
+    featured: false,
+    published: true
   }
 ];
 

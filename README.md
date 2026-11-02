@@ -26,6 +26,7 @@ A plain HTML/CSS/JavaScript portfolio hosted on GitHub Pages. The site is organi
 - **DET01** — Authentication Attack Detection & Investigation
 - **ID01** — Active Directory Identity Abuse & Privilege Monitoring
 - **NET01** — Segmented Office Network with Cisco Switching & Routing (Networking)
+- **NET02** — Tracing & Containing Suspicious Network Endpoints (Networking)
 - **REMOTE01** — Secure Proxmox Remote Access with Tailscale (supporting lab enhancement)
 
 ## Project publishing workflow
@@ -60,3 +61,5 @@ The visible email address works with any mail provider. Gmail compose links are 
 ## Networking track
 
 `projects.html?domain=networking#project-catalog` is the dedicated Networking catalog. NET01 is the first published entry. Its PDF is `assets/net01.pdf`; its selected screenshots, exact logical diagram, and reconstructed configuration reference are in `assets/net01/`. Future NET projects should reuse this domain.
+
+NET02 documents Practical Networking’s supplied Layer 2 challenge. Its full investigation is in `assets/net02.pdf`; screenshots are in `assets/net02/`. The source exercise is credited on the case-study page and in the PDF.
