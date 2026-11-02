@@ -102,6 +102,20 @@ window.PORTFOLIO_PROJECTS = [
     pdf: "assets/net02.pdf",
     featured: false,
     published: true
+  },
+  {
+    id: "NET03",
+    number: "07",
+    title: "Access Switch Replacement, Migration & Rollback",
+    domain: "Networking",
+    domainKey: "networking",
+    status: "Completed and validated",
+    description: "A planned Cisco access-switch replacement with a port inventory, staged VLAN and trunk configuration, DHCP renewal tests, verified rollback, and final client connectivity checks.",
+    skills: ["Cisco IOS", "Switch Replacement", "VLANs & Trunking", "DHCP Validation", "Migration & Rollback"],
+    href: "project-net03.html",
+    pdf: "assets/net03.pdf",
+    featured: false,
+    published: true
   }
 ];
 
