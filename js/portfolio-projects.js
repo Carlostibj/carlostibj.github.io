@@ -86,6 +86,20 @@ window.PORTFOLIO_PROJECTS = [
     skills: ["Cisco IOS", "VLANs & Trunking", "Inter-VLAN Routing", "DHCP", "Network Troubleshooting"],
     href: "project-net01.html",
     pdf: "assets/net01.pdf",
+    featured: false,
+    published: true
+  },
+  {
+    id: "AI01",
+    number: "08",
+    title: "AI-Assisted SOC Analyst",
+    domain: "AI / ML Security",
+    domainKey: "ai",
+    status: "Completed and validated",
+    description: "An analyst-controlled SOC workspace that correlates Wazuh, Zeek, and Suricata evidence, persists cases, and requests structured Azure AI analysis with explicit uncertainty.",
+    skills: ["Python", "Wazuh", "Zeek", "Suricata", "Azure AI"],
+    href: "project-ai01.html",
+    pdf: "assets/ai01.pdf",
     featured: true,
     published: true
   },
@@ -128,7 +142,7 @@ window.PORTFOLIO_ROADMAP = [
 
   { key: "detection", label: "Detection Engineering", stage: "tracks", state: "active", note: "Custom detections and investigations", visible: true },
   { key: "identity", label: "Identity Security", stage: "tracks", state: "active", note: "AD → PAM → Zero Trust → NHI", visible: true },
-  { key: "ai", label: "AI / ML Security", stage: "tracks", state: "next", note: "SOC copilots, agents, ML, AI security", visible: false },
+  { key: "ai", label: "AI / ML Security", stage: "tracks", state: "active", note: "AI01: evidence-grounded SOC analyst", directHref: "project-ai01.html", visible: true },
 
   { key: "cloud", label: "Cloud Security", stage: "advanced", state: "planned", note: "Azure / AWS / hybrid identity", visible: false },
   { key: "threat-hunting", label: "Threat Hunting", stage: "advanced", state: "planned", note: "Multi-source investigations", visible: false },
@@ -274,4 +288,5 @@ window.PORTFOLIO_STAGES = [
     requestAnimationFrame(() => document.getElementById("project-catalog")?.scrollIntoView());
   }
 })();
+
 
