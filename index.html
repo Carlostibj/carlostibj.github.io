@@ -1,20 +1,159 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cybersecurity & Infrastructure Portfolio | Carlos Tiburcio</title><meta name="description" content="Hands-on infrastructure and cybersecurity projects by Carlos Tiburcio, with documented testing and troubleshooting."><meta name="theme-color" content="#132c43"><link rel="stylesheet" href="assets/style.css"><script defer src="js/portfolio-projects.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header><div class="nav-wrap"><a class="brand" href="index.html">CT<span>Carlos Tiburcio</span></a><nav aria-label="Main navigation"><a href="index.html">Home</a><a href="projects.html">Projects</a><a href="certifications.html">Education</a><a href="experience.html">Experience</a><a href="index.html#contact">Contact</a></nav></div></header><main id="main" class="wrap"><section class="hero"><p class="eyebrow">BRONX, NEW YORK / HANDS-ON TECHNICAL PORTFOLIO</p><h1>Building infrastructure.<br><span>Developing security skills.</span></h1><p class="lead">I'm Carlos Tiburcio. I use my homelab to build and troubleshoot networks, Windows infrastructure, and security monitoring systems while developing the skills I want to use professionally.</p><div class="actions"><a class="button" href="projects.html">View my projects <span>↗</span></a><a class="button secondary" href="#contact">Get in touch</a></div><p class="small">Pursuing entry-level SOC, IT support, and infrastructure opportunities.</p></section><section><div class="section-heading"><div><p class="eyebrow">FEATURED WORK</p><h2>Projects I built, tested, and documented.</h2><p class="section-sub">A few completed projects are featured here for a fast recruiter scan. The full portfolio is organized by technical domain on the Projects page.</p></div><a href="projects.html">Explore project roadmap →</a></div><div class="project-list" data-project-list="featured"></div><noscript><p>Please enable JavaScript to view the project catalog.</p></noscript></section><section id="technical-toolkit" class="skills" aria-labelledby="toolkit-heading">
-<div><p class="eyebrow">TECHNICAL SKILLS</p><h2 id="toolkit-heading">My technical toolkit</h2><p>Skills I use to build, troubleshoot, and investigate in my homelab. Each area links to completed project work, including Cisco Packet Tracer simulations.</p></div>
-<dl>
-<dt>Networking &amp; Cisco IOS</dt>
-<dd>TCP/IP, IPv4 addressing, VLANs, 802.1Q trunking, inter-VLAN routing, DHCP, MAC address tracing, CDP, switch-port identification, and connectivity troubleshooting.<br><a href="project-net01.html">NET01: switching &amp; routing</a> · <a href="project-net02.html">NET02: endpoint tracing</a></dd>
-<dt>Windows Server &amp; Active Directory</dt>
-<dd>AD DS, DNS, organizational units, user and group administration, delegated permissions, Group Policy, domain joins and trust, SMB/NTFS permissions, and AGDLP group nesting.<br><a href="project-enterprise-proxmox-lab.html">INFRA-BASE-v1: Windows infrastructure</a> · <a href="project-id01.html">ID01: delegated administration</a></dd>
-<dt>Linux, virtualization &amp; backups</dt>
-<dd>Proxmox VE, virtual machines, LXC containers, Ubuntu Server, Linux command line, SSH, systemd, Linux networking, LVM expansion, VM snapshots, and VZDump backups.<br><a href="project-enterprise-proxmox-lab.html">INFRA-BASE-v1: lab administration</a> · <a href="project-remote01.html">REMOTE01: Linux gateway</a></dd>
-<dt>Security monitoring &amp; telemetry</dt>
-<dd>Wazuh administration and agent enrollment, Windows audit policy, Sysmon, auditd, journald, Suricata IDS, Zeek, JSON log collection, tcpdump, passive traffic mirroring, and telemetry troubleshooting.<br><a href="project-soc01.html">SOC01: endpoint &amp; network telemetry</a></dd>
-<dt>Detection engineering</dt>
-<dd>Custom Wazuh XML rules, Kerberos event analysis, threshold and time-window correlation, source/account grouping, detection tuning, and positive and negative validation tests.<br><a href="project-det01.html">DET01: authentication detection</a></dd>
-<dt>Identity security &amp; investigation</dt>
-<dd>Windows Security event analysis, account-lifecycle and privileged-group monitoring, actor/target attribution, SID interpretation, logon-session correlation, and MITRE ATT&amp;CK mapping.<br><a href="project-id01.html">ID01: identity &amp; privilege monitoring</a></dd>
-<dt>Firewall policy &amp; remote access</dt>
-<dd>OPNsense, network segmentation, service-based firewall rules, least-privilege access, Tailscale VPN, subnet routing, host-specific routes, and remote-access validation.<br><a href="project-enterprise-proxmox-lab.html">INFRA-BASE-v1: segmentation</a> · <a href="project-remote01.html">REMOTE01: scoped remote access</a></dd>
-<dt>Scripting, validation &amp; documentation</dt>
-<dd>PowerShell administration and validation, Bash scripting, XML/JSON configuration, structured troubleshooting, access-control testing, evidence collection, and technical case studies.<br><a href="project-soc01.html">SOC01: persistent monitoring scripts</a> · <a href="project-det01.html">DET01: test methodology</a></dd>
-</dl></section><section id="contact" class="contact"><p class="eyebrow">LET'S CONNECT</p><h2>Have an opportunity in mind?</h2><p>I'm looking for a role where I can contribute, keep learning, and build on the hands-on experience I've developed through my labs and coursework.</p><p>Email: <strong>carlomtj15@gmail.com</strong>. Copy this address to contact me using any email service.</p><div class="actions"><a class="button" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=carlomtj15%40gmail.com" target="_blank" rel="noopener noreferrer">Email Carlos via Gmail ↗</a></div></section></main><footer><div class="wrap"><p>© 2026 Carlos Tiburcio · Cybersecurity &amp; Infrastructure</p><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=carlomtj15%40gmail.com" target="_blank" rel="noopener noreferrer">carlomtj15@gmail.com</a></div></footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carlos Tiburcio | SOC & Security Analyst Portfolio</title>
+  <meta name="description" content="Carlos Tiburcio builds and defends an enterprise homelab: Active Directory, Wazuh, Sysmon, Suricata, and Zeek, with tested detections and documented case studies.">
+  <meta name="theme-color" content="#0a1520">
+  <meta property="og:title" content="Carlos Tiburcio | SOC & Security Analyst Portfolio">
+  <meta property="og:description" content="Enterprise homelab, tested detections, and documented security case studies.">
+  <meta property="og:image" content="assets/ai01/workspace.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+  <script defer src="js/portfolio-projects.js"></script>
+  <script defer src="js/site.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header data-site-header></header>
+
+  <main id="main">
+    <section class="band hero">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <span class="open-to">Open to SOC analyst, security &amp; IT infrastructure roles · Bronx, NY</span>
+            <h1>I build the network.<br><span class="dim">Then I prove I can defend it.</span></h1>
+            <p class="lead">I'm <strong>Carlos Tiburcio</strong>. My homelab runs a segmented <strong>Active Directory enterprise</strong> monitored with <strong>Wazuh, Sysmon, Suricata, and Zeek</strong>. I write detections, test them against what should and shouldn't fire, and document every project as a case study with evidence.</p>
+            <div class="actions">
+              <a class="button" href="#work">See the case studies ↓</a>
+              <a class="button secondary" href="#contact">Contact me</a>
+            </div>
+          </div>
+
+          <div class="console" aria-label="Lab summary">
+            <div class="console-bar"><i></i><i></i><i></i><span>analyst@homelab.internal</span></div>
+            <div class="console-body">
+              <div><span class="cmd">$</span> lab status</div>
+              <dl>
+                <dt>hypervisor</dt><dd>Proxmox VE · 64 GB host</dd>
+                <dt>network</dt><dd>OPNsense · IT · Sales · HR · Marketing</dd>
+                <dt>identity</dt><dd>AD DS · DNS · DHCP · GPO</dd>
+                <dt>telemetry</dt><dd>Wazuh · Sysmon · auditd</dd>
+                <dt>network ids</dt><dd>Suricata · Zeek (passive)</dd>
+                <dt>detections</dt><dd><span class="ok">● tested</span> positive + negative</dd>
+                <dt>now building</dt><dd><a href="projects.html#roadmap" data-next-project>DET02</a></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <div class="proof" aria-label="Portfolio at a glance">
+          <div><strong data-count="projects">9</strong><span>documented case studies</span></div>
+          <div><strong data-count="rules">11</strong><span>custom Wazuh rules, tested</span></div>
+          <div><strong>7</strong><span>endpoints &amp; sensors reporting to Wazuh</span></div>
+          <div><strong>4</strong><span>telemetry sources centralized</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Featured work</p>
+            <h2>Built, tested, and written up.</h2>
+            <p>Each project includes the design, validation tests, troubleshooting, and a full PDF report.</p>
+          </div>
+          <a class="text-link" href="projects.html">All projects →</a>
+        </div>
+        <div class="cards" data-featured></div>
+        <noscript><p>Enable JavaScript to see project cards, or browse the <a href="projects.html">project list</a>.</p></noscript>
+      </div>
+    </section>
+
+    <section class="section" id="lab">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">How the lab fits together</p>
+            <h2>One environment. Each project builds on the last.</h2>
+            <p>The infrastructure feeds the monitoring platform, the monitoring feeds detections, and detections feed analysis. Click any finished project.</p>
+          </div>
+        </div>
+        <div class="pipeline" data-pipeline></div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Skills, with proof</p>
+            <h2>What I can do, and where you can see it.</h2>
+          </div>
+        </div>
+        <div class="skills-grid">
+          <article class="skill">
+            <h3>Security monitoring &amp; SIEM <small>Wazuh</small></h3>
+            <div class="tags"><span>Wazuh</span><span>Sysmon</span><span>Windows audit policy</span><span>auditd</span><span>Suricata</span><span>Zeek</span><span>Traffic mirroring</span></div>
+            <p class="used-in">Proof: <a href="project-soc01.html">SOC01</a> · <a href="project-ai01.html">AI01</a></p>
+          </article>
+          <article class="skill">
+            <h3>Detection engineering <small>Wazuh XML</small></h3>
+            <div class="tags"><span>Custom rules</span><span>Correlation &amp; thresholds</span><span>Negative testing</span><span>Tuning</span><span>MITRE ATT&amp;CK</span></div>
+            <p class="used-in">Proof: <a href="project-det01.html">DET01</a> · <a href="project-id01.html">ID01</a></p>
+          </article>
+          <article class="skill">
+            <h3>Identity &amp; Active Directory <small>Windows Server</small></h3>
+            <div class="tags"><span>AD DS</span><span>Group Policy</span><span>Kerberos events</span><span>Privileged groups</span><span>Actor vs. target</span><span>NTFS/SMB</span></div>
+            <p class="used-in">Proof: <a href="project-id01.html">ID01</a> · <a href="project-enterprise-proxmox-lab.html">INFRA-BASE-v1</a></p>
+          </article>
+          <article class="skill">
+            <h3>Networking &amp; firewalls <small>Cisco · OPNsense</small></h3>
+            <div class="tags"><span>TCP/IP</span><span>VLANs &amp; 802.1Q</span><span>Inter-VLAN routing</span><span>DHCP/DNS</span><span>Firewall policy</span><span>Tailscale</span></div>
+            <p class="used-in">Proof: <a href="project-net01.html">NET01</a> · <a href="project-net03.html">NET03</a> · <a href="project-remote01.html">REMOTE01</a></p>
+          </article>
+          <article class="skill">
+            <h3>Linux &amp; virtualization <small>Proxmox · Ubuntu</small></h3>
+            <div class="tags"><span>Proxmox VE</span><span>LXC</span><span>systemd</span><span>SSH</span><span>LVM</span><span>Backups &amp; snapshots</span></div>
+            <p class="used-in">Proof: <a href="project-enterprise-proxmox-lab.html">INFRA-BASE-v1</a> · <a href="project-remote01.html">REMOTE01</a></p>
+          </article>
+          <article class="skill">
+            <h3>Scripting &amp; automation <small>Python · PowerShell</small></h3>
+            <div class="tags"><span>Python</span><span>PowerShell</span><span>Bash</span><span>REST APIs</span><span>JSON</span><span>SQLite</span><span>AI-assisted triage</span></div>
+            <p class="used-in">Proof: <a href="project-ai01.html">AI01</a> · <a href="project-soc01.html">SOC01</a></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band contact-band" id="contact">
+      <div class="wrap contact-grid">
+        <div>
+          <p class="eyebrow">Let's talk</p>
+          <h2>Looking for an analyst who checks the quiet cases too?</h2>
+          <p>I'm looking for an entry-level SOC, security, or infrastructure role where I can contribute from day one and keep growing. I'm happy to walk through any project live.</p>
+        </div>
+        <div class="contact-card">
+          <p class="small" style="margin:0">Email</p>
+          <a class="email" data-email href="#"></a>
+          <div class="row">
+            <a class="button" data-email href="#">Send an email</a>
+            <button class="copy-btn" type="button" data-copy-email>Copy address</button>
+          </div>
+          <div class="row" style="margin-top:14px">
+            <a class="text-link" data-link="linkedin" href="#">LinkedIn ↗</a>
+            <a class="text-link" data-link="github" href="#">GitHub ↗</a>
+            <a class="text-link" data-link="resume" href="#">Résumé (PDF) ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer data-site-footer></footer>
+</body>
+</html>

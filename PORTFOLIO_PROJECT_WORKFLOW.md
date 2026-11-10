@@ -1,107 +1,60 @@
-# Portfolio Project Publishing Workflow
+# Publishing a new project
 
-This repository is intentionally structured so future cybersecurity projects can be added without redesigning the site.
+Publishing takes two files plus your assets. The homepage, the Projects page, the filters, the lab pipeline, the homepage totals, and the previous/next links all update themselves.
 
-## Portfolio architecture
+## Checklist
 
-- `index.html`: recruiter-facing homepage. Shows a small set of featured projects and links to the full project hub.
-- `projects.html`: project hub. Shows the portfolio roadmap plus the project catalog.
-- `js/portfolio-projects.js`: single source of truth for project metadata used by the homepage and project hub.
-- `project-*.html`: individual project case-study pages.
-- `assets/*.pdf`: downloadable case-study PDFs.
-- `assets/style.css`: shared visual system.
+1. **Assets.** Put screenshots in `assets/<id>/` (for example `assets/det02/`) and the PDF at `assets/<id>.pdf`.
+2. **Case study page.** Copy `templates/project-template.html` to the site root as `project-<id>.html`. Replace every `[BRACKETED]` value and delete sections you don't need.
+3. **Catalog entry.** Open `js/portfolio-projects.js`:
+   - Add one object to `PORTFOLIO_PROJECTS` (copy the example below).
+   - Delete the same project from `PORTFOLIO_UPCOMING`. The next item there automatically becomes "now building" on the homepage.
+4. **Preview, then push.** Open `index.html` and your new page locally, check phone width, then commit.
 
-## Standard project workflow
-
-Build → troubleshoot → validate → capture screenshots → finish technical work → select strongest evidence → create case study → publish.
-
-Do not interrupt technical work to fully document every step. Capture screenshots while working, then choose only the strongest evidence after the project is complete.
-
-## Documentation standard
-
-Case studies should:
-- Be technically accurate and evidence-based.
-- Use natural first-person language such as "I built", "I tested", "I configured", and "I fixed".
-- Avoid inflated claims, fabricated validation, corporate filler, and AI-sounding phrasing.
-- Explain objective, architecture, implementation, validation, troubleshooting, lessons learned, and outcome.
-- Use only screenshots that materially prove the work.
-- Match the established INFRA-BASE-v1 / SOC01 visual style.
-
-## Adding a completed project
-
-1. Create the project case-study page as `project-<id-or-slug>.html`.
-2. Add the final PDF to `assets/`.
-3. Add or update the project's object in `js/portfolio-projects.js`.
-4. Set:
-   - `published: true`
-   - `href` to the project page
-   - `pdf` to the PDF path
-   - `featured: true` only when the project deserves homepage visibility.
-5. Verify homepage, project hub, project page, PDF link, mobile layout, and navigation.
-6. Keep the homepage curated. Do not show every future project there.
-
-## Project metadata template
+## Catalog entry
 
 ```js
 {
-  id: "ID01",
-  number: "04",
-  title: "Active Directory Identity Abuse & Privilege Monitoring",
-  domain: "Identity Security",
-  domainKey: "identity",
-  status: "Completed",
-  description: "Short recruiter-friendly description.",
-  skills: ["Wazuh", "Active Directory", "Windows Security"],
-  href: "project-id01.html",
-  pdf: "assets/id01.pdf",
-  featured: true,
+  id: "DET02",
+  title: "Suspicious PowerShell Detection & Investigation",
+  domain: "detection",            // foundation | soc | detection | identity | ai | networking | supporting
+  stage: "detect",                // build | monitor | detect | analyze | respond
+  summary: "1–2 sentences: what you built and why it matters.",
+  proof: "3 custom rules · 6 tests · 2 negative controls",   // hard numbers only
+  skills: ["Wazuh", "PowerShell", "Script Block Logging", "Sysmon"],
+  href: "project-det02.html",
+  pdf: "assets/det02.pdf",
+  thumb: "assets/det02/<best-screenshot>.png",  // top-left of the image is what shows
+  featured: 0,                    // 0 = Projects page only; 1 = homepage spotlight; 2+ = homepage order
+  rules: 3,                       // optional: adds to the "custom Wazuh rules" total
   published: true
 }
 ```
 
-## Domain strategy
+Featuring tip: keep 5 projects on the homepage. When a new one deserves the spotlight, give it `featured: 1` and renumber the others.
 
-The project hub is designed around a growing capability map:
+## Site-wide settings
 
-Foundation & Infrastructure → SOC / Telemetry → Detection → Identity → AI/ML Security → Cloud → Threat Hunting → Vulnerability Management → Incident Response / DFIR → Security Automation → Malware Analysis → Purple / Red Team.
+`js/site.js` holds your name, email, GitHub, LinkedIn, résumé path, and navigation. Fill in `linkedin` and `resume` and the links appear everywhere; leave them `""` and they stay hidden.
 
-Networking coursework can be added under Networking as curated portfolio entries. System administration should remain primarily represented through infrastructure projects until there are enough dedicated system-administration projects to justify a separate project family.
+## Writing standard
 
-## Recruiter-facing rule
+- First person, specific, evidence-based: "I built", "I tested", "I fixed".
+- Every number on the page must be checkable in the PDF.
+- Show the quiet cases (negative tests) as carefully as the alert.
+- State the coverage boundary: what the project does not prove.
+- Use only screenshots that prove something, with a caption that says what.
 
-The homepage should remain fast to scan. Keep roughly 3–5 strongest/most relevant projects featured. The full project catalog belongs on the Projects page.
+## File map
 
-
-## Navigation rule
-
-- A roadmap box representing one foundational project may link directly to that case study (for example INFRA-BASE-v1 or SOC01).
-- A roadmap box representing a growing project family must open the filtered project catalog for that domain (for example Detection Engineering, Identity Security, or AI / ML Security).
-- As soon as a domain receives its first project, the box becomes clickable automatically through the centralized catalog.
-- Keep the roadmap ordered as Foundation → Security Operations → Core Security Tracks → Advanced Capabilities → Response & Automation.
-
-
-## Web evidence rule
-
-- The default Projects page is a capability map, not a duplicate list of every project.
-- Project cards appear when a user enters a multi-project domain such as Detection Engineering, Identity Security, or AI / ML Security.
-- Keep individual web case studies concise and recruiter-friendly.
-- Show roughly 3–4 of the strongest screenshots on the webpage.
-- Keep the complete validation sequence, supporting screenshots, detailed troubleshooting, and deeper evidence in the project PDF.
-
-
-## Domain visibility rule
-
-- Roadmap domains remain stored in `js/portfolio-projects.js` even when they are not shown publicly.
-- Use `visible: true` only when that domain has at least one real portfolio project ready to represent it.
-- Keep future or empty domains as `visible: false`.
-- Do not show empty roadmap boxes to recruiters.
-- When the first project in a domain is published, switch that domain to `visible: true`.
-- Networking should remain hidden until the strongest Cisco/Packet Tracer coursework has been selected and converted into portfolio entries.
-
-
-## Supporting project rule
-
-- Not every useful project needs a roadmap domain.
-- Small but meaningful lab improvements such as remote management, backup/recovery, infrastructure access, or operational tooling belong under **Lab Enhancements / Supporting Infrastructure**.
-- Supporting projects should use `supporting: true`, remain `featured: false` by default, and should not create a new roadmap box.
-- They may receive their own concise case-study page when they demonstrate real implementation, validation, and operational reasoning.
+| File | Purpose |
+|---|---|
+| `index.html` | Homepage |
+| `projects.html` | All projects with filters and roadmap |
+| `about.html` | Background, education, certifications |
+| `project-*.html` | Case studies |
+| `js/portfolio-projects.js` | Project catalog (edit this to publish) |
+| `js/site.js` | Header, footer, contact links |
+| `assets/style.css` | All styling |
+| `templates/project-template.html` | Starting point for new case studies |
+| `experience.html`, `certifications.html` | Redirects to `about.html` for old links |

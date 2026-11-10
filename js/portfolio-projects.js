@@ -1,292 +1,269 @@
-/*
-  Central project catalog for the portfolio.
-  Future projects should be added here once their case study is ready.
-  The homepage and project hub both render from this file.
-*/
+/* ==========================================================================
+   PROJECT CATALOG — the only file you edit to publish a project.
+   The homepage, the Projects page, the lab pipeline, and the previous/next
+   links on case-study pages all build themselves from this list.
+
+   To publish a new project:
+     1. Copy templates/project-template.html to project-<id>.html, fill it in,
+        and put its PDF + screenshots in assets/.
+     2. Add one object to PORTFOLIO_PROJECTS below (copy an existing one).
+        If it was listed in PORTFOLIO_UPCOMING, delete it from there.
+   Order matters: projects appear in this order (and previous/next follow it).
+
+   Field guide
+     id        Short code shown on the card ("DET02").
+     title     Full project title.
+     domain    One of the keys in PORTFOLIO_DOMAINS.
+     stage     Where it sits in the lab pipeline: build | monitor | detect | analyze
+     summary   1–2 sentences: what you built and why.
+     proof     One line of hard evidence (numbers, tests, results).
+     skills    4–6 tags.
+     href/pdf  Case-study page and PDF.
+     thumb     Screenshot used as the card image (top-left is what shows).
+     featured  0 = not on homepage. 1 = big spotlight card, 2+ = homepage order.
+     rules     Optional: number of custom detection rules (adds to the homepage total).
+   ========================================================================== */
+
+window.PORTFOLIO_DOMAINS = {
+  foundation: "Infrastructure",
+  soc: "Security Operations",
+  detection: "Detection Engineering",
+  identity: "Identity Security",
+  ai: "AI Security",
+  networking: "Networking",
+  supporting: "Lab Enhancement"
+};
+
 window.PORTFOLIO_PROJECTS = [
   {
     id: "INFRA-BASE-v1",
-    number: "01",
     title: "Enterprise Cybersecurity Homelab Infrastructure",
-    domain: "Foundation & Infrastructure",
-    domainKey: "foundation",
-    status: "Completed baseline",
-    description: "A home-built enterprise lab with segmented departments, Active Directory, file services, firewall policy, and a tested backup and recovery baseline.",
-    skills: ["Proxmox", "OPNsense", "Active Directory", "Windows Server", "VLANs"],
+    domain: "foundation",
+    stage: "build",
+    summary: "A segmented enterprise built on Proxmox and OPNsense: Active Directory, DNS/DHCP, Group Policy, department file shares, and service-based firewall rules between segments.",
+    proof: "8 VMs · 4 department VLANs · AGDLP permissions · 2 TB backup target",
+    skills: ["Proxmox", "OPNsense", "Active Directory", "Group Policy", "VLANs"],
     href: "project-enterprise-proxmox-lab.html",
     pdf: "assets/infra-base-v1.pdf",
-    featured: true,
+    thumb: "assets/infra-base-v1/architecture.png",
+    featured: 5,
     published: true
   },
   {
     id: "SOC01",
-    number: "02",
     title: "Enterprise Security Monitoring & Telemetry Platform",
-    domain: "Security Operations",
-    domainKey: "soc",
-    status: "Completed platform",
-    description: "A SOC platform that centralizes Windows, Linux, and network telemetry in Wazuh, with Suricata and Zeek running on a passive sensor.",
+    domain: "soc",
+    stage: "monitor",
+    summary: "Centralized Windows, Linux, and network telemetry in Wazuh, with Suricata and Zeek on a passive sensor fed by Proxmox traffic mirroring.",
+    proof: "7 Wazuh agents · Sysmon + auditd · Suricata + Zeek · 8/8 pipeline tests passed",
     skills: ["Wazuh", "Sysmon", "Suricata", "Zeek", "auditd"],
     href: "project-soc01.html",
     pdf: "assets/soc01.pdf",
-    featured: true,
-    published: true
-  },
-  {
-    id: "REMOTE01",
-    number: "LAB",
-    title: "Secure Proxmox Remote Access with Tailscale",
-    domain: "Supporting Infrastructure",
-    domainKey: "supporting",
-    status: "Completed and validated",
-    description: "A secure remote-management path for Proxmox using a dedicated unprivileged Ubuntu LXC container, Tailscale subnet routing, a host-only /32 route, and narrowly scoped access to TCP 8006.",
-    skills: ["Proxmox", "Tailscale", "Linux Routing", "LXC", "Access Control"],
-    href: "project-remote01.html",
-    pdf: "assets/remote01.pdf",
-    featured: false,
-    supporting: true,
+    thumb: "assets/soc01/suricata-alert-in-wazuh.png",
+    featured: 4,
     published: true
   },
   {
     id: "DET01",
-    number: "03",
     title: "Authentication Attack Detection & Investigation",
-    domain: "Detection Engineering",
-    domainKey: "detection",
-    status: "Completed and validated",
-    description: "A detection-engineering lab focused on repeated Kerberos authentication failures, Wazuh correlation, source and account separation, timing windows, negative testing, and analyst investigation.",
-    skills: ["Wazuh", "Kerberos", "Windows Event 4771", "Correlation", "Detection Tuning"],
+    domain: "detection",
+    stage: "detect",
+    summary: "Wazuh correlation for repeated Kerberos failures (Event 4771), grouped by account and source, then tested against the cases that should stay quiet.",
+    proof: "2 custom rules · 1 positive + 4 negative tests · 120 s window · T1110.001",
+    skills: ["Wazuh", "Kerberos", "Event 4771", "Correlation", "Detection Tuning"],
     href: "project-det01.html",
     pdf: "assets/det01.pdf",
-    featured: true,
+    thumb: "assets/det01/correlation-alert.png",
+    featured: 2,
+    rules: 2,
     published: true
   },
   {
     id: "ID01",
-    number: "04",
     title: "Active Directory Identity Abuse & Privilege Monitoring",
-    domain: "Identity Security",
-    domainKey: "identity",
-    status: "Completed and validated",
-    description: "An identity-security lab covering AD account lifecycle events, privileged-group changes, Administrator activity, actor-target attribution, logon-session correlation, and negative testing.",
-    skills: ["Active Directory", "Wazuh", "Windows Security Events", "MITRE ATT&CK", "Identity Investigation"],
+    domain: "identity",
+    stage: "detect",
+    summary: "Detections for account lifecycle events, Domain Admins changes, and privileged Administrator activity, built to answer who did it and what was affected.",
+    proof: "9 custom rules · 9 event types · 4 ATT&CK mappings · negative control",
+    skills: ["Active Directory", "Wazuh", "Windows Security Events", "MITRE ATT&CK"],
     href: "project-id01.html",
     pdf: "assets/id01.pdf",
-    featured: true,
-    published: true
-  },
-  {
-    id: "NET01",
-    number: "05",
-    title: "Segmented Office Network with Cisco Switching & Routing",
-    domain: "Networking",
-    domainKey: "networking",
-    status: "Completed and validated",
-    description: "A Cisco Packet Tracer extension of INFRA-BASE-v1: six VLANs, two switches, 802.1Q trunks, router-on-a-stick routing, four DHCP pools, and verified client/server connectivity.",
-    skills: ["Cisco IOS", "VLANs & Trunking", "Inter-VLAN Routing", "DHCP", "Network Troubleshooting"],
-    href: "project-net01.html",
-    pdf: "assets/net01.pdf",
-    featured: false,
+    thumb: "assets/id01/domain-admin-addition.png",
+    featured: 3,
+    rules: 9,
     published: true
   },
   {
     id: "AI01",
-    number: "08",
     title: "AI-Assisted SOC Analyst",
-    domain: "AI / ML Security",
-    domainKey: "ai",
-    status: "Completed and validated",
-    description: "An analyst-controlled SOC workspace that correlates Wazuh, Zeek, and Suricata evidence, persists cases, and requests structured Azure AI analysis with explicit uncertainty.",
+    domain: "ai",
+    stage: "analyze",
+    summary: "An analyst workspace that turns Wazuh, Zeek, and Suricata alerts into source-aware incidents, saves cases, and requests evidence-grounded AI analysis that states what it doesn't know.",
+    proof: "39 Python tests passed · 3/3 live scenarios · human-in-the-loop by design",
     skills: ["Python", "Wazuh", "Zeek", "Suricata", "Azure AI"],
     href: "project-ai01.html",
     pdf: "assets/ai01.pdf",
-    featured: true,
+    thumb: "assets/ai01/workspace.png",
+    featured: 1,
+    published: true
+  },
+  {
+    id: "NET01",
+    title: "Segmented Office Network with Cisco Switching & Routing",
+    domain: "networking",
+    stage: "build",
+    summary: "The INFRA-BASE-v1 design rebuilt in Cisco Packet Tracer: six VLANs, 802.1Q trunks, router-on-a-stick, and four DHCP pools.",
+    proof: "6 VLANs · 2 switches · 4 DHCP leases verified",
+    skills: ["Cisco IOS", "VLANs & Trunking", "Inter-VLAN Routing", "DHCP"],
+    href: "project-net01.html",
+    pdf: "assets/net01.pdf",
+    thumb: "assets/net01/topology.svg",
+    featured: 0,
     published: true
   },
   {
     id: "NET02",
-    number: "06",
     title: "Tracing & Containing Suspicious Network Endpoints",
-    domain: "Networking",
-    domainKey: "networking",
-    status: "Completed and validated",
-    description: "A Practical Networking Packet Tracer challenge: trace three flagged MAC addresses through MAC tables and CDP, disable their endpoint ports, and verify eight remaining ICMP responders.",
-    skills: ["Cisco IOS", "MAC Address Tracing", "CDP", "Endpoint Containment", "Network Troubleshooting"],
+    domain: "networking",
+    stage: "build",
+    summary: "Traced three flagged MAC addresses through an unfamiliar network with MAC tables and CDP, disabled their ports, and confirmed everything else stayed up.",
+    proof: "3 MACs traced · 3 ports contained · 8 hosts still responding",
+    skills: ["Cisco IOS", "MAC Tracing", "CDP", "Containment"],
     href: "project-net02.html",
     pdf: "assets/net02.pdf",
-    featured: false,
+    thumb: "assets/net02/challenge-topology.png",
+    featured: 0,
     published: true
   },
   {
     id: "NET03",
-    number: "07",
     title: "Access Switch Replacement, Migration & Rollback",
-    domain: "Networking",
-    domainKey: "networking",
-    status: "Completed and validated",
-    description: "A planned Cisco access-switch replacement with a port inventory, staged VLAN and trunk configuration, DHCP renewal tests, verified rollback, and final client connectivity checks.",
-    skills: ["Cisco IOS", "Switch Replacement", "VLANs & Trunking", "DHCP Validation", "Migration & Rollback"],
+    domain: "networking",
+    stage: "build",
+    summary: "A planned access-switch replacement with a port inventory, staged configuration, DHCP renewal tests, and a rehearsed rollback before final cutover.",
+    proof: "3 VLANs preserved · rollback rehearsed · 6/6 final tests passed",
+    skills: ["Cisco IOS", "Change Management", "VLANs & Trunking", "Rollback"],
     href: "project-net03.html",
     pdf: "assets/net03.pdf",
-    featured: false,
+    thumb: "assets/net03/final-topology.png",
+    featured: 0,
+    published: true
+  },
+  {
+    id: "REMOTE01",
+    title: "Secure Proxmox Remote Access with Tailscale",
+    domain: "supporting",
+    stage: "build",
+    summary: "Private remote management for Proxmox through an unprivileged LXC gateway, a single /32 subnet route, and access limited to TCP 8006. No port forwarding.",
+    proof: "1 LXC gateway · /32 route · only TCP 8006 reachable",
+    skills: ["Proxmox", "Tailscale", "Linux Routing", "LXC", "Least Privilege"],
+    href: "project-remote01.html",
+    pdf: "assets/remote01.pdf",
+    thumb: "assets/remote01/management-network.png",
+    featured: 0,
     published: true
   }
 ];
 
-window.PORTFOLIO_ROADMAP = [
-  { key: "networking", label: "Networking", stage: "foundation", state: "active", note: "Cisco switching, routing, and troubleshooting", visible: true },
-  { key: "foundation", label: "Infrastructure Foundation", stage: "foundation", state: "active", note: "INFRA-BASE-v1", directHref: "project-enterprise-proxmox-lab.html", visible: true },
-  { key: "sysadmin", label: "Systems Administration", stage: "foundation", state: "foundation", note: "Core Windows and Linux administration", visible: false },
-
-  { key: "soc", label: "Security Monitoring / SOC", stage: "soc", state: "active", note: "SOC01", directHref: "project-soc01.html", visible: true },
-
-  { key: "detection", label: "Detection Engineering", stage: "tracks", state: "active", note: "Custom detections and investigations", visible: true },
-  { key: "identity", label: "Identity Security", stage: "tracks", state: "active", note: "AD → PAM → Zero Trust → NHI", visible: true },
-  { key: "ai", label: "AI / ML Security", stage: "tracks", state: "active", note: "AI01: evidence-grounded SOC analyst", directHref: "project-ai01.html", visible: true },
-
-  { key: "cloud", label: "Cloud Security", stage: "advanced", state: "planned", note: "Azure / AWS / hybrid identity", visible: false },
-  { key: "threat-hunting", label: "Threat Hunting", stage: "advanced", state: "planned", note: "Multi-source investigations", visible: false },
-  { key: "vulnerability", label: "Vulnerability Management", stage: "advanced", state: "planned", note: "Discovery, prioritization, remediation", visible: false },
-
-  { key: "ir", label: "Incident Response / DFIR", stage: "response", state: "planned", note: "Triage, containment, forensics", visible: false },
-  { key: "automation", label: "Security Automation", stage: "response", state: "planned", note: "Python, APIs, SOAR-style workflows", visible: false },
-  { key: "malware", label: "Malware Analysis", stage: "response", state: "planned", note: "Controlled behavior analysis", visible: false },
-  { key: "purple", label: "Purple / Red Team", stage: "response", state: "planned", note: "Adversary simulation and validation", visible: false }
+/* What's coming next. The first entry is shown as "In progress".
+   When one is published, delete it here and add it above. */
+window.PORTFOLIO_UPCOMING = [
+  { id: "DET02", title: "Suspicious PowerShell Detection & Investigation", stage: "detect" },
+  { id: "ID02", title: "Credential Abuse & Lateral Authentication", stage: "detect" },
+  { id: "AI02", title: "Secure Homelab AI Agent", stage: "analyze" },
+  { id: "DET03", title: "Persistence Detection & Investigation", stage: "detect" },
+  { id: "IR01", title: "Windows Endpoint Incident Response", stage: "respond" }
 ];
 
+/* Pipeline stages shown in "How the lab fits together". */
 window.PORTFOLIO_STAGES = [
-  { key: "foundation", number: "01", label: "Foundation", description: "Networking, infrastructure, identity basics, and systems administration." },
-  { key: "soc", number: "02", label: "Security Operations", description: "Centralized endpoint, server, and network telemetry." },
-  { key: "tracks", number: "03", label: "Core Security Tracks", description: "Detection engineering, modern identity security, and AI/ML security." },
-  { key: "advanced", number: "04", label: "Advanced Capabilities", description: "Cloud security, threat hunting, and vulnerability management." },
-  { key: "response", number: "05", label: "Response & Automation", description: "Incident response, DFIR, automation, malware analysis, and adversary validation." }
+  { key: "build", label: "Build", text: "Segmented network, Active Directory, and secure administration." },
+  { key: "monitor", label: "Monitor", text: "Endpoint, server, and network telemetry in one place." },
+  { key: "detect", label: "Detect", text: "Custom rules, validated with positive and negative tests." },
+  { key: "analyze", label: "Analyze", text: "Correlation and AI-assisted triage with the analyst in control." },
+  { key: "respond", label: "Respond", text: "Incident response, forensics, and automation." }
 ];
 
+/* ==========================================================================
+   Rendering — no need to edit below this line.
+   ========================================================================== */
 (function () {
-  function esc(value) {
-    return String(value ?? "").replace(/[&<>"']/g, c => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
-    }[c]));
+  const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[c]));
+  const D = window.PORTFOLIO_DOMAINS;
+  const all = window.PORTFOLIO_PROJECTS.filter(p => p.published);
+
+  function card(p, spotlight) {
+    const media = p.thumb
+      ? `<div class="pcard-media"><img src="${esc(p.thumb)}" alt="" loading="lazy"></div>` : "";
+    return `<article class="pcard${spotlight ? " spotlight" : ""}">
+      ${media}
+      <div class="pcard-body">
+        ${spotlight ? '<span class="spot-label">Latest project</span>' : ""}
+        <div class="pcard-meta"><span class="chip-id">${esc(p.id)}</span><span class="chip-domain">${esc(D[p.domain] || p.domain)}</span></div>
+        <h3><a href="${esc(p.href)}">${esc(p.title)}</a></h3>
+        <p>${esc(p.summary)}</p>
+        ${p.proof ? `<div class="proof-line">${esc(p.proof)}</div>` : ""}
+        <div class="tags">${(p.skills || []).map(s => `<span>${esc(s)}</span>`).join("")}</div>
+        <div class="pcard-links"><a href="${esc(p.href)}">Case study →</a>${p.pdf ? `<a href="${esc(p.pdf)}">PDF report ↗</a>` : ""}</div>
+      </div>
+    </article>`;
   }
 
-  const params = new URLSearchParams(window.location.search);
-  const domainFilter = params.get("domain");
-  const activeDomain = window.PORTFOLIO_ROADMAP.find(item => item.key === domainFilter);
-
-  function projectCard(project) {
-    const title = project.published && project.href
-      ? `<a href="${esc(project.href)}">${esc(project.title)}</a>`
-      : esc(project.title);
-
-    const action = project.published && project.href
-      ? `<a class="text-link" href="${esc(project.href)}">Read the case study →</a>`
-      : `<span class="case-study-pending">Case study being finalized</span>`;
-
-    return `
-      <article class="project-card">
-        <div class="project-number">${esc(project.number)} / ${esc(project.domain).toUpperCase()}</div>
-        <div>
-          <span class="status ${project.published ? "" : "status-progress"}">${esc(project.status)}</span>
-          <h2>${title}</h2>
-          <p>${esc(project.id)}</p>
-          <p>${esc(project.description)}</p>
-          <div class="tags">${project.skills.map(skill => `<span>${esc(skill)}</span>`).join("")}</div>
-          ${action}
-        </div>
-      </article>`;
-  }
-
-  document.querySelectorAll("[data-project-list]").forEach(container => {
-    const mode = container.dataset.projectList;
-    let projects = window.PORTFOLIO_PROJECTS.filter(project => {
-      if (mode === "featured") return project.featured && project.published;
-      if (mode === "supporting") return project.supporting && project.published;
-      if (mode === "published") return project.published;
-      return true;
-    });
-
-    if (domainFilter && mode !== "featured" && mode !== "supporting") {
-      projects = projects.filter(project => project.domainKey === domainFilter);
-    }
-
-    container.innerHTML = projects.length
-      ? projects.map(projectCard).join("")
-      : `<div class="empty-state"><strong>No published case studies in this domain yet.</strong><p>This area is part of the portfolio roadmap and will activate as the work is completed and documented.</p></div>`;
+  /* Homepage featured grid */
+  document.querySelectorAll("[data-featured]").forEach(el => {
+    const f = all.filter(p => p.featured > 0).sort((a, b) => a.featured - b.featured);
+    el.innerHTML = f.map((p, i) => card(p, i === 0 && p.featured === 1)).join("");
   });
 
-  document.querySelectorAll("[data-roadmap]").forEach(container => {
-    const projectCounts = window.PORTFOLIO_PROJECTS
-      .filter(project => project.published)
-      .reduce((counts, project) => {
-        counts[project.domainKey] = (counts[project.domainKey] || 0) + 1;
-        return counts;
-      }, {});
+  /* Auto-computed numbers: <span data-count="projects|rules"> */
+  const counts = {
+    projects: all.length,
+    rules: all.reduce((n, p) => n + (p.rules || 0), 0)
+  };
+  document.querySelectorAll("[data-count]").forEach(el => { el.textContent = counts[el.dataset.count] ?? ""; });
+  const nextUp = (window.PORTFOLIO_UPCOMING || [])[0];
+  document.querySelectorAll("[data-next-project]").forEach(el => {
+    el.textContent = nextUp ? `${nextUp.id} · ${nextUp.title}` : "Next project in planning";
+  });
 
-    function node(item) {
-      const count = projectCounts[item.key] || 0;
-      const meta = item.directHref
-        ? item.note
-        : count
-          ? `${count} project${count === 1 ? "" : "s"}`
-          : item.note;
+  /* Projects page: filters + grid. Supports ?domain=key links. */
+  document.querySelectorAll("[data-catalog]").forEach(el => {
+    const filters = document.querySelector("[data-filters]");
+    const used = Object.keys(D).filter(k => all.some(p => p.domain === k));
+    let current = new URLSearchParams(location.search).get("domain");
+    if (!used.includes(current)) current = "all";
 
-      const current = domainFilter === item.key ? " roadmap-current" : "";
-      const inner = `
-        <span class="roadmap-state">${esc(item.state === "active" ? "ACTIVE" : item.state === "next" ? "NEXT" : item.state === "foundation" ? "FOUNDATION" : "PLANNED")}</span>
-        <strong>${esc(item.label)}</strong>
-        <small>${esc(meta)}</small>`;
-
-      if (item.directHref) {
-        return `<a class="roadmap-node roadmap-${esc(item.state)}${current}" href="${esc(item.directHref)}">${inner}</a>`;
-      }
-
-      return count
-        ? `<a class="roadmap-node roadmap-${esc(item.state)}${current}" href="projects.html?domain=${encodeURIComponent(item.key)}#project-catalog">${inner}</a>`
-        : `<div class="roadmap-node roadmap-${esc(item.state)}">${inner}</div>`;
+    function draw() {
+      const list = current === "all" ? all : all.filter(p => p.domain === current);
+      el.innerHTML = list.length ? list.map(p => card(p)).join("") : `<div class="empty-state">No case studies here yet.</div>`;
+      if (filters) filters.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.key === current)));
     }
+    if (filters) {
+      filters.innerHTML = [["all", "All", all.length], ...used.map(k => [k, D[k], all.filter(p => p.domain === k).length])]
+        .map(([k, l, n]) => `<button type="button" data-key="${esc(k)}">${esc(l)}<small>${n}</small></button>`).join("");
+      filters.addEventListener("click", e => {
+        const b = e.target.closest("button"); if (!b) return;
+        current = b.dataset.key; draw();
+        const url = new URL(location.href);
+        if (current === "all") url.searchParams.delete("domain"); else url.searchParams.set("domain", current);
+        history.replaceState(null, "", url);
+      });
+    }
+    draw();
+  });
 
-    const visibleStages = window.PORTFOLIO_STAGES
-      .map(stage => ({
-        ...stage,
-        items: window.PORTFOLIO_ROADMAP.filter(item => item.stage === stage.key && item.visible !== false)
-      }))
-      .filter(stage => stage.items.length);
-
-    container.innerHTML = visibleStages.map((stage, index) => {
-      return `
-        <div class="roadmap-stage">
-          <div class="roadmap-stage-heading">
-            <span>${esc(stage.number)}</span>
-            <div><strong>${esc(stage.label)}</strong><small>${esc(stage.description)}</small></div>
-          </div>
-          <div class="roadmap-stage-nodes roadmap-stage-${esc(stage.key)}">
-            ${stage.items.map(node).join("")}
-          </div>
-        </div>
-        ${index < visibleStages.length - 1 ? '<div class="roadmap-arrow" aria-hidden="true">↓</div>' : ''}`;
+  /* Lab pipeline */
+  document.querySelectorAll("[data-pipeline]").forEach(el => {
+    const up = window.PORTFOLIO_UPCOMING || [];
+    el.innerHTML = window.PORTFOLIO_STAGES.map((s, i) => {
+      const done = all.filter(p => p.stage === s.key && p.domain !== "networking" && p.domain !== "supporting");
+      const later = up.filter(u => u.stage === s.key);
+      const isNext = later.some(u => u === up[0]);
+      const items = [
+        ...done.map(p => `<li><a href="${esc(p.href)}">${esc(p.id)} ✓</a></li>`),
+        ...later.map(u => `<li><span class="${u === up[0] ? "next" : "planned"}" title="${esc(u.title)}">${esc(u.id)} · ${u === up[0] ? "in progress" : "planned"}</span></li>`)
+      ].join("");
+      return `<div class="stage${isNext ? " is-next" : ""}"><span class="stage-num">0${i + 1}</span><h3>${esc(s.label)}</h3><p>${esc(s.text)}</p><ul>${items}</ul></div>`;
     }).join("");
   });
-
-  document.querySelectorAll("[data-domain-section]").forEach(section => {
-    section.hidden = !activeDomain;
-  });
-
-  document.querySelectorAll("[data-supporting-section]").forEach(section => {
-    section.hidden = Boolean(activeDomain);
-  });
-
-  document.querySelectorAll("[data-domain-heading]").forEach(el => {
-    if (activeDomain) el.textContent = `${activeDomain.label} projects`;
-  });
-
-  document.querySelectorAll("[data-domain-reset]").forEach(el => {
-    el.hidden = !activeDomain;
-  });
-
-  // The catalog starts hidden; apply its incoming anchor after rendering.
-  if (activeDomain && window.location.hash === "#project-catalog") {
-    requestAnimationFrame(() => document.getElementById("project-catalog")?.scrollIntoView());
-  }
 })();
-
-
